@@ -9,7 +9,7 @@ import {
     updateWordDetails,
     updateWordFocus
 } from "./wordFocus.js";
-import { logEvent, startWordView, endWordView } from "/analytics.js";
+import { logEvent, startWordView, endWordView } from "../../analytics.js";
 
 import { yearPeriods } from "./menu.js";
 

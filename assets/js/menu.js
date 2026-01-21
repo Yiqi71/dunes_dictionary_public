@@ -17,7 +17,7 @@ import {
     clampOffsetY,
     updateScaleForNodes
 } from "./uni-canvas.js";
-import { logEvent, startWordView, endWordView } from "/analytics.js";
+import { logEvent, startWordView, endWordView } from "../../analytics.js";
 
 // �?menu.js 文件顶部�?import 部分添加
 import { showAboutPanel } from "./detail.js";

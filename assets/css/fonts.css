@@ -8,13 +8,13 @@
 }
 
 /* ChillDINGothic - Local font for consistent loading */
-/* @font-face {
+@font-face {
   font-family: "ChillDINGothic";
   src: url("../fonts/Chilldin/ChillDINGothic_Regular.otf") format("opentype");
   font-weight: 400;
   font-style: normal;
   font-display: block;
-} */
+}
 
 /* Barlow Condensed - Local font for consistent loading */
 @font-face {

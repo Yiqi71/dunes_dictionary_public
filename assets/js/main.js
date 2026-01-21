@@ -1,4 +1,4 @@
-// 状态变�?
+// 状态变�?
 import { state } from "./state.js";
 import { draw, updateWordNodeTransforms, updateScaleForNodes, handleZoomWheel } from "./uni-canvas.js";
 import { country_bounding_boxes } from "./countryBoundingBoxes.js";
@@ -9,7 +9,7 @@ import {
     updateWordDetails,
     updateWordFocus
 } from "./wordFocus.js";
-import { logEvent, startWordView, endWordView } from "/analytics.js";
+import { logEvent, startWordView, endWordView } from "../../analytics.js";
 
 import { yearPeriods } from "./menu.js";
 
@@ -54,7 +54,7 @@ langBtn.addEventListener("click", () => {
     document.querySelectorAll('button').forEach(button => {
         if(!button) return;
     
-        // 包一�?span，只旋转文字，不影响 SVG
+        // 包一�?span，只旋转文字，不影响 SVG
         let span = button.querySelector('span');
         if (!span) {
             const text = button.innerHTML;
@@ -70,9 +70,9 @@ langBtn.addEventListener("click", () => {
             button.querySelector('span').textContent = state.currentLang === "en" ? "NOTES" : "笔记";
         }
 
-        // 设置旋转和偏�?
+        // 设置旋转和偏�?
         if (state.currentLang === "en") {
-            span.style.display = "inline-block"; // 必须�?inline-block 才能旋转
+            span.style.display = "inline-block"; // 必须�?inline-block 才能旋转
             span.style.transform = "translateX(-10px) rotate(-90deg)";
         } else {
             span.style.transform = "rotate(0deg) translateY(0)";
@@ -80,7 +80,7 @@ langBtn.addEventListener("click", () => {
     });
 
 
-    // 如果需要更新浮�?
+    // 如果需要更新浮�?
     if(state.focusedNodeId) {
         updateWordFocus();
         renderPanelSections();
@@ -155,9 +155,9 @@ function getCountryCenter(countryCode) {
     const centerLon = (minLon + maxLon) / 2; // 中心经度
     const centerLat = (minLat + maxLat) / 2; // 中心纬度
 
-    // 把经纬度转成百分比坐标（和你�?renderWordUniverse 里一致）
-    const left = (centerLon + 180) / 3.6;   // -180~180 �?0~100
-    const top = (90 - centerLat) / 1.8;     // 90~-90 �?0~100
+    // 把经纬度转成百分比坐标（和你�?renderWordUniverse 里一致）
+    const left = (centerLon + 180) / 3.6;   // -180~180 �?0~100
+    const top = (90 - centerLat) / 1.8;     // 90~-90 �?0~100
 
     return { left, top };
 }
@@ -185,22 +185,22 @@ function getCountryGridPoints(countryCode) {
         left,
         top
     }) => {
-        // 转换百分比到经纬�?
+        // 转换百分比到经纬�?
         const lon = left * 3.6 - 180;
         const lat = 90 - top * 1.8;
         return lon >= minLon && lon <= maxLon && lat >= minLat && lat <= maxLat;
     });
 
-    shuffleArray(availablePoints); // 只打乱国家内部格子顺�?
+    shuffleArray(availablePoints); // 只打乱国家内部格子顺�?
     return availablePoints;
 }
 
-// 新增：扩散算�?- 从国家中心向外扩散寻找可用位�?
+// 新增：扩散算�?- 从国家中心向外扩散寻找可用位�?
 function findAvailablePositions(countryCode, wordCount) {
     const countryPoints = getCountryGridPoints(countryCode);
     const positions = [];
     
-    // 首先使用国家内部的格�?
+    // 首先使用国家内部的格�?
     for (let i = 0; i < countryPoints.length && positions.length < wordCount; i++) {
         const point = countryPoints[i];
         const key = `${Math.round(point.left)},${Math.round(point.top)}`;
@@ -210,7 +210,7 @@ function findAvailablePositions(countryCode, wordCount) {
         }
     }
     
-    // 如果国家内部格点不够，向外扩�?
+    // 如果国家内部格点不够，向外扩�?
     if (positions.length < wordCount) {
         const countryCenter = getCountryCenter(countryCode);
         const additionalPositions = expandFromCenter(
@@ -232,7 +232,7 @@ function expandFromCenter(center, neededCount, excludePoints = []) {
     );
     
     let radius = minGrid;
-    const maxRadius = 50; // 最大扩散半�?
+    const maxRadius = 50; // 最大扩散半�?
     
     while (positions.length < neededCount && radius <= maxRadius) {
         const ringPositions = generateRingPositions(center, radius);
@@ -242,7 +242,7 @@ function expandFromCenter(center, neededCount, excludePoints = []) {
             
             const key = `${Math.round(pos.left)},${Math.round(pos.top)}`;
             
-            // 检查是否在地图范围内，未被使用，且不在排除列表�?
+            // 检查是否在地图范围内，未被使用，且不在排除列表�?
             if (isValidPosition(pos) && 
                 !usedPositions.has(key) && 
                 !excludeKeys.has(key)) {
@@ -257,7 +257,7 @@ function expandFromCenter(center, neededCount, excludePoints = []) {
     return positions;
 }
 
-// 生成指定半径的环形位�?
+// 生成指定半径的环形位�?
 function generateRingPositions(center, radius) {
     const positions = [];
     const steps = Math.max(8, Math.floor(2 * Math.PI * radius / minGrid)); // 根据半径调整密度
@@ -267,7 +267,7 @@ function generateRingPositions(center, radius) {
         const left = center.left + radius * Math.cos(angle);
         const top = center.top + radius * Math.sin(angle);
         
-        // 对齐到网�?
+        // 对齐到网�?
         const gridLeft = Math.round(left / minGrid) * minGrid;
         const gridTop = Math.round(top / minGrid) * minGrid;
         
@@ -277,7 +277,7 @@ function generateRingPositions(center, radius) {
     return positions;
 }
 
-// 检查位置是否有效（在地图范围内�?
+// 检查位置是否有效（在地图范围内�?
 function isValidPosition(pos) {
     return pos.left >= 5 && pos.left <= 95 && 
            pos.top >= 5 && pos.top <= 95;
@@ -285,7 +285,7 @@ function isValidPosition(pos) {
 
 // 优化后的位置分配算法
 function allocatePositionsForCountries(wordsByCountry) {
-    usedPositions.clear(); // 重置已使用位�?
+    usedPositions.clear(); // 重置已使用位�?
     const countryPositions = {};
     
     // 按单词数量排序，优先分配单词多的国家
@@ -310,7 +310,7 @@ function renderWordUniverse(wordsData) {
     wordNodesContainer.innerHTML = '';
     wordsOnGrid = {};
 
-    // 按国家分�?
+    // 按国家分�?
     const wordsByCountry = {};
     wordsData.forEach(word => {
         if (!wordsByCountry[word.proposing_country]) {
@@ -319,10 +319,10 @@ function renderWordUniverse(wordsData) {
         wordsByCountry[word.proposing_country].push(word);
     });
 
-    // 使用优化的位置分配算�?
+    // 使用优化的位置分配算�?
     const countryPositions = allocatePositionsForCountries(wordsByCountry);
 
-    // 渲染每个国家的节�?
+    // 渲染每个国家的节�?
     for (const country in wordsByCountry) {
         const words = wordsByCountry[country];
         const positions = countryPositions[country];
@@ -332,7 +332,7 @@ function renderWordUniverse(wordsData) {
             
             // 使用分配好的位置，如果位置不够就跳过
             if (i >= positions.length) {
-                console.warn(`国家 ${country} 的单词数量超过可分配位置，跳过单�? ${word.term}`);
+                console.warn(`国家 ${country} 的单词数量超过可分配位置，跳过单�? ${word.term}`);
                 continue;
             }
             
@@ -350,7 +350,7 @@ function renderWordUniverse(wordsData) {
             <div class="detail-title">${String(word.id).padStart(4, '0')}</div>
             <div class="terms">
                 <div class="term-main">${word.term?.[lang] || '未知单词'}</div>
-                <div class="term-ori">${word.termOri || '�?}</div>
+                <div class="term-ori">${word.termOri || ''}</div>
             </div>
             `;
             node.style.left = `${leftPercent}%`;
@@ -371,7 +371,7 @@ function renderWordUniverse(wordsData) {
             node.dataset.y = topPercent / 100;
             node.id = word.id;
             
-            // �?关键：用 "x,y" 作为 key 存储
+            // �?关键：用 "x,y" 作为 key 存储
             const key = `${Math.round(leftPercent)},${Math.round(topPercent)}`;
             wordsOnGrid[key] = node.id;
 
@@ -381,7 +381,7 @@ function renderWordUniverse(wordsData) {
             }, { passive: false });
             
             // 添加点击事件处理浮窗显示
-            // 修改单词节点的点击事�?
+            // 修改单词节点的点击事�?
             node.addEventListener('mousedown', (e) => {
                 e.stopPropagation();
             });
@@ -416,7 +416,7 @@ function renderWordUniverse(wordsData) {
         updateRelations();
     });
     canvas.addEventListener('mouseup', () => {
-        updateWordFocus(); // 拖动结束后更�?
+        updateWordFocus(); // 拖动结束后更�?
         updateRelations();
     });
 
@@ -424,15 +424,15 @@ function renderWordUniverse(wordsData) {
 
 
 
-// 初始�?- 等待DOM加载完成后获取数�?
+// 初始�?- 等待DOM加载完成后获取数�?
 document.addEventListener('DOMContentLoaded', () => {
     sessionStartTs = Date.now();
     logEvent("session_start", {});
     logEvent("page_loaded", { lang: document.documentElement.lang || "zh" });
-    fetch('/content/data.json')
+    fetch('content/data.json')
         .then(response => {
             if (!response.ok) {
-                throw new Error('网络响应不正�?);
+                throw new Error('网络响应不正常');
             }
             return response.json();
         })
@@ -448,7 +448,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(error => {
             logEvent("data_loaded", { status: "error" });
             console.error('加载数据失败:', error);
-            // 可以在这里添加错误处理UI，比如显示错误信�?
+            // 可以在这里添加错误处理UI，比如显示错误信�?
             document.getElementById('word-nodes-container').innerHTML =
                 '<p class="error">加载单词数据失败，请刷新重试</p>';
         });
