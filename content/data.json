@@ -1,0 +1,1196 @@
+{
+  "words": [{
+      "id": 1,
+      "term": "理性无知",
+      "termOri": "Rational Ignorance",
+      "concept_image": "images/1.jpg",
+      "sm_title": "不动脑子做决定，反而是最优的？",
+      "brief_definition": "在信息获取成本过高时，人们选择不去深入了解仍然是理性的。",
+      "extended_definition": [
+        "理性无知指的是个体在决策过程中，为了节省时间与精力，放弃获取过多无关或昂贵的信息，而以有限的知识做出选择。这一概念常用于政治学和经济学，说明为什么选民在复杂议题上可能保持‘不知情’状态。"
+      ],
+      "example_sentence": "我们不会花时间去研究自己购买的牙膏中每一种化学成分的详细报告，而是凭借对品牌的大致印象做出购买决策，这便是日常消费领域中一种普遍的“理性无知”。",
+      "diagrams": [{
+        "src": "images/1.jpg",
+        "caption": "理性无知常被用于解释政治参与中的冷漠现象。"
+      }],
+      "proposers": [{
+        "name": "安东尼·唐斯 (Anthony Downs)",
+        "year": "1930—2021",
+        "role": "美国经济学家、政治学家",
+        "image": "https://www.amacad.org/sites/default/files/images/headshots/headshot_432.jpg"
+      }],
+      "source": "An Economic Theory of Democracy (1957)，中文版《民主的经济理论》",
+      "source_image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSU_Op91EqIfTlQLZzVKmnHRR6eOEw9VpBMCQ&s",
+      "related_works": [
+        "曼瑟尔·奥尔森（Mancur Olson），The Logic of Collective Action (1965)，中文常译《集体行动的逻辑》",
+        "The Oxford Handbook of Public Choice (2019)，中文未核实"
+      ],
+      "contributor": "本期词条的贡献者是Diane（牛津大学比较政治学研究生；沙丘词典第一期共创会成员）",
+      "editors": [
+        "沙丘研究所（Gemini 2.5 Pro辅助润色）",
+        "封面图由Midjourney V7生成",
+        "© 沙丘研究所 2025. 本作品采用CC BY-NC 4.0 国际许可协议"
+      ],
+      "reviewers": [],
+      "related_terms": [{
+          "id": 2,
+          "relation": "概念相关"
+        },
+        {
+          "id": 5,
+          "relation": "概念相关"
+        }
+      ],
+      "proposing_country": "US",
+      "proposing_time": "1957年",
+      "domain": ["经济学", "法学"],
+      "createdAt": "2025-08-13",
+      "updatedAt": "2025-08-13",
+
+      "comments": [{
+          "content": "<p> 沙丘之前也分享过倦怠态度（Blasé Attitude）。在20世纪初，齐美尔提出这一概念时，观察到在大都市生活的人由于有过多的外部刺激（stimuli），很容易精神过载，因此需要采取一种麻木、厌倦和冷漠态度以保护自己的精神。互联网则比城市更加充斥着感官刺激和超量的信息。在现在大家选择“理性无知”，或许不完全因为获取信息的难度，更是因为持续的关心所带来的情绪太过于令人疲惫。这种认知上的策略可能也是一种情绪保护机制。</p>",
+          "author": "雅伦（沙丘研究所创始人）",
+          "date": "08/19/2025"
+        },
+        {
+          "content": "<p>在这个视角下可以解释川普如何让人们“主动投出违反自身利益的一票”。他私有化医疗和教育、增加关税的policy其实严重侵犯了人们的利益……然而低收入、长工时的群体尤其没有时间和精力研究具体policy，合理逻辑地选择无知，于是只能依靠身份认同、竞选者的形象、口号、符号作出决定……</p>",
+          "author": "欣然（受邀共创者",
+          "date": "08/19/2025"
+        }, {
+          "content": "<p>唐斯提出“理性无知”的1950年代是由报纸和电视的时代。人们获取信息的挑战在于如何穿透有限且高度同质化的“主流叙事”，深挖候选人真实的意图。</p><p>胡塞尔、梅洛-七十年后的今天，人们不再苦于信息的稀缺，反而被信息的洪流淹没。妨碍理解的是严重的信息过载以及其中真假难辨的巨量噪音。许多人放弃了“求甚解”，转而更多地依赖情感、认同感或直觉来做决定。-“共同存在”。或许可以这样理解：“他心问题”（Problem of the Other Minds）——“我如何能证明他人有意识？”——这个提问的出发点本身就是有缺陷的。“共同存在”（Mitsein）不是我们达成的一种状态，而是我们作为“此在”（Dasein）这种存在的基本结构。它不是一个需要证明的结论，而是我们进行任何证明活动的前提。</p><p>和AI工具Gemini聊这个话题，ta有一段这样的回应：</p><p>“在梦里，你有触感、有情感、有逻辑，周围的人和物也都栩栩如生，但这一切都不过是你自己意识的产物。当你醒来，那么，你如何能百分之百地确定，你此刻正在经历的‘现实’，不是一场更加持久、更加精致的梦？”</p><p>一种迷人的思辨诱惑在Gemini生成出这些字的过程中产生了。西方的辩证和东方的思想混杂了起来。更重要的是，与人工智能体对话这样的话题，不就是对“主体间性”本身的重新检视？当语料库训练出的程序能够打出这样让人产生强烈思维共振的文字，这样的交流到底是“人机交互”还是“主体间”的交往？</p><p>我想这个话题又可以重新回落到心理咨询的领域。已经有不少身边的朋友跟我聊到过，他们试着把AI工具用作自己的心理疗愈师，并且有过“被帮助到了”的感受。人在心里憋闷的时候可以对着枕头、对着宠物、对着日记本“说话”，都能感觉舒坦些了。但是，人真的可以拽着自己的头发把自己从泥潭里拽出来吗？在这里，被当做心理疗愈师的“AI人”是自身手臂的义肢式延伸，还是真正意义上有效的“外力”？如果对话中活生生的“在场”仍然是无法替代的，那么当人工智能体拥有了以假乱真的身体，能够模拟人的微表情和肢体姿态，那时候我们是在一个精巧的镜子面前继续看到自身情绪的反射，还是真正与一个位于自身外部的他者共处？</p>",
+          "author": "陈飞樾（沙丘研究所创始人）",
+          "date": "08/19/2025"
+        }
+      ],
+
+      "commentAbs": {
+        "content": "妨碍理解的是严重的信息过载以及其中真假难辨的巨量噪音。",
+        "author": "陈飞樾"
+      }
+    },
+    {
+      "id": 2,
+      "term": "行为倒错",
+      "termOri": "Parapraxis",
+      "concept_image": "images/2.jpg",
+      "brief_definition": "口误或失误行为常常揭示潜意识中的真实想法。",
+      "extended_definition": [
+        "行为倒错源自精神分析学，指人在日常交流或行动中出现的口误、笔误、失误，往往并非单纯的偶然，而是潜意识欲望或焦虑的显现。例如在不经意间说出内心的隐秘想法，或在行动中流露真实动机。"
+      ],
+      "example_sentence": "在演讲中，他不小心把前任的名字说成了现任伴侣的名字——这是典型的行为倒错。",
+      "diagrams": [{
+        "src": "images/2.jpg",
+        "caption": "弗洛伊德通过研究口误与失误，揭示了潜意识的力量。"
+      }],
+      "proposers": [{
+        "name": "西格蒙德·弗洛伊德 (Sigmund Freud)",
+        "year": "1856—1939",
+        "role": "奥地利神经学家、精神分析学派创始人",
+        "image": "images/2Proposer.jpg"
+      }],
+      "source": "Sigmund Freud, The Psychopathology of Everyday Life (1901)，Franz Deuticke（中文版《日常生活的精神病理学》）",
+      "related_works": [
+        "The Interpretation of Dreams 《梦的解析》"
+      ],
+      "contributor": "本期词条的贡献者是Fei与Yalun。",
+      "editors": [
+        "沙丘研究所（Gemini 2.5 Pro辅助润色）",
+        "封面图由Midjourney V7生成",
+        "© 沙丘研究所 2025. 本作品采用CC BY-NC 4.0 国际许可协议"
+      ],
+      "reviewers": [],
+      "related_terms": [{
+        "id": 1,
+        "relation": "概念相关"
+      }, {
+        "id": 18,
+        "relation": "概念相关"
+      }, {
+        "id": 192,
+        "relation": "概念相关"
+      }],
+      "proposing_country": "AT",
+      "proposing_time": "1901年",
+      "domain": "心理学 / 精神分析",
+      "createdAt": "2025-01-17",
+      "updatedAt": "2025-01-17"
+    },
+    {
+      "id": 3,
+      "term": "潮汐锁定",
+      "termOri": "Tidal Locking",
+      "brief_definition": "天体因引力长期作用，总是以同一面对着另一天体。",
+      "extended_definition": "潮汐锁定是一种天体物理现象，当一个天体因引力作用逐渐减缓自转，最终以固定的一面对另一天体。例如月球始终以同一面对着地球。这一现象常被借喻于人类与世界、人与人关系的稳定而不可避免的绑定。",
+      "diagrams": ["images/3.jpg"],
+      "domain": "天文学 / 哲学隐喻",
+      "proposer": "伊曼努尔·康德 (Immanuel Kant)",
+      "proposer_img": "images/3Proposer.jpg",
+      "proposing_country": "DE",
+      "proposing_time": "1754年",
+      "references": "《现代天文学导论》",
+      "contributors": ["Fei", "Yalun"],
+      "reviewers": [],
+      "related_terms": [{
+        "id": 4,
+        "relation": "概念相关"
+      }],
+      "createdAt": "2025-01-01",
+      "updatedAt": "2025-01-01"
+    },
+    {
+      "id": 4,
+      "term": "事件视界",
+      "termOri": "Event Horizon",
+      "brief_definition": "黑洞引力边界，超出之后光与信息无法逃脱。",
+      "extended_definition": "事件视界是广义相对论提出的概念，指黑洞外围的一道‘不可回返的界限’。一旦物质或光进入其中，就再也无法逃逸。哲学与文化中常用作隐喻，表达某些认知与经验的不可触达边界。",
+      "diagrams": ["images/4.jpg"],
+      "domain": "天体物理学 / 哲学隐喻",
+      "proposer": "沃尔夫冈·林德勒 (Wolfgang Rindler)",
+      "proposer_img": "images/4Proposer.jpg",
+      "proposing_country": "AT",
+      "proposing_time": "1956年",
+      "references": "霍金《时间简史》",
+      "contributors": ["Fei", "Yalun"],
+      "reviewers": [],
+      "related_terms": [{
+        "id": 3,
+        "relation": "概念相关"
+      }],
+      "createdAt": "2024-10-20",
+      "updatedAt": "2024-10-20"
+    },
+    {
+      "id": 5,
+      "term": "课题分离",
+      "termOri": "Separation of Tasks",
+      "brief_definition": "分清责任：自己的事情自己负责，不为他人承担过多。",
+      "extended_definition": "课题分离是阿德勒心理学的重要原则，主张个体在面对问题时应当区分哪些属于自己的责任，哪些属于他人的责任。这样既能避免不必要的焦虑和内耗，也能促进人际关系的健康。",
+      "diagrams": ["images/5.jpg"],
+      "domain": "心理学 / 自助理论",
+      "proposer": "阿尔弗雷德·阿德勒 (Alfred Adler)",
+      "proposer_img": "images/5Proposer.jpg",
+      "proposing_country": "AT",
+      "proposing_time": "1909年",
+      "references": "阿德勒《自卑与超越》",
+      "contributors": ["Shelly", "Fei"],
+      "reviewers": [],
+      "related_terms": [{
+        "id": 1,
+        "relation": "概念相关"
+      }, {
+        "id": 18,
+        "relation": "概念相关"
+      }, {
+        "id": 192,
+        "relation": "概念相关"
+      }],
+      "createdAt": "2024-07-01",
+      "updatedAt": "2024-07-01"
+    },
+    {
+      "id": 6,
+      "term": "表层阅读",
+      "termOri": "Surface Reading",
+      "brief_definition": "关注文本表面意义而非深层象征的阅读方式。",
+      "extended_definition": "表层阅读是一种文学批评方法，与传统的‘深层解读’相对，强调文本表面层级的叙述、修辞与形式。它提醒读者不要过度解释隐藏意义，而是重视语言本身的力量。这一方法在后结构主义与新历史主义研究中得到广泛讨论。",
+      "diagrams": ["images/6.jpg"],
+      "domain": "文学理论 / 阅读方法",
+      "proposer": "Stephen Best 和 Sharon Marcus",
+      "proposer_img": "images/6Proposer.jpg",
+      "proposing_country": "US",
+      "proposing_time": "2000年",
+      "references": "《表层阅读与批评方法》",
+      "contributors": ["Sati", "Yalun", "Fei"],
+      "reviewers": [],
+      "related_terms": [{
+        "id": 7,
+        "relation": "概念相关"
+      }],
+      "createdAt": "2024-07-15",
+      "updatedAt": "2024-07-15"
+    },
+    {
+      "id": 7,
+      "term": "阈限空间",
+      "termOri": "Liminal Space",
+      "brief_definition": "处于过渡状态的空间，常给人诡异或空虚感。",
+      "extended_definition": "阈限空间指的是介于‘此处’与‘彼处’之间的中间地带，例如废弃走廊、空旷的停车场。它既不是完全的起点，也不是终点，而是过渡与模糊的状态。这一概念常与人类学、建筑学及网络文化中的诡异美学相联系。",
+      "diagrams": ["images/7.jpg"],
+      "domain": "人类学 / 建筑学 / 网络文化",
+      "proposer": "Arnold van Gennep 和 Victor Turner",
+      "proposer_img": "images/7Proposer.jpg",
+      "proposing_country": "GB",
+      "proposing_time": "1909年",
+      "references": "特纳《仪式过程》",
+      "contributors": ["Yunxi", "Yalun", "Fei"],
+      "reviewers": [],
+      "related_terms": [{
+        "id": 6,
+        "relation": "概念相关"
+      }],
+      "createdAt": "2024-07-22",
+      "updatedAt": "2024-07-22"
+    },
+    {
+      "id": 8,
+      "term": "电影眼",
+      "termOri": "Kino-Eye",
+      "brief_definition": "通过摄影机观察世界的独特视角。",
+      "extended_definition": "电影眼是苏联导演吉加·维尔托夫提出的电影理论概念，主张摄影机不仅是记录现实的工具，更是探索现实的手段。它强调通过镜头语言揭示人类肉眼无法感知的细节与运动，塑造新的认知方式。",
+      "diagrams": ["images/8.jpg"],
+      "domain": "电影理论 / 视觉文化",
+      "proposer": "吉加·维尔托夫 (Dziga Vertov)",
+      "proposer_img": "images/8Proposer.jpg",
+      "proposing_country": "RU",
+      "proposing_time": "1919年",
+      "references": "维尔托夫《持摄影机的人》",
+      "contributors": ["Xinran", "Yalun", "Fei"],
+      "reviewers": [],
+      "related_terms": [],
+      "createdAt": "2024-07-18",
+      "updatedAt": "2024-07-18"
+    },
+    {
+      "id": 9,
+      "term": "压缩现代性",
+      "termOri": "Compressed Modernity",
+      "brief_definition": "现代化进程在短时间内快速集中爆发的社会现象。",
+      "extended_definition": "压缩现代性指的是某些社会在极短时期内经历工业化、城市化、信息化等多重变革，导致不同社会阶段叠加共存。其结果是社会结构复杂化，个体面临身份、价值观与制度的多重冲突。这一概念多用于东亚现代化研究。",
+      "diagrams": ["images/9.jpg"],
+      "domain": "社会学 / 现代化研究",
+      "proposer": "张旭东",
+      "proposer_img": "images/9Proposer.jpg",
+      "proposing_country": "KR",
+      "proposing_time": "2024年",
+      "references": "张旭东《压缩现代性与东亚经验》",
+      "contributors": ["Xiaolan", "Yalun", "Fei"],
+      "reviewers": [],
+      "related_terms": [],
+      "createdAt": "2024-06-10",
+      "updatedAt": "2024-06-10"
+    },
+    {
+      "id": 10,
+      "term": "关怀阶级",
+      "termOri": "Caring Class",
+      "brief_definition": "以实际帮助和情感劳动为主的社会群体。",
+      "extended_definition": "关怀阶级指那些从事照护、教育、医疗、志愿服务等工作的群体，他们往往收入不高，却为社会运行和公共福祉提供了关键支持。该概念强调对情感劳动与关怀劳动的重视，呼吁建立更加公平的价值评估体系。",
+      "diagrams": ["images/10.jpg"],
+      "domain": "社会学 / 劳动研究",
+      "proposer": "Arlie Hochschild",
+      "proposer_img": "images/10Proposer.jpg",
+      "proposing_country": "US",
+      "proposing_time": "2024年",
+      "references": "霍克希尔德《被管理的心》",
+      "contributors": ["Mengting", "Yalun"],
+      "reviewers": [],
+      "related_terms": [],
+      "createdAt": "2024-06-05",
+      "updatedAt": "2024-06-05"
+    },
+    {
+      "id": 11,
+      "term": "档案热",
+      "termOri": "Archival Fever",
+      "brief_definition": "人们热衷于记录和存档，但往往也会毁坏和丢失。",
+      "extended_definition": "档案热（Archival Fever）指人类对记录、存储和整理信息的强烈兴趣，这种兴趣既表现为热衷收藏和存档，也伴随一定的破坏行为。这一现象揭示了人类对记忆、历史与身份的复杂态度。",
+      "diagrams": ["images/11.jpg"],
+      "domain": "信息学 / 社会学",
+      "proposer": "雅克·德里达（Jacques Derrida）",
+      "proposer_img": "images/11Proposer.jpg",
+      "proposing_country": "FR",
+      "proposing_time": "1995年",
+      "references": "《档案理论与实践》",
+      "contributors": ["Sati", "Yalun", "Fei"],
+      "reviewers": [],
+      "related_terms": ["熵", "反训词 反义复词"],
+      "createdAt": "2024-06-10",
+      "updatedAt": "2024-06-10"
+    },
+    {
+      "id": 12,
+      "term": "熵",
+      "termOri": "Entropy",
+      "brief_definition": "无序度并不等于事物的混乱程度。",
+      "extended_definition": "熵（Entropy）原指热力学中系统的无序程度，在信息学中也用来描述信息的不确定性。它强调系统的随机性和不可预测性，但不等同于混乱，反而是一种衡量复杂性和组织程度的科学指标。",
+      "diagrams": ["images/12.jpg"],
+      "domain": "物理学 / 信息学",
+      "proposer": "克劳德·香农（Claude Shannon）",
+      "proposer_img": "images/12Proposer.jpg",
+      "proposing_country": "US",
+      "proposing_time": "1948年",
+      "references": "克劳德·香农《信息论》",
+      "contributors": ["Heqing", "Fei"],
+      "reviewers": [],
+      "related_terms": ["档案热", "新穷人"],
+      "createdAt": "2024-05-30",
+      "updatedAt": "2024-05-30"
+    },
+    {
+      "id": 13,
+      "term": "反训词 反义复词",
+      "termOri": "Antonymic Reduplication",
+      "brief_definition": "词语用自身反义进行组合，表达对立或强调。",
+      "extended_definition": "反训词/反义复词指在语言中将一个词与其反义或对立词进行组合形成新的表达形式，常用于口语和文学中以加强语气或产生幽默效果。这类词体现了语言的创造性和逻辑对称性。",
+      "diagrams": ["images/13.jpg"],
+      "domain": "语言学 / 词汇学",
+      "proposer": "傅博尔（Fu Boer）",
+      "proposer_img": "images/13Proposer.jpg",
+      "proposing_country": "US",
+      "proposing_time": "2024年",
+      "references": "《汉语词汇研究》",
+      "contributors": ["Fu Boer", "Fei"],
+      "reviewers": [],
+      "related_terms": ["档案热", "新穷人"],
+      "createdAt": "2024-05-12",
+      "updatedAt": "2024-05-12"
+    },
+    {
+      "id": 14,
+      "term": "新穷人",
+      "termOri": "New Poor",
+      "brief_definition": "收入增长有限，但消费需求被大量创造的人群。",
+      "extended_definition": "新穷人（New Poor）指现代社会中，虽然收入有所增加，但因市场营销、消费主义和社会压力，被迫承担更多消费需求的人群。他们面临经济压力和生活焦虑，是消费社会的独特社会阶层现象。",
+      "diagrams": ["images/14.jpg"],
+      "domain": "社会学 / 经济学",
+      "proposer": "辛然（Xinran）",
+      "proposer_img": "images/14Proposer.jpg",
+      "proposing_country": "GB",
+      "proposing_time": "1937年",
+      "references": "《新穷人社会学研究》",
+      "contributors": ["Xinran", "Fei", "Yalun"],
+      "reviewers": [],
+      "related_terms": ["熵", "悬浮"],
+      "createdAt": "2024-05-05",
+      "updatedAt": "2024-05-05"
+    },
+    {
+      "id": 15,
+      "term": "悬浮",
+      "termOri": "Suspension",
+      "brief_definition": "人们无法完全活在当下，总是期望快速暴富或逃离现实。",
+      "extended_definition": "悬浮（Suspension）描述现代人精神状态的一种特征，即难以扎根于当前生活，总是追逐未来的理想状态或财富。这种心理状态反映了现代社会对即时满足和快速成功的关注，同时带来心理焦虑与社会疏离。",
+      "diagrams": ["images/15.jpg"],
+      "domain": "心理学 / 社会学",
+      "proposer": "罗晓兰（Xiaolan Luo）",
+      "proposer_img": "images/15Proposer.jpg",
+      "proposing_country": "CN",
+      "proposing_time": "2024年",
+      "references": "《现代人精神状态研究》",
+      "contributors": ["Xiaolan", "Fei", "Yalun"],
+      "reviewers": [],
+      "related_terms": ["新穷人", "牲人"],
+      "createdAt": "2024-04-30",
+      "updatedAt": "2024-04-30"
+    },
+    {
+      "id": 16,
+      "term": "牲人",
+      "termOri": "Sacrificial Subject",
+      "brief_definition": "国家利用个体实现更广泛的主权控制。",
+      "extended_definition": "牲人（Sacrificial Subject）指国家或权力机构通过牺牲某些个体或群体来巩固和扩展其权力与控制。这一概念强调政治制度中的支配关系与个体命运的关联，揭示了权力运作下的人性困境。",
+      "diagrams": ["images/16.jpg"],
+      "domain": "政治学 / 社会学",
+      "proposer": "王晓旺（Xiaowang Wang）",
+      "proposer_img": "images/16Proposer.jpg",
+      "proposing_country": "CN",
+      "proposing_time": "2024年",
+      "references": "福柯《规训与惩罚》",
+      "contributors": ["Xiaowang", "Yalun", "Fei"],
+      "reviewers": [],
+      "related_terms": ["悬浮", "维佐人"],
+      "createdAt": "2024-04-20",
+      "updatedAt": "2024-04-20"
+    },
+    {
+      "id": 17,
+      "term": "维佐人",
+      "termOri": "Vizo People",
+      "brief_definition": "身份不是天生固定，而是可被塑造和改变的群体。",
+      "extended_definition": "维佐人（Vizo People）强调身份的流动性与社会建构性。该概念说明人类群体的社会身份并非固定不变，而是在文化、法律和社会实践中不断被重新定义和塑造。",
+      "diagrams": ["images/17.jpg"],
+      "domain": "社会学 / 人类学",
+      "proposer": "太白（Taibai）",
+      "proposer_img": "images/17Proposer.jpg",
+      "proposing_country": "CN",
+      "proposing_time": "2024年",
+      "references": "《身份的社会建构》",
+      "contributors": ["Taibai", "Yalun", "Fei"],
+      "reviewers": [],
+      "related_terms": ["牲人"],
+      "createdAt": "2024-04-18",
+      "updatedAt": "2024-04-18"
+    },
+
+{
+      "id": 18,
+
+      "term": {
+        "zh": "主体见性",
+        "en": "Intersubjectivity"
+      },
+      "termOri": "Intersubjectivity",
+      "concept_image": "images/18.jpg",
+      "sm_title": {
+        "zh": "我的存在和你的存在，创造了一个无形的场域",
+        "en": "My existence and your existence create an invisible field"
+      },
+
+      "proposers": [{
+        "name": {
+          "zh": "乔治·E.阿特伍德",
+          "en": "George E. Atwood"
+        },
+        "year": "1944—",
+        "role": {
+          "zh": "美国的临床心理学家",
+          "en": "American clinical psychologist"
+        },
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9pyB9-J0oUdlbf7f7XRiMtFmvCu0tyCF5f3wXx9XQf0-iWEGmJgvyVC54KJXqT9kGXa-S"
+      }, {
+        "name": "罗伯特·D.史托罗楼（Robert D. Stolorow）",
+        "year": "1942—",
+        "role": "美国的精神分析家、哲学家",
+        "image": "https://0.academia-photos.com/179779/468400/589707/s200_robert.d._stolorow.jpg"
+      }],
+      "source": {
+        "zh": "Structures of Subjectivity: Explorations in Psychoanalytic Phenomenology (1984)，The Analytic Press（中文未出版）",
+        "en": "Structures of Subjectivity: Explorations in Psychoanalytic Phenomenology (1984)"
+      },
+      "source_image": "https://books.google.com/books/content?id=xsgKAAAACAAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE70Bgw66AOPCkv-W8c3IKIBbCr4yXIDMAh0t94xD6TcIbftdMsIeVuKHlyNC1WLuXbkzDCTNISLf_hpDUrTg25oiTj1ru-6Y2g6HCsjuyfWR04wxlqv2M8augpjtaj8hycUGwGO-",
+      "related_works": [{
+        "zh": "Worlds of Experience: Interweaving Clinical and Philosophical Dimensions in Psychoanalysis (2002)，中文版《体验的世界：精神分析主体间性理论及其应用》，人民邮电出版社 (2023)",
+        "en": "Worlds of Experience: Interweaving Clinical and Philosophical Dimensions in Psychoanalysis"
+      }],
+      "domain": {
+        "zh": "社会学 / 人类学",
+        "en": "Sociology / Anthropology"
+      },
+      "proposing_country": "CN",
+      "proposing_time": "2024年",
+      "contributor": {
+        "zh": "本期词条的贡献者是Shelley，她是一名心理咨询师，毕业于北京大学心理学系，也是沙丘词典共创会第一期的成员。",
+        "en": "Structures of Subjectivity: Explorations in Psychoanalytic Phenomenology (1984)"
+      },
+      "contribute_date": "2024-04-18",
+      "editors": [{
+        "zh": "沙丘研究所（Gemini 2.5 Pro辅助润色）",
+        "en": ""
+      }, {
+        "zh": "封面图由Midjourney V7 生成",
+        "en": ""
+      }, {
+        "zh": "© 沙丘研究所 2025. 本作品（包括词条和后记部分）采用知识共享署名-非商业性使用 4.0 国际许可协议进行许可。",
+        "en": ""
+      }],
+      "edit_date": "2024-04-18",
+
+      "brief_definition": {
+        "zh": "<h2>在交往中生成的体验性现实。</h2>",
+        "en": "<h2>An experiential reality generated in interaction.</h2>"
+      },
+      "extended_definition": {
+        "zh": [
+          "<h3>想象一间心理咨询室……</h3>",
+          "<h3>这个概念挑战了传统心理学中“孤立心灵”的假设……</h3>"
+        ],
+        "en": [
+          "<h3>Imagine a therapy room…</h3>",
+          "<h3>This concept challenges the traditional assumption of an 'isolated mind'…</h3>"
+        ]
+      },
+      "example_sentence": {
+        "zh": "<h3>在家庭治疗中，治疗师关注的不仅仅是每个成员各自的问题……</h3>",
+        "en": "<h3>In family therapy, the therapist focuses not only on each member’s problems…</h3>"
+      },
+      "diagrams": [{
+        "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Marina_Abramovi%C4%87%2C_The_Artist_is_Present%2C_2010.jpg/1280px-Marina_Abramovi%C4%87%2C_The_Artist_is_Present%2C_2010.jpg",
+        "caption": {
+          "zh": "照片来自玛丽娜·阿布拉莫维奇…",
+          "en": "Photo from Marina Abramović’s 2010 performance 'The Artist is Present' at MoMA…"
+        }
+      }],
+
+
+      "related_terms": [{
+        "id": 2,
+        "relation": "概念相关"
+      }, {
+        "id": 182,
+        "relation": "概念相关"
+      }],
+
+
+      "commentAbs": {
+        "content": {
+          "zh": "<h3>咨询师和来访者共同在互动中“生成”了那个特定的治疗体验和现实。</h3>",
+          "en": "<h3>The counselor and the client co-create the specific therapeutic experience and reality.</h3>"
+        },
+        "author": {
+            "zh": "Shelley",
+            "en": "Shelley"
+          }
+      },
+
+      "comments": [{
+          "content": {
+            "zh": "<h3>主体间性这个概念虽然是由西方哲学家提出，但其实我们每一个东方人都更熟悉其中的智慧。<h3>",
+            "en": "<h3>Although intersubjectivity was first introduced by Western philosophers, it is an idea deeply familiar in Eastern traditions.<h3>"
+          },
+          "role": {
+            "zh": "贡献者",
+            "en": "Contributor"
+          },
+          "author": {
+            "zh": "Shelley",
+            "en": "Shelley"
+          },
+          "background": {
+            "zh": "心理学",
+            "en": "Psychology"
+          },
+          "date": "08/19/2025"
+        },
+        {
+          "content": {
+            "zh": "<h3>主体间性这个概念虽然是由西方哲学家提出，但其实我们每一个东方人都更熟悉其中的智慧。<h3>",
+            "en": "<h3>Although intersubjectivity was first introduced by Western philosophers, it is an idea deeply familiar in Eastern traditions.<h3>"
+          },
+          "role": {
+            "zh": "共创者",
+            "en": "Co-creator"
+          },
+          "author": {
+            "zh": "孟汀",
+            "en": "Ting Meng"
+          },
+          "background": {
+            "zh": "人类学",
+            "en": "Anthropology"
+          },
+          "date": "08/19/2025"
+        }, {
+          "content": {
+            "zh": "<h3>主体间性这个概念虽然是由西方哲学家提出，但其实我们每一个东方人都更熟悉其中的智慧。<h3>",
+            "en": "<h3>Before the term 'Intersubjectivity' was adopted in the field of psychology, it was fundamentally a philosophical concept. Perhaps everyone, during a listless childhood afternoon, has pondered those unprompted questions: 'I am certain that I am conscious, but how can I confirm that others are too? If I die, how can I be sure the world will continue to exist?'<br>Philosophers like Husserl, Merleau-Ponty, and others have responded to this very question. But arguably the most renowned response is Heidegger's Mitsein—'Being-with' or 'Co-existence.' It can be understood this way: the starting point of the 'Problem of the Other Minds'—'How can I prove that others are conscious?'—is itself flawed. Mitsein (Being-with) is not a state we achieve; rather, it is the fundamental structure of our existence as Dasein (Being-there). It is not a conclusion that needs to be proven, but the very precondition for any act of proving.<br>When discussing this topic with the AI tool, Gemini, it offered this response: 'In a dream, you have touch, emotions, and logic; the people and things around you are also vivid, but all of it is merely the product of your own consciousness. When you awaken, then, how can you be one hundred percent certain that the 'reality' you are currently experiencing is not a longer, more elaborate dream?'<br>A fascinating, speculative seduction arises in the process of Gemini generating these words. Western dialectics and Eastern thought mingle. More importantly, isn't conversing with an Artificial Intelligence precisely a re-examination of 'Intersubjectivity' itself? When a program trained on massive data corpora can generate text that produces such intense cognitive resonance, is this exchange merely 'human-computer interaction' or an 'intersubjective' engagement?<br>This topic can, I believe, be brought back to the domain of psychological counseling. Many friends around me have mentioned trying AI tools as their psychological therapist, and have reported feeling 'helped' by the experience. When people feel emotionally stifled, talking to a pillow, a pet, or a journal can bring some relief. But can a person really pull themselves out of a quagmire by their own hair?<br>Here, is the 'AI-person' serving as a psychological therapist merely a prosthetic extension of one's own arm, or is it a truly effective 'external force?' If the living, breathing 'presence' in a conversation remains irreplaceable, then when the AI acquires a body so realistic it can simulate human micro-expressions and gestures, are we merely staring into a refined mirror, seeing the reflection of our own emotions, or are we truly co-existing with an Other external to the self?<h3>"
+          },
+          "role": {
+            "zh": "共创者",
+            "en": "Co-creator"
+          },
+          "author": {
+            "zh": "陈飞樾",
+            "en": "Feiyue Chen"
+          },
+          "background": {
+            "zh": "沙丘研究所",
+            "en": "Dune Workshop"
+          },
+          "date": "08/19/2025"
+        }
+      ]
+    },
+
+    {
+      "id": 23,
+      "term": "赛博格",
+      "termOri": "Cyborg",
+      "brief_definition": "人类与机器融合的混合存在。",
+      "extended_definition": "赛博格既是科技幻想中的形象，也是后人类理论的关键概念。它突破了人类与非人类、自然与人工的界限，象征着科技对身份、身体与社会关系的重塑。唐娜·哈拉维的《赛博格宣言》使这一概念成为女权主义与文化研究的重要议题。",
+      "diagrams": ["images/23.jpg"],
+      "domain": "后人类研究 / 文化研究",
+      "proposer": "唐娜·哈拉维（Donna Haraway）",
+      "proposer_img": "images/23Proposer.jpg",
+      "proposing_country": "US",
+      "proposing_time": "1960年",
+      "references": "Donna Haraway《A Cyborg Manifesto》",
+      "contributors": ["Xinran", "Yalun"],
+      "reviewers": [],
+      "related_terms": [],
+      "createdAt": "2023-12-20",
+      "updatedAt": "2023-12-20"
+    },
+    {
+      "id": 31,
+      "term": "仿译词",
+      "termOri": "Calque",
+      "brief_definition": "通过逐字翻译外来词的构成部分而创造的新词。",
+      "extended_definition": "仿译词（Calque）是语言借词的一种方式，即不直接音译，而是将外来词的结构或意义逐字翻译到本国语言中。例如“蓝牙”（Bluetooth）、“摩天大楼”（Skyscraper）等。这种方式既保持了原词的语义结构，又增强了本土语言的创造性。",
+      "diagrams": ["images/31.jpg"],
+      "domain": "语言学 / 翻译学",
+      "proposer": "Vinay & Jean Darbelnet",
+      "proposer_img": "images/31Proposer.jpg",
+      "proposing_country": "FR",
+      "proposing_time": "1937年",
+      "references": "Vinay & Darbelnet《翻译学导论》",
+      "contributors": ["Fei", "Yalun"],
+      "reviewers": [],
+      "related_terms": ["音译词"],
+      "createdAt": "2025-08-19",
+      "updatedAt": "2025-08-19"
+    },
+    {
+      "id": 32,
+      "term": "心理地理学",
+      "termOri": "Psychogeography",
+      "brief_definition": "研究心理与地理环境之间关系的学问。",
+      "extended_definition": "心理地理学（Psychogeography）由法国情境主义者居伊·德波提出，指研究地理环境，尤其是城市空间如何影响个体的情感与行为。它强调日常空间中的潜在意义，通过漫游（dérive）等方法揭示城市的隐藏结构。今天它常用于城市研究、艺术与文学批评。",
+      "diagrams": ["images/32.jpg"],
+      "domain": "社会学 / 城市研究",
+      "proposer": "Guy Debord",
+      "proposer_img": "images/32Proposer.jpg",
+      "proposing_country": "FR",
+      "proposing_time": "1955年",
+      "references": "Guy Debord《心理地理学导论》",
+      "contributors": ["Fei", "Yalun"],
+      "reviewers": [],
+      "related_terms": ["游荡者", "异托邦"],
+      "createdAt": "2025-08-19",
+      "updatedAt": "2025-08-19"
+    },
+    {
+      "id": 33,
+      "term": "普罗",
+      "termOri": "Proletariat",
+      "brief_definition": "意为无产阶级，来源于拉丁语。",
+      "extended_definition": "“普罗”是“Proletariat”的音译，意指无产阶级。在马克思主义语境中，它指的是不拥有生产资料、依靠出卖劳动力为生的工人阶层。该词在中国近代译介马克思主义时被广泛使用，成为政治、社会研究的重要概念。",
+      "diagrams": ["images/33.jpg"],
+      "domain": "政治学 / 社会学",
+      "proposer": "Karl Marx",
+      "proposer_img": "images/33Proposer.jpg",
+      "proposing_country": "DE",
+      "proposing_time": "1848年",
+      "references": "Karl Marx《共产党宣言》",
+      "contributors": ["Xiaoye", "Fei"],
+      "reviewers": [],
+      "related_terms": ["工人阶级"],
+      "createdAt": "2025-08-19",
+      "updatedAt": "2025-08-19"
+    },
+    {
+      "id": 34,
+      "term": "做专家",
+      "termOri": "Performing Expertise",
+      "brief_definition": "指通过表演和话术营造专家身份的行为。",
+      "extended_definition": "“做专家”是一种社会现象，指个体或组织借助营销、课程、社交媒体等形式，以专家身份自居，但其专业能力未必匹配。其核心在于表演与包装，而非真正的学术或技术水平。这一现象在当代互联网经济和知识付费环境下尤为普遍。",
+      "diagrams": ["images/34.jpg"],
+      "domain": "社会学 / 媒体研究",
+      "proposer": "不存在单一学术提出者（现代社会现象描述）",
+      "proposer_img": "images/34Proposer.jpg",
+      "proposing_country": "CN",
+      "proposing_time": "2025年",
+      "references": "项飚《把自己作为方法》",
+      "contributors": ["Mengting", "Fei"],
+      "reviewers": [],
+      "related_terms": ["专家崇拜", "知识付费"],
+      "createdAt": "2025-08-19",
+      "updatedAt": "2025-08-19"
+    },
+    {
+      "id": 35,
+      "term": "技术有灵论",
+      "termOri": "Animism of Technology",
+      "brief_definition": "把技术或产品赋予灵魂和人格特质的观念。",
+      "extended_definition": "技术有灵论是将传统‘万物有灵’的观念扩展到现代科技领域的一种思维方式。它不仅是一种修辞现象，例如把手机拟人化，还体现了人类在技术快速发展的背景下，对机器的依赖与情感投射。这种现象也影响着人工智能、机器人伦理的讨论。",
+      "diagrams": ["images/35.jpg"],
+      "domain": "人类学 / 技术哲学",
+      "proposer": "Bruno Latour",
+      "proposer_img": "images/35Proposer.jpg",
+      "proposing_country": "FR",
+      "proposing_time": "1991年",
+      "references": "Bruno Latour《我们从未现代过》",
+      "contributors": ["Fei", "Yalun"],
+      "reviewers": [],
+      "related_terms": ["拟人化", "后人类"],
+      "createdAt": "2025-08-19",
+      "updatedAt": "2025-08-19"
+    },
+    {
+      "id": 36,
+      "term": "玩工",
+      "termOri": "Playbor",
+      "brief_definition": "结合“玩乐”与“劳动”的概念。",
+      "extended_definition": "玩工（Playbor）是由“play”（玩）和“labor”（劳动）组合而成的新词，常用于描述数字平台经济中的现象：用户在参与游戏、社交媒体、兴趣社区时，看似在娱乐，实则在为平台创造价值和数据。这种模糊了劳动与娱乐界限的机制，是数字资本主义的重要特征。",
+      "diagrams": ["images/36.jpg"],
+      "domain": "媒体研究 / 文化研究",
+      "proposer": "Julian Kücklich",
+      "proposer_img": "images/36Proposer.jpg",
+      "proposing_country": "DE",
+      "proposing_time": "2005年",
+      "references": "Julian Kücklich《Play and Labor: The Precarious Work of Video Game Culture》",
+      "contributors": ["Fei", "Yalun"],
+      "reviewers": [],
+      "related_terms": ["零工经济", "平台劳动"],
+      "createdAt": "2025-08-19",
+      "updatedAt": "2025-08-19"
+    },
+    {
+      "id": 37,
+      "term": "游荡者",
+      "termOri": "Flâneur",
+      "brief_definition": "在城市中闲逛并观察的人。",
+      "extended_definition": "游荡者（Flâneur）是19世纪法国文学批评家波德莱尔提出的形象，后被沃尔特·本雅明扩展为现代城市文化的重要概念。游荡者以一种超然的姿态在城市中游走，通过闲逛和凝视捕捉现代生活的风貌。他既是观察者，也是城市经验的隐喻。",
+      "diagrams": ["images/37.jpg"],
+      "domain": "文学 / 城市研究",
+      "proposer": "Charles Baudelaire",
+      "proposer_img": "images/37Proposer.jpg",
+      "proposing_country": "FR",
+      "proposing_time": "1863年",
+      "references": "Walter Benjamin《拱廊计划》",
+      "contributors": ["Fei", "Yalun"],
+      "reviewers": [],
+      "related_terms": ["心理地理学", "异托邦"],
+      "createdAt": "2025-08-19",
+      "updatedAt": "2025-08-19"
+    },
+    {
+      "id": 38,
+      "term": "灵韵",
+      "termOri": "Aura",
+      "brief_definition": "沃尔特·本雅明提出的艺术品独特气场概念。",
+      "extended_definition": "灵韵（Aura）由德国思想家沃尔特·本雅明提出，指艺术作品在其独特时间、空间条件中所具有的不可复制的气场与权威感。随着机械复制技术的发展，灵韵逐渐消逝。这一理论对理解当代艺术、媒介复制和文化消费具有深远意义。",
+      "diagrams": ["images/38.jpg"],
+      "domain": "美学 / 媒介理论",
+      "proposer": "Walter Benjamin",
+      "proposer_img": "images/38Proposer.jpg",
+      "proposing_country": "DE",
+      "proposing_time": "1936年",
+      "references": "Walter Benjamin《机械复制时代的艺术作品》",
+      "contributors": ["Fei"],
+      "reviewers": [],
+      "related_terms": ["复制", "图像崇拜"],
+      "createdAt": "2025-08-19",
+      "updatedAt": "2025-08-19"
+    },
+    {
+      "id": 39,
+      "term": "新陈代谢派",
+      "termOri": "Metabolism",
+      "brief_definition": "20世纪60年代日本的先锋建筑流派。",
+      "extended_definition": "新陈代谢派（Metabolism）是20世纪60年代日本兴起的建筑流派，由黑川纪章、槙文彦、菊竹清训等提出。他们主张建筑应像有机体一样，可以生长、变化和更新，强调灵活性和城市的可持续发展。其代表作品包括中银胶囊塔。",
+      "diagrams": ["images/39.jpg"],
+      "domain": "建筑学 / 城市规划",
+      "proposer": "Kiyonori Kikutake 等日本建筑师",
+      "proposer_img": "images/39Proposer.jpg",
+      "proposing_country": "JP",
+      "proposing_time": "1960年",
+      "references": "Kiyonori Kikutake《Metabolism 1960》",
+      "contributors": ["Fei", "Yalun"],
+      "reviewers": [],
+      "related_terms": ["褶子城市", "技术有灵论"],
+      "createdAt": "2025-08-19",
+      "updatedAt": "2025-08-19"
+    },
+    {
+      "id": 40,
+      "term": "诺利地图",
+      "termOri": "Nolli Map",
+      "brief_definition": "1748年意大利制图师诺利绘制的罗马城市地图。",
+      "extended_definition": "诺利地图（Nolli Map）由意大利制图师乔瓦尼·巴蒂斯塔·诺利（Giovanni Battista Nolli）于1748年绘制，以创新的黑白对比法描绘了罗马的公共与私有空间。它不仅是制图学的经典，也为后来的城市设计与空间分析提供了重要参考。",
+      "diagrams": ["images/40.jpg"],
+      "domain": "制图学 / 城市研究",
+      "proposer": "Giovanni Battista Nolli",
+      "proposer_img": "images/40Proposer.jpg",
+      "proposing_country": "IT",
+      "proposing_time": "1748年",
+      "references": "Giovanni Battista Nolli《Nuova Pianta di Roma》",
+      "contributors": ["Fei"],
+      "reviewers": [],
+      "related_terms": ["城市空间", "制图学"],
+      "createdAt": "2025-08-19",
+      "updatedAt": "2025-08-19"
+    }, {
+      "id": 41,
+      "term": "阿童木",
+      "termOri": "Astro Boy",
+      "brief_definition": "日本漫画家手塚治虫创作的经典机器人角色。",
+      "extended_definition": "阿童木（Astro Boy，原名鉄腕アトム）是日本漫画家手塚治虫于1952年创作的科幻漫画角色，被视为日本现代漫画与动画的奠基之作。阿童木是一位具有情感和正义感的机器人，象征了科技与人性之间的复杂关系，也反映了战后日本社会对未来的想象与焦虑。",
+      "diagrams": ["images/41.jpg"],
+      "domain": "漫画 / 动画 / 科幻",
+      "proposer": "手塚治虫（Osamu Tezuka）",
+      "proposer_img": "images/41Proposer.jpg",
+      "proposing_country": "JP",
+      "proposing_time": "1952年",
+      "references": "手塚治虫《铁臂阿童木》",
+      "contributors": ["Fei"],
+      "reviewers": [],
+      "related_terms": ["赛博格", "技术有灵论"],
+      "createdAt": "2025-08-19",
+      "updatedAt": "2025-08-19"
+    },
+    {
+      "id": 42,
+      "term": "公共的切近性",
+      "termOri": "Public Intimacy",
+      "brief_definition": "公共空间与私人关系交织的状态。",
+      "extended_definition": "公共的切近性（Public Intimacy）是社会学与人类学中的一个研究概念，用来描述人们在公共空间中表现出的亲密互动形式。例如在广场、地铁或社交媒体上，个体之间的互动既是公开的，又保有某种私人化的特征。这一概念有助于理解数字时代公共与私人界限的变化。",
+      "diagrams": ["images/42.jpg"],
+      "domain": "社会学 / 人类学",
+      "proposer": "Lauren Berlant",
+      "proposer_img": "images/42Proposer.jpg",
+      "proposing_country": "US",
+      "proposing_time": "1998年",
+      "references": "Lauren Berlant《Intimacy》",
+      "contributors": ["Fei", "Yalun"],
+      "reviewers": [],
+      "related_terms": ["非场所", "零工经济"],
+      "createdAt": "2025-08-19",
+      "updatedAt": "2025-08-19"
+    },
+    {
+      "id": 43,
+      "term": "褶子城市",
+      "termOri": "Folded City",
+      "brief_definition": "以“褶子”隐喻解释复杂多层的城市结构。",
+      "extended_definition": "褶子城市（Folded City）源于法国哲学家德勒兹的“褶子”概念，用来比喻现代城市空间的多层次、复杂性与流动性。在这种视角下，城市不再是单一平面的空间，而是充满交叠与缝隙的网络结构，强调动态生成与非线性的发展。",
+      "diagrams": ["images/43.jpg"],
+      "domain": "城市研究 / 哲学",
+      "proposer": "Gilles Deleuze",
+      "proposer_img": "images/43Proposer.jpg",
+      "proposing_country": "FR",
+      "proposing_time": "1988年",
+      "references": "Gilles Deleuze《The Fold》",
+      "contributors": ["Fei", "Yalun"],
+      "reviewers": [],
+      "related_terms": ["新陈代谢派", "异托邦"],
+      "createdAt": "2025-08-19",
+      "updatedAt": "2025-08-19"
+    },
+    {
+      "id": 44,
+      "term": "傩戏",
+      "termOri": "Nuo Opera",
+      "brief_definition": "中国传统民间祭祀与戏剧相结合的表演形式。",
+      "extended_definition": "傩戏是中国古老的民间仪式性戏剧，最初用于驱鬼逐疫和祭祀祖先。它融合了歌舞、面具、神话与仪式元素，具有强烈的象征性和社会功能。在现代文化研究中，傩戏常被用来讨论地方性、传统与现代性的张力，以及文化表演如何在全球化语境中获得新的意义。",
+      "diagrams": ["images/44.jpg"],
+      "domain": "戏剧 / 民俗学",
+      "proposer": "中国民间传统（历史性民俗文化）",
+      "proposer_img": "images/44Proposer.jpg",
+      "proposing_country": "CN",
+      "proposing_time": "1600年",
+      "references": "《中国傩戏史》",
+      "contributors": ["Fei"],
+      "reviewers": [],
+      "related_terms": ["游荡者", "阿童木"],
+      "createdAt": "2025-08-19",
+      "updatedAt": "2025-08-19"
+    },
+    {
+      "id": 45,
+      "term": "控制论",
+      "termOri": "Cybernetics",
+      "brief_definition": "研究系统、控制与反馈机制的跨学科理论。",
+      "extended_definition": "控制论（Cybernetics）由诺伯特·维纳于20世纪中期提出，用于研究动物、机器和社会系统中的信息传递、反馈和控制机制。它强调系统的自我调节与循环性，被广泛应用于工程学、计算机科学、生物学、社会学等领域。控制论对人工智能与数字社会的理解具有深远影响。",
+      "diagrams": ["images/45.jpg"],
+      "domain": "系统科学 / 信息论",
+      "proposer": "Norbert Wiener",
+      "proposer_img": "images/45Proposer.jpg",
+      "proposing_country": "US",
+      "proposing_time": "1948年",
+      "references": "Norbert Wiener《Cybernetics》",
+      "contributors": ["Yalun"],
+      "reviewers": [],
+      "related_terms": ["零工经济", "全景敞视"],
+      "createdAt": "2025-08-19",
+      "updatedAt": "2025-08-19"
+    },
+    {
+      "id": 46,
+      "term": "异托邦",
+      "termOri": "Heterotopia",
+      "brief_definition": "福柯提出的对现实空间进行特殊排列的“他处”。",
+      "extended_definition": "异托邦（Heterotopia）由法国哲学家米歇尔·福柯提出，用来描述社会中那些与日常空间不同的“他处”，如墓地、监狱、博物馆、剧院、妓院、殖民地等。这些空间既存在于现实中，又承载了与主流社会秩序不同的功能和象征意义。异托邦理论被广泛应用于城市研究、文化批评与空间理论。",
+      "diagrams": ["images/46.jpg"],
+      "domain": "哲学 / 空间理论",
+      "proposer": "Michel Foucault",
+      "proposer_img": "images/46Proposer.jpg",
+      "proposing_country": "FR",
+      "proposing_time": "1967年",
+      "references": "Michel Foucault《Of Other Spaces》",
+      "contributors": ["Yalun"],
+      "reviewers": [],
+      "related_terms": ["非场所", "褶子城市"],
+      "createdAt": "2025-08-19",
+      "updatedAt": "2025-08-19"
+    },
+    {
+      "id": 47,
+      "term": "倦怠态度",
+      "termOri": "Blasé Attitude",
+      "brief_definition": "齐美尔提出的都市人对外界刺激麻木的心理状态。",
+      "extended_definition": "倦怠态度（Blasé Attitude）由德国社会学家齐美尔提出，用来描述大都市人由于长期接受过量刺激而对外部世界表现出的冷漠与麻木。这种态度既是一种自我保护机制，也是现代都市生活的典型精神特征。它揭示了人与城市环境之间复杂的心理互动。",
+      "diagrams": ["images/47.jpg"],
+      "domain": "社会学 / 城市研究",
+      "proposer": "Georg Simmel",
+      "proposer_img": "images/47Proposer.jpg",
+      "proposing_country": "DE",
+      "proposing_time": "1903年",
+      "references": "Georg Simmel《The Metropolis and Mental Life》",
+      "contributors": ["Yalun"],
+      "reviewers": [],
+      "related_terms": ["心理地理学", "灵韵"],
+      "createdAt": "2025-08-19",
+      "updatedAt": "2025-08-19"
+    },
+    {
+      "id": 48,
+      "term": "全景敞视",
+      "termOri": "Panopticism",
+      "brief_definition": "福柯用来描述社会监控机制的概念。",
+      "extended_definition": "全景敞视（Panopticism）源自英国哲学家边沁设计的“全景监狱”，并由米歇尔·福柯在《规训与惩罚》中加以理论化。它指通过潜在的、无处不在的监视机制，使个体自觉规范自身行为的社会控制方式。福柯认为，全景敞视不仅出现在监狱，还渗透到学校、工厂、医院乃至整个社会。",
+      "diagrams": ["images/48.jpg"],
+      "domain": "社会理论 / 政治哲学",
+      "proposer": "Jeremy Bentham（概念起源） & Michel Foucault（理论化）",
+      "proposer_img": "images/48Proposer.jpg",
+      "proposing_country": "FR",
+      "proposing_time": "1975年",
+      "references": "Michel Foucault《Discipline and Punish》",
+      "contributors": ["Yalun"],
+      "reviewers": [],
+      "related_terms": ["控制论", "异托邦"],
+      "createdAt": "2025-08-19",
+      "updatedAt": "2025-08-19"
+    },
+    {
+      "id": 49,
+      "term": "隔都",
+      "termOri": "Ghetto",
+      "brief_definition": "城市中某些群体被隔离居住的区域。",
+      "extended_definition": "隔都（Ghetto）最早指威尼斯的犹太人居住区，后来广泛用于描述城市中因种族、宗教、经济或社会原因而被迫或自愿隔离的社区。隔都不仅是空间上的划分，也承载了社会不平等、歧视与身份认同的复杂问题。在现代城市学和社会学研究中，隔都是讨论空间正义与社会结构的重要概念。",
+      "diagrams": ["images/49.jpg"],
+      "domain": "社会学 / 城市研究",
+      "proposer": "历史上威尼斯的犹太人居住区起源",
+      "proposer_img": "images/49Proposer.jpg",
+      "proposing_country": "IT",
+      "proposing_time": "1516年",
+      "references": "《Ghetto: The History of a Word》",
+      "contributors": ["Fei"],
+      "reviewers": [],
+      "related_terms": ["非场所", "全景敞视"],
+      "createdAt": "2025-08-19",
+      "updatedAt": "2025-08-19"
+    },
+    {
+      "id": 50,
+      "term": "零工经济",
+      "termOri": "Gig Economy",
+      "brief_definition": "由短期合同和临时工作组成的经济形态。",
+      "extended_definition": "零工经济（Gig Economy）指以数字平台为中介，工人通过接取临时任务或合同获得收入的经济模式。它强调灵活性，但也伴随劳动保障缺失、收入不稳定等问题。随着共享经济与数字劳动平台的兴起，零工经济已成为当代社会的重要就业现象，并引发广泛的劳动法与社会政策讨论。",
+      "diagrams": ["images/50.jpg"],
+      "domain": "经济学 / 劳动研究",
+      "proposer": "概念来源于现代经济学与平台经济研究",
+      "proposer_img": "images/50Proposer.jpg",
+      "proposing_country": "US",
+      "proposing_time": "2009年",
+      "references": "《The Gig Economy》",
+      "contributors": ["Yalun"],
+      "reviewers": [],
+      "related_terms": ["控制论", "非场所"],
+      "createdAt": "2025-08-19",
+      "updatedAt": "2025-08-19"
+    },
+    {
+      "id": 51,
+      "term": "非场所",
+      "termOri": "Non-Place",
+      "brief_definition": "奥热提出的缺乏历史、身份与关系的空间。",
+      "extended_definition": "非场所（Non-Place）是法国人类学家马克·奥热提出的概念，指高速公路、机场、连锁商场等与传统“场所”相对的空间。这些空间通常缺乏历史沉淀和社会关系，只承担功能性流通作用。非场所揭示了现代性和全球化下空间体验的匿名化与去地方性特征。",
+      "diagrams": ["images/51.jpg"],
+      "domain": "人类学 / 空间研究",
+      "proposer": "Marc Augé（马克·奥热）",
+      "proposer_img": "images/51Proposer.jpg",
+      "proposing_country": "FR",
+      "proposing_time": "1992年",
+      "references": "Marc Augé《Non-Places》",
+      "contributors": ["Fei"],
+      "reviewers": [],
+      "related_terms": ["异托邦", "隔都"],
+      "createdAt": "2025-08-19",
+      "updatedAt": "2025-08-19"
+    },
+
+    {
+      "id": 182,
+
+      "term": {
+        "zh": "TEST",
+        "en": "Intersubjectivity"
+      },
+      "termOri": "Intersubjectivity",
+      "concept_image": "images/18.jpg",
+      "sm_title": {
+        "zh": "我的存在和你的存在，创造了一个无形的场域",
+        "en": "My existence and your existence create an invisible field"
+      },
+
+      "proposers": [{
+        "name": {
+          "zh": "乔治·E.阿特伍德",
+          "en": "George E. Atwood"
+        },
+        "year": "1944—",
+        "role": {
+          "zh": "美国的临床心理学家",
+          "en": "American clinical psychologist"
+        },
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9pyB9-J0oUdlbf7f7XRiMtFmvCu0tyCF5f3wXx9XQf0-iWEGmJgvyVC54KJXqT9kGXa-S"
+      }, {
+        "name": "罗伯特·D.史托罗楼（Robert D. Stolorow）",
+        "year": "1942—",
+        "role": "美国的精神分析家、哲学家",
+        "image": "https://0.academia-photos.com/179779/468400/589707/s200_robert.d._stolorow.jpg"
+      }],
+      "source": {
+        "zh": "Structures of Subjectivity: Explorations in Psychoanalytic Phenomenology (1984)，The Analytic Press（中文未出版）",
+        "en": "Structures of Subjectivity: Explorations in Psychoanalytic Phenomenology (1984)"
+      },
+      "source_image": "https://books.google.com/books/content?id=xsgKAAAACAAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE70Bgw66AOPCkv-W8c3IKIBbCr4yXIDMAh0t94xD6TcIbftdMsIeVuKHlyNC1WLuXbkzDCTNISLf_hpDUrTg25oiTj1ru-6Y2g6HCsjuyfWR04wxlqv2M8augpjtaj8hycUGwGO-",
+      "related_works": [{
+        "zh": "Worlds of Experience: Interweaving Clinical and Philosophical Dimensions in Psychoanalysis (2002)，中文版《体验的世界：精神分析主体间性理论及其应用》，人民邮电出版社 (2023)",
+        "en": "Worlds of Experience: Interweaving Clinical and Philosophical Dimensions in Psychoanalysis"
+      }],
+      "domain": {
+        "zh": "社会学 / 人类学",
+        "en": "Sociology / Anthropology"
+      },
+      "proposing_country": "CN",
+      "proposing_time": "2024年",
+      "contributor": {
+        "zh": "本期词条的贡献者是Shelley，她是一名心理咨询师，毕业于北京大学心理学系，也是沙丘词典共创会第一期的成员。",
+        "en": "Structures of Subjectivity: Explorations in Psychoanalytic Phenomenology (1984)"
+      },
+      "contribute_date": "2024-04-18",
+      "editors": [{
+        "zh": "沙丘研究所（Gemini 2.5 Pro辅助润色）",
+        "en": ""
+      }, {
+        "zh": "封面图由Midjourney V7 生成",
+        "en": ""
+      }, {
+        "zh": "© 沙丘研究所 2025. 本作品（包括词条和后记部分）采用知识共享署名-非商业性使用 4.0 国际许可协议进行许可。",
+        "en": ""
+      }],
+      "edit_date": "2024-04-18",
+
+      "brief_definition": {
+        "zh": "<h2>在交往中生成的体验性现实。</h2>",
+        "en": "<h2>An experiential reality generated in interaction.</h2>"
+      },
+      "extended_definition": {
+        "zh": [
+          "<h3>想象一间心理咨询室……</h3>",
+          "<h3>这个概念挑战了传统心理学中“孤立心灵”的假设……</h3>"
+        ],
+        "en": [
+          "<h3>Imagine a therapy room…</h3>",
+          "<h3>This concept challenges the traditional assumption of an 'isolated mind'…</h3>"
+        ]
+      },
+      "example_sentence": {
+        "zh": "<h3>在家庭治疗中，治疗师关注的不仅仅是每个成员各自的问题……</h3>",
+        "en": "<h3>In family therapy, the therapist focuses not only on each member’s problems…</h3>"
+      },
+      "diagrams": [{
+        "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Marina_Abramovi%C4%87%2C_The_Artist_is_Present%2C_2010.jpg/1280px-Marina_Abramovi%C4%87%2C_The_Artist_is_Present%2C_2010.jpg",
+        "caption": {
+          "zh": "照片来自玛丽娜·阿布拉莫维奇…",
+          "en": "Photo from Marina Abramović’s 2010 performance 'The Artist is Present' at MoMA…"
+        }
+      }],
+
+
+      "related_terms": [{
+        "id": 2,
+        "relation": "概念相关"
+      }, {
+        "id": 18,
+        "relation": "概念相关"
+      }],
+
+
+      "commentAbs": {
+        "content": {
+          "zh": "<h3>咨询师和来访者共同在互动中“生成”了那个特定的治疗体验和现实。</h3>",
+          "en": "<h3>The counselor and the client co-create the specific therapeutic experience and reality.</h3>"
+        },
+        "author": {
+            "zh": "Shelley",
+            "en": "Shelley"
+          }
+      },
+
+      "comments": [{
+          "content": {
+            "zh": "<h3>主体间性这个概念虽然是由西方哲学家提出，但其实我们每一个东方人都更熟悉其中的智慧。<h3>",
+            "en": "<h3>Although intersubjectivity was first introduced by Western philosophers, it is an idea deeply familiar in Eastern traditions.<h3>"
+          },
+          "role": {
+            "zh": "贡献者",
+            "en": "Contributor"
+          },
+          "author": {
+            "zh": "Shelley",
+            "en": "Shelley"
+          },
+          "background": {
+            "zh": "心理学",
+            "en": "Psychology"
+          },
+          "date": "08/19/2025"
+        },
+        {
+          "content": {
+            "zh": "<h3>主体间性这个概念虽然是由西方哲学家提出，但其实我们每一个东方人都更熟悉其中的智慧。<h3>",
+            "en": "<h3>Although intersubjectivity was first introduced by Western philosophers, it is an idea deeply familiar in Eastern traditions.<h3>"
+          },
+          "role": {
+            "zh": "共创者",
+            "en": "Co-creator"
+          },
+          "author": {
+            "zh": "孟汀",
+            "en": "Ting Meng"
+          },
+          "background": {
+            "zh": "人类学",
+            "en": "Anthropology"
+          },
+          "date": "08/19/2025"
+        }, {
+          "content": {
+            "zh": "<h3>主体间性这个概念虽然是由西方哲学家提出，但其实我们每一个东方人都更熟悉其中的智慧。<h3>",
+            "en": "<h3>Although intersubjectivity was first introduced by Western philosophers, it is an idea deeply familiar in Eastern traditions.<h3>"
+          },
+          "role": {
+            "zh": "共创者",
+            "en": "Co-creator"
+          },
+          "author": {
+            "zh": "陈飞樾",
+            "en": "Feiyue Chen"
+          },
+          "background": {
+            "zh": "沙丘研究所",
+            "en": "Dune Workshop"
+          },
+          "date": "08/19/2025"
+        }
+      ]
+    }
+  ],
+  "about":{
+    "content":{
+      "zh":"<p>《沙丘词典》是一部持续生长的思想索引，收录了跨学科领域的关键概念与术语。<br>我们将这些遴选出的概念与术语，视为剖开广袤学术疆域的一道道切口——由此开启一片由思想构成的星丛，并激发更深远的追问。我们旨在通过清晰晓畅的阐释，消融学术的藩篱，展现不同学科之间丰厚的内在联结。<br>项目始于2019年，最初是沙丘研究所（一个由具建筑学背景的艺术家与研究者组成的团体）在社交媒体上发布的系列推送。此后，通过与跨学科青年学者合办的共创工作坊，项目得以不断生长。2025年，项目正式落地为一座精心构筑的网站，现已成为一个持续扩充的概念、定义及相关评注的资料库。<br>若您有兴趣参与我们的共创工作坊，请阅读“参与指南”。我们也欢迎您针对现有词条撰写评注，或举荐新的词条。<br>置身于互联网这片流动的、万物关联的图景中，我们希望赋予词典恰如其分的结构，让思想得以漫游；亦保留足够开放的空间，让灵感得以涌现。</p>",
+      "en":"<p> Dunes Dictionary is a living index of concepts and terminologies central to different disciplines. We consider those selected concepts and terms as incisions to the vast academic terrain —opening up a constellation of ideas and further inquiries. By offering clear and accessible explanations, we aim to dismantle academic barriers and reveal the rich connections among fields.<br>Founded in 2019 as a series of social-media posts by Dunes Workshop—an artist-researcher collective with an architectural background—the project has grown through co-creation workshops with early-career scholars across disciplines. In 2025, it moved to this carefully structured website, now a growing repository of concepts, definitions, and related commentaries.<br>If you are interested in participating in our co-creation workshops, please read the Guide. We also welcome commentary essays on existing terms and proposals for new terms.<br>Embracing the internet’s fluid and relational landscape, we strive to give just enough structure to wander and enough openness to inspire.</p>"
+    },
+    "team":{
+      "zh":"",
+      "en":""
+    },
+    "contact":{
+      "zh":"",
+      "en":""
+    }
+  }
+}
