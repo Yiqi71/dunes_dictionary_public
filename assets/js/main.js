@@ -9,7 +9,7 @@ import {
     updateWordDetails,
     updateWordFocus
 } from "./wordFocus.js";
-import { logEvent, startWordView, endWordView } from "../../analytics.js";
+import { logEvent, startWordView, endWordView } from "/analytics.js";
 
 import { yearPeriods } from "./menu.js";
 
@@ -429,7 +429,7 @@ document.addEventListener('DOMContentLoaded', () => {
     sessionStartTs = Date.now();
     logEvent("session_start", {});
     logEvent("page_loaded", { lang: document.documentElement.lang || "zh" });
-    fetch('content/data.json')
+    fetch('/content/data.json')
         .then(response => {
             if (!response.ok) {
                 throw new Error('网络响应不正常');

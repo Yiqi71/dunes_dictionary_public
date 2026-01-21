@@ -2,7 +2,7 @@ import { state } from "./state.js";
 import { updateRelations } from "./relationManager.js";
 import { moveIndicator } from "./menu.js";
 import { hideFloatingPanel } from "./detail.js"
-import { logEvent } from "../../analytics.js";
+import { logEvent } from "/analytics.js";
 
 const canvas = document.getElementById("universe-canvas");
 const ctx = canvas.getContext("2d");
