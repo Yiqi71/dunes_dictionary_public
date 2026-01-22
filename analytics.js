@@ -34,7 +34,7 @@ export function logEvent(name, data = {}) {
     // 2) 同时上报到后端
     // - keepalive: 页面关闭/跳转时也尽量发出去
     // - 不阻塞 UI：不 await
-    fetch("http://123.56.109.107:3000/events", {
+    fetch("/events", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(event),
