@@ -444,6 +444,9 @@ document.addEventListener('DOMContentLoaded', () => {
             renderWordUniverse(data.words);
             zoomToWord(state.focusedNodeId,state.scaleThreshold);
             updateWordFocus();
+            if (state.focusedNodeId !== null && state.focusedNodeId !== undefined) {
+                startWordView(state.focusedNodeId);
+            }
         })
         .catch(error => {
             logEvent("data_loaded", { status: "error" });

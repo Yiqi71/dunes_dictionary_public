@@ -19,7 +19,7 @@ import {
 } from "./uni-canvas.js";
 import { logEvent, startWordView, endWordView } from "/analytics.js";
 
-// �?menu.js 文件顶部�?import 部分添加
+// �?menu.js 文件顶部�?import 部分添加
 import { showAboutPanel } from "./detail.js";
 
 
@@ -33,7 +33,7 @@ numbersContainer.innerHTML = '';
 for (let i = 0; i < numSteps; i++) {
     const percent = (i / (numSteps - 1)) * 100;
 
-    // 刻度�?
+    // 刻度�?
     const tick = document.createElement('div');
     tick.style.left = percent + '%';
     ticksContainer.appendChild(tick);
@@ -51,7 +51,7 @@ let isDragging = false;
 let containerRect;
 
 
-// 初始�?indicator 在中�?
+// 初始�?indicator 在中�?
 if(state.scaleThreshold){
     moveIndicator(state.scaleThreshold);
 }
@@ -95,7 +95,7 @@ function onDrag(e) {
     offsetY = mouseY - (mouseY - offsetY) * (newScale / scale);
 
     state.panX = clampOffsetX(offsetX);
-    state.panY = clampOffsetY(offsetY); // 加边�?
+    state.panY = clampOffsetY(offsetY); // 加边�?
     state.currentScale = percent * 19 / 100 + 1;
 
     draw();
@@ -121,7 +121,7 @@ export function moveIndicator(scaleValue) {
     scaleValue = (scaleValue-1) * 4 / (state.scaleThreshold-1)+1;
     if (scaleValue < 1) scaleValue = 1;
     if (scaleValue > 5) scaleValue = 5;
-    const percent = (scaleValue - 1) * 25; // 5 个刻�?
+    const percent = (scaleValue - 1) * 25; // 5 个刻�?
     indicator.style.left = percent + '%';
 }
 
@@ -300,6 +300,19 @@ function onYearDrag(e) {
     moveYearIndicator(nearestIndex);
 }
 
+function onYearClick(e) {
+    if (isYearDragging) return;
+    yearContainerRect = yearContainer.getBoundingClientRect();
+    let x = e.clientX - yearContainerRect.left;
+    x = Math.max(0, Math.min(yearContainerRect.width, x));
+    const percent = (x / yearContainerRect.width) * 100;
+    const floatIndex = (percent / 100) * (yearPeriods.length - 1);
+    const nearestIndex = Math.round(floatIndex);
+    moveYearIndicator(nearestIndex);
+    const label = yearPeriods[currentYearIndex]?.label || "";
+    logEvent("timeline_click", {});
+}
+
 function snapYearToStep() {
     const leftPercent = parseFloat(yearIndicator.style.left);
     const stepPercent = 100 / (yearPeriods.length - 1);
@@ -308,6 +321,7 @@ function snapYearToStep() {
 }
 
 // Event listeners for year filter
+yearContainer.addEventListener('click', onYearClick);
 yearIndicator.addEventListener('mousedown', startYearDrag);
 window.addEventListener('mouseup', endYearDrag);
 window.addEventListener('mousemove', onYearDrag);
@@ -327,13 +341,14 @@ export function resetYearFilter() {
 
 
 
-// �?menu.js 文件�?DOMContentLoaded 事件监听器中添加About按钮的事件处�?
+// �?menu.js 文件�?DOMContentLoaded 事件监听器中添加About按钮的事件处�?
 window.addEventListener('DOMContentLoaded', () => {
  
     // 新增：About按钮点击事件
     const aboutButton = document.getElementById('about-button');
     if (aboutButton) {
         aboutButton.addEventListener('click', () => {
+            logEvent("about_click", {});
             showAboutPanel();
         });
     }
@@ -358,6 +373,7 @@ function showSearchModal(source = "icon") {
     
     modal.classList.remove('hidden');
     isSearchModalOpen = true;
+    logEvent("search_click", { source });
     
     // Focus the input after a short delay to ensure the modal is visible
     setTimeout(() => {

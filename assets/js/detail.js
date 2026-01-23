@@ -13,6 +13,8 @@ import {
     updateRelations
 } from "./relationManager.js"
 
+
+import { logEvent, startWordView, endWordView } from "/analytics.js";
 // 浮窗相关变量
 let isPanelVisible = false;
 let isExpanded = false;
@@ -42,6 +44,10 @@ function filterProposer(name) {
         link.addEventListener('click', (e) => {
             e.stopPropagation();
             const targetNodeId = link.id.replace('related-', '');
+            const fromWordId = state.focusedNodeId;
+            endWordView("switch");
+            startWordView(targetNodeId);
+            logEvent("link_click", { fromWordId, toWordId: targetNodeId });
             zoomToWord(targetNodeId, state.currentScale);
             updateWordFocus();
 
