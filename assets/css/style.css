@@ -93,12 +93,16 @@ h1.English {
 }
 
 #connection-lines {
-    pointer-events: none;
+    pointer-events: auto;
 
     transition: left 0.3s ease-in-out;
 }
 
 #connection-lines line {
+    pointer-events: stroke;
+}
+
+#connection-lines path {
     pointer-events: stroke;
 }
 

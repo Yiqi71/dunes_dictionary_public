@@ -396,7 +396,7 @@ function renderWordUniverse(wordsData) {
                         zoomToWord(node.id, state.scaleThreshold);
                         updateWordFocus();
                         renderPanelSections();
-                        logEvent("word_node_click", { wordId: node.id });
+                        logEvent("word-node-click", { wordId: node.id });
                     }
                 }
             });
