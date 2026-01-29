@@ -780,12 +780,40 @@ document.addEventListener('mouseup', () => {
 });
 
 
+
+function adjustMarkerTooltip(marker) {
+    const tooltip = marker.querySelector('.scroll-tooltip');
+    if (!tooltip) return;
+
+    tooltip.style.setProperty('--tooltip-shift', '0px');
+    tooltip.style.display = 'block';
+
+    requestAnimationFrame(() => {
+        const rect = tooltip.getBoundingClientRect();
+        const padding = 6;
+        let shift = 0;
+
+        if (rect.bottom > window.innerHeight - padding) {
+            shift -= rect.bottom - (window.innerHeight - padding);
+        }
+        if (rect.top < padding) {
+            shift += padding - rect.top;
+        }
+
+        if (shift != 0) {
+            tooltip.style.setProperty('--tooltip-shift', `${shift}px`);
+        }
+    });
+}
+
 function renderScrollMarkers(panelType = 'entry') {
     const panel = panelType === 'entry' 
         ? document.querySelector('.panel-entry')
         : document.querySelector('.panel-comment');
     
     if (!panel) return;
+
+    const lang = state.currentLang || "zh";
     
     const panelMain = panel.querySelector('.panel-main');
     const scrollTrack = panel.querySelector('.scroll-track');
@@ -797,36 +825,36 @@ function renderScrollMarkers(panelType = 'entry') {
 
     const sections = [{
             id: "panel-top",
-            label: "顶部",
+            label: { zh: "顶部", en: "Top" },
             isTop: true
         },
         {
             id: "section-brief",
-            label: "释义"
+            label: sectionTitles.brief
         },
         {
             id: "section-example",
-            label: "例句"
+            label: sectionTitles.example
         },
         {
             id: "section-proposers",
-            label: "提出人"
+            label: sectionTitles.proposers
         },
         {
             id: "section-source",
-            label: "来源"
+            label: sectionTitles.source
         },
         {
             id: "section-related-works",
-            label: "相关著作"
+            label: sectionTitles.relatedWorks
         },
         {
             id: "section-contributors",
-            label: "contributors"
+            label: sectionTitles.contributors
         },
         {
             id: "section-editors",
-            label: "编辑"
+            label: sectionTitles.editors
         }
     ];
 
@@ -870,8 +898,17 @@ function renderScrollMarkers(panelType = 'entry') {
 
         const tooltip = document.createElement("div");
         tooltip.className = "scroll-tooltip";
-        tooltip.textContent = sec.label;
+        tooltip.textContent = sec.label?.[lang] || sec.label;
         marker.appendChild(tooltip);
+
+        marker.addEventListener("mouseenter", () => {
+            adjustMarkerTooltip(marker);
+        });
+
+        marker.addEventListener("mouseleave", () => {
+            tooltip.style.removeProperty('--tooltip-shift');
+            tooltip.style.display = "";
+        });
 
         marker.addEventListener("click", () => {
             const currentPanelMain = panel.querySelector('.panel-main');
@@ -893,6 +930,8 @@ function renderCommentMarkers(panelType = 'comment') {
         : document.querySelector('.panel-entry');
     
     if (!panel) return;
+
+    const lang = state.currentLang || "zh";
     
     const panelMain = panel.querySelector('.panel-main');
     const scrollTrack = panel.querySelector('.scroll-track');
@@ -933,8 +972,19 @@ function renderCommentMarkers(panelType = 'comment') {
 
         const tooltip = document.createElement("div");
         tooltip.className = "scroll-tooltip";
-        tooltip.textContent = c.author || `评论${idx+1}`;
+        const authorLabel = c.author?.[lang] || c.author;
+        const fallbackLabel = lang === "en" ? `Note ${idx + 1}` : `评论${idx + 1}`;
+        tooltip.textContent = authorLabel || fallbackLabel;
         marker.appendChild(tooltip);
+
+        marker.addEventListener("mouseenter", () => {
+            adjustMarkerTooltip(marker);
+        });
+
+        marker.addEventListener("mouseleave", () => {
+            tooltip.style.removeProperty('--tooltip-shift');
+            tooltip.style.display = "";
+        });
 
         marker.addEventListener("click", () => {
             const currentPanelMain = panel.querySelector('.panel-main');
