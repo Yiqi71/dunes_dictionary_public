@@ -46,6 +46,30 @@
     user-select: none;
 }
 
+#side-menu.menu-compact {
+    min-width: unset;
+    width: auto;
+    gap: 0;
+}
+
+#side-menu #buttons,
+#side-menu #lower-menu,
+#side-menu #year-menu {
+    transition: opacity 0.3s ease, transform 0.3s ease, height 0.3s ease, margin 0.3s ease;
+}
+
+#side-menu.menu-compact #buttons,
+#side-menu.menu-compact #lower-menu,
+#side-menu.menu-compact #year-menu {
+    opacity: 0;
+    pointer-events: none;
+    height: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    transform: translateY(8px);
+}
+
 #language-icon{
     width: 22px;
     height: 22px;

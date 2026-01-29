@@ -7,6 +7,13 @@ import { moveIndicator } from "./menu.js";
 
 
 let focusedWord = null;
+const MENU_COMPACT_CLASS = "menu-compact";
+
+function setMenuCompact(enabled) {
+    const sideMenu = document.getElementById("side-menu");
+    if (!sideMenu) return;
+    sideMenu.classList.toggle(MENU_COMPACT_CLASS, Boolean(enabled));
+}
 
 // 定义每个section的基础位置和变化范围
 const detailPositions = {
@@ -155,6 +162,7 @@ export function updateWordFocus() {
         resetPositions();
         const detailDiv = document.getElementById("word-details");
         detailDiv.classList.add("hidden");
+        setMenuCompact(false);
         
         // 停止呼吸动画
         stopBreathingAnimation();
@@ -197,6 +205,7 @@ export function updateWordFocus() {
             closestWord.classList.add('focused');
             focusedWord = closestWord;
             state.focusedNodeId = closestWord.id;
+            setMenuCompact(true);
 
             updateRelations();
             hideNearbyNodes(closestWord);
@@ -220,6 +229,8 @@ export function updateWordFocus() {
                 });
             }
         }
+    } else {
+        setMenuCompact(false);
     }
 }
 
