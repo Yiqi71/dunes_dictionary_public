@@ -49,6 +49,16 @@
     gap: var(--menu-gap);
     min-width: var(--menu-min-width);
     user-select: none;
+    position: fixed;
+}
+
+#side-menu::before {
+    content: "";
+    position: absolute;
+    top: -36px;
+    right: -36px;
+    bottom: -36px;
+    left: -36px;
 }
 
 #side-menu.menu-compact {
