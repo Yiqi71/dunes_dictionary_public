@@ -49,65 +49,32 @@
     min-width: unset;
     width: auto;
     gap: 0;
-    align-items: flex-start;
+    /* align-items: flex-start;
 }
 
 #side-menu #buttons {
-    transition: opacity 0.45s ease, transform 0.45s ease;
+    transition: opacity 0.45s ease, transform 0.45s ease; */
 }
 
+#side-menu #buttons,
 #side-menu #lower-menu,
 #side-menu #year-menu {
-    transition: opacity 0.45s ease, transform 0.45s ease;
+    transition: opacity 0.3s ease, transform 0.3s ease, height 0.3s ease, margin 0.3s ease;
 }
 
-#side-menu.menu-compact #buttons {
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(8px);
-}
-
+#side-menu.menu-compact #buttons,
 #side-menu.menu-compact #lower-menu,
 #side-menu.menu-compact #year-menu {
     opacity: 0;
     pointer-events: none;
+    height: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
     transform: translateY(8px);
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
 }
 
-#side-menu.menu-compact:hover {
-    min-width: 366px;
-    gap: 12px;
-    align-items: flex-start;
-}
 
-#side-menu.menu-compact #upper-menu {
-    width: auto;
-    justify-content: flex-start;
-}
-
-#side-menu.menu-compact:hover #upper-menu {
-    width: 100%;
-    justify-content: space-between;
-}
-
-#side-menu.menu-compact:hover #buttons {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateY(0);
-}
-
-#side-menu.menu-compact:hover #lower-menu,
-#side-menu.menu-compact:hover #year-menu {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateY(0);
-    position: static;
-    align-self: center;
-}
 
 
 #language-icon{
