@@ -361,6 +361,7 @@ export function renderPanelSections() {
     const bottomDiv = entryPanel.querySelector('.panel-bottom');
     bottomDiv.innerHTML = `
         <section id="section-brief"> </section>
+        <section id="section-extended"> </section>
         <section id="section-example"> </section>
         <section id="section-proposers"> </section>
         <section id="section-source"> </section>
@@ -370,6 +371,7 @@ export function renderPanelSections() {
     `;
 
     const briefSec = document.getElementById("section-brief");
+    const extendedSec = document.getElementById("section-extended");
     const exampleSec = document.getElementById("section-example");
     const proposerSec = document.getElementById("section-proposers");
     const sourceSec = document.getElementById("section-source");
@@ -377,17 +379,22 @@ export function renderPanelSections() {
     const contributorsSec = document.getElementById("section-contributors");
     const editorsSec = document.getElementById("section-editors");
 
-    briefSec.innerHTML = `<p class="left-title">${sectionTitles.brief[lang]}</p>
+        briefSec.innerHTML = `<p class="left-title">${sectionTitles.brief[lang]}</p>
                        <div>
-                           ${currentWord.brief_definition?.[lang] || '暂无简要释义'}
-                           ${
-                            Array.isArray(currentWord.extended_definition?.[lang])
-                                ? currentWord.extended_definition?.[lang].join('')
-                                : currentWord.extended_definition?.[lang] 
-                                ? currentWord.extended_definition?.[lang]
-                                : '<h3>暂无扩展释义</h3>'
-                            }
+                           ${currentWord.brief_definition?.[lang] || "暂无简要释义"}
                       </div>`;
+
+    const extendedTitle = lang === "zh" ? "详细释义" : "Extended Definition";
+    extendedSec.innerHTML = `<p class="left-title">${extendedTitle}</p>
+                        <div>
+                            ${
+                                Array.isArray(currentWord.extended_definition?.[lang])
+                                    ? currentWord.extended_definition?.[lang].join("")
+                                    : currentWord.extended_definition?.[lang]
+                                    ? currentWord.extended_definition?.[lang]
+                                    : "暂无详细释义"
+                            }
+                        </div>`;
 
     // FIXED: Don't wrap in h3 since JSON already contains HTML tags  
     exampleSec.innerHTML = `<p class="left-title">${sectionTitles.example[lang]}</p>

@@ -453,6 +453,28 @@ line-height: 40px;
     /* 125% */
     letter-spacing: 0.4px;
 }
+/* Entry panel: brief definition subheadings (zh) */
+.panel-entry #section-brief h3 {
+    color: #FAF4E5;
+    font-family: "ChillDINGothic";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 25px;
+}
+
+/* Entry panel body text (Chinese) */
+.panel-entry .panel-bottom div p {
+    color: #FAF4E5;
+    font-family: "ChillDINGothic Condensed", "ChillDINGothic", "ChillDIN";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 30px;
+    letter-spacing: 1px;
+}
+
+
 
 /* 笔记面板的h3颜色 */
 .panel-comment .panel-bottom h3 {
@@ -461,10 +483,10 @@ line-height: 40px;
 
 .panel-bottom .left-title {
     color: #FAF4E5;
-    font-family: "ChillDINGothic", "ChillDIN";
+    font-family: "ChillDINGothic Condensed", "ChillDINGothic", "ChillDIN";
     font-size: 20px;
     font-style: normal;
-    font-weight: 600;
+    font-weight: 400;
 }
 
 /* 笔记面板的left-title颜色 */
