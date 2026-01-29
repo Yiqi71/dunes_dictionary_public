@@ -56,15 +56,13 @@
     transition: opacity 0.45s ease, transform 0.45s ease; */
 }
 
-#side-menu #buttons,
-#side-menu #lower-menu,
-#side-menu #year-menu {
-    transition: opacity 0.3s ease, transform 0.3s ease, height 0.3s ease, margin 0.3s ease;
+#side-menu .menu-part {
+    transition: opacity 0.3s ease, transform 0.3s ease, height 0.3s ease, margin 0.3s ease, padding 0.3s ease;
+    transform: translateY(0);
+    opacity: 1;
 }
 
-#side-menu.menu-compact #buttons,
-#side-menu.menu-compact #lower-menu,
-#side-menu.menu-compact #year-menu {
+#side-menu.menu-compact .menu-part {
     opacity: 0;
     pointer-events: none;
     height: 0;
@@ -72,6 +70,16 @@
     padding: 0;
     overflow: hidden;
     transform: translateY(8px);
+}
+
+#side-menu.menu-compact .menu-part.menu-part--keep {
+    opacity: 1;
+    pointer-events: auto;
+    height: auto;
+    margin: initial;
+    padding: initial;
+    overflow: visible;
+    transform: none;
 }
 
 
