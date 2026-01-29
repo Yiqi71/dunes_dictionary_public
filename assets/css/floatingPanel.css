@@ -13,7 +13,7 @@
     flex-direction: row;
     /* 让slide在右侧 */
     z-index: 1000;
-    transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
+    transition: transform 0.45s ease-in-out, width 0.3s ease-in-out;
     transform: translateX(100%);
     /* overflow: hidden; */
     /* 防止溢出 */
@@ -43,7 +43,7 @@
     display: flex;
     flex-direction: row;
     z-index: 1;
-    transition: transform 0.3s ease-in-out, z-index 0.3s ease-in-out;
+    transition: transform 0.45s ease-in-out, z-index 0.3s ease-in-out;
     background: #43403B;
     border-radius: 8px 0 0 8px;
 }
@@ -63,6 +63,11 @@
 .panel-comment:not(.active) {
     transform: translateX(-68px);
     cursor: pointer;
+}
+
+.panel-entry:not(.active):hover,
+.panel-comment:not(.active):hover {
+    transform: translateX(-88px);
 }
 
 /* 主内容区域 - 包含top和bottom，可整体滚动 */
@@ -254,14 +259,24 @@
 .panel-comment .panel-bottom section {
     max-height: 260px;
     overflow: hidden;
-    transition: max-height 0.3s ease;
+    transition: max-height 0.3s ease, transform 0.45s ease;
     cursor: pointer;
+    position: relative;
+    transform: translateY(0);
+}
+/* 仅前三个comment section显示上边阴影 */
+.panel-comment .panel-bottom section:not(#section-contributors):not(#section-editors):nth-of-type(-n+3) {
     box-shadow: 0 -4px 4px 0 rgba(0, 0, 0, 0.10);
 }
 
 /* 展开状态 */
 .panel-comment .panel-bottom section.note-expanded {
     max-height: none;
+}
+
+/* 折叠状态 hover 时向上位移，露出更多内容（不影响其他元素布局） */
+.panel-comment .panel-bottom section:not(.note-expanded):not(#section-contributors):not(#section-editors):hover {
+    transform: translateY(-20px);
 }
 
 /* 排除contributors和editors section，它们不需要折叠 */
@@ -731,7 +746,8 @@ line-height: 40px;
     display: flex;
     flex-direction: column;
     gap: 45px;
-    z-index: 10; /* 确保tab按钮在panel内容之上 */
+    z-index: 10;
+    pointer-events: none; /* 确保tab按钮在panel内容之上 */
 }
 
 .panel-tabs button {
@@ -758,6 +774,7 @@ line-height: 40px;
 
     
     transition: background 0.2s;
+    pointer-events: auto;
 }
 :lang(en) .panel-tabs button {
     color: #43403B;

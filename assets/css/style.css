@@ -328,7 +328,6 @@ body[data-scale="5"] .detail-title {
 
 .detail {
     position: absolute;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
     transform: translate(-50%, -50%);
     border-radius: 5px;
     overflow: hidden;
