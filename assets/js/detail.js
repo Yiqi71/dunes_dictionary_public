@@ -331,6 +331,11 @@ const sectionTitles = {
     editors: { zh: "编辑", en: "Editors" }
 };
 
+const noteAuthor = {
+    role: { zh: "编辑", en: "Editor" },
+    name: { zh: "陈飞樾", en: "Chen Feiyue" }
+};
+
 export function renderPanelSections() {
     let currentWord = window.allWords.find(w => w.id == state.focusedNodeId);
     if (!currentWord) return;
@@ -467,8 +472,8 @@ function renderCommentSection() {
     contentScroll.innerHTML = `
         ${currentWord.comments?.map(c => 
             `<section>
-                <p class="left-title">${c.role?.[lang]}<br>${c.author?.[lang]}<br>${c.background?.[lang]}</p>
-                <div><br><br><br><br>${c.content?.[lang]}</div>
+                <p class="left-title">${noteAuthor.role[lang]}<br>${noteAuthor.name[lang]}</p>
+                <div class="note-body"><br><br><br><br>${c.content?.[lang]}</div>
             </section>`
         ).join('') || '暂无评论'}
 
@@ -972,7 +977,7 @@ function renderCommentMarkers(panelType = 'comment') {
 
         const tooltip = document.createElement("div");
         tooltip.className = "scroll-tooltip";
-        const authorLabel = c.author?.[lang] || c.author;
+        const authorLabel = noteAuthor.name[lang];
         const fallbackLabel = lang === "en" ? `Note ${idx + 1}` : `评论${idx + 1}`;
         tooltip.textContent = authorLabel || fallbackLabel;
         marker.appendChild(tooltip);

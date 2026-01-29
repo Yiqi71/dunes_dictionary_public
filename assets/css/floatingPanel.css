@@ -240,6 +240,17 @@
     max-height: none;
     cursor: default;
 }
+html:lang(en) .panel-comment .panel-bottom .note-body,
+html:lang(en) .panel-comment .panel-bottom .note-body * {
+    color: #43403B;
+    text-align: justify;
+    font-family: "Barlow Condensed";
+    font-size: 21px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 26px;
+    letter-spacing: 0.42px;
+}
 
 .panel-bottom section * {
     padding: 0 0 20px 0;
@@ -404,6 +415,14 @@ line-height: 40px;
 .panel-comment .panel-bottom .left-title {
     color: #43403B;
 }
+:lang(en) .panel-comment .panel-bottom .left-title {
+    color: #43403B;
+    font-family: "Barlow Condensed";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+}
 
 .panel-bottom .diagram-caption {
     color: #FAF4E5;
@@ -475,6 +494,19 @@ line-height: 40px;
 /* 笔记面板的editors-container p颜色 */
 .panel-comment .panel-bottom #editors-container p {
     color: #43403B;
+    font-family: "Barlow Condensed";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+}
+:lang(en) .panel-comment .panel-bottom #editors-container p {
+    color: #43403B;
+    font-family: "Barlow Condensed";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
 }
 
 #section-editors {
@@ -685,6 +717,17 @@ line-height: 40px;
 
     
     transition: background 0.2s;
+}
+:lang(en) .panel-tabs button {
+    color: #43403B;
+    font-family: "Barlow Condensed";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+}
+:lang(en) .panel-entry .panel-tabs button[data-tab="entry"] {
+    color: #FAF4E5;
 }
 
 .panel-tabs button.active {

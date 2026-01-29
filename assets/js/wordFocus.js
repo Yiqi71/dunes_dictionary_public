@@ -8,6 +8,10 @@ import { moveIndicator } from "./menu.js";
 
 let focusedWord = null;
 const MENU_COMPACT_CLASS = "menu-compact";
+const noteAuthor = {
+    role: { zh: "编辑", en: "Editor" },
+    name: { zh: "陈飞樾", en: "Chen Feiyue" }
+};
 
 function setMenuCompact(enabled) {
     const sideMenu = document.getElementById("side-menu");
@@ -311,7 +315,7 @@ export function updateWordDetails() {
     }
     if (word.commentAbs) {
         const comment = word.commentAbs;
-        commentContent.innerHTML = `${comment.content?.[lang]} <p>—— ${comment.author?.[lang]}</p>`;
+        commentContent.innerHTML = `${comment.content?.[lang]} <p>${noteAuthor.role[lang]}</p><p>${noteAuthor.name[lang]}</p>`;
     } else {
         commentContent.innerHTML = `<h3>暂无笔记</h3> <p></p>`;
     }

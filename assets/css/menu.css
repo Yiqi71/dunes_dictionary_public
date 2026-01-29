@@ -59,6 +59,7 @@
     right: -36px;
     bottom: -36px;
     left: -36px;
+    pointer-events: none;
 }
 
 #side-menu.menu-compact {
@@ -118,7 +119,7 @@
 
 #side-menu.menu-compact:hover #year-menu {
     opacity: 1;
-    pointer-events: auto;
+    pointer-events: none;
     height: 37px;
     margin: 8px 0 0;
     padding: 0;
@@ -416,4 +417,10 @@
 
 #yearIndicator {
     cursor: grab;
+}
+
+/* Match small buttons hover cursor */
+#upper-menu #about-button,
+#upper-menu #about-button * {
+    cursor: pointer;
 }
