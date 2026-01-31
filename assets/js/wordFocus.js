@@ -164,7 +164,7 @@ function normalizeLang(code) {
 function resolveImagePath(src) {
     if (!src) return "";
     if (src.startsWith("http") || src.startsWith("data:") || src.startsWith("/")) return src;
-    if (src.startsWith("images/")) return `/content/draft/${src}`;
+    if (src.startsWith("images/")) return `/content/${src}`;
     return src;
 }
 
