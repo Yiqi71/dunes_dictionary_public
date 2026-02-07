@@ -18,6 +18,36 @@ import { logEvent, startWordView, endWordView } from "/analytics.js";
 // 浮窗相关变量
 let isPanelVisible = false;
 let isExpanded = false;
+function getFloatingPanel() {
+    return document.getElementById('floating-panel');
+}
+
+function queryFloating(selector) {
+    const panel = getFloatingPanel();
+    return panel ? panel.querySelector(selector) : null;
+}
+
+function queryAllFloating(selector) {
+    const panel = getFloatingPanel();
+    return panel ? panel.querySelectorAll(selector) : [];
+}
+
+function setupLazyImages(root) {
+    if (!root) return;
+    const imgs = root.querySelectorAll("img");
+    imgs.forEach((img) => {
+        img.loading = "lazy";
+        img.decoding = "async";
+        img.classList.add("lazy-img");
+
+        if (img.complete && img.naturalWidth > 0) {
+            img.classList.remove("lazy-img");
+            return;
+        }
+        img.addEventListener("load", () => img.classList.remove("lazy-img"), { once: true });
+        img.addEventListener("error", () => img.classList.add("lazy-img-error"), { once: true });
+    });
+}
 
 function filterProposer(name) {
     const focusedWord = window.allWords.find(w => w.id == state.focusedNodeId);
@@ -61,7 +91,7 @@ function filterProposer(name) {
 }
 
 // function togglePanelWidth() {
-//     const panel = document.getElementById('floating-panel');
+//     const panel = getFloatingPanel();
 //     const expandBtn = document.getElementById('expand-btn');
 
 //     if (!panel || !expandBtn) return;
@@ -97,9 +127,11 @@ function filterProposer(name) {
 
 // 浮窗功能函数
 export function showFloatingPanel() {
-    const panel = document.getElementById('floating-panel');
+    const panel = getFloatingPanel();
+    if (!panel) return;
     panel.classList.remove('hidden');
     isPanelVisible = true;
+    document.dispatchEvent(new CustomEvent('floating-panel:show'));
 
     ensureExpandButton();
     
@@ -108,14 +140,14 @@ export function showFloatingPanel() {
     renderCommentSection();
 
     // 重置 tab 按钮状态和panel状态
-    const allTabs = document.querySelectorAll('.panel-tabs button');
+    const allTabs = queryAllFloating('.panel-tabs button');
     allTabs.forEach(btn => btn.classList.remove('active'));
-    const entryTabs = document.querySelectorAll('.panel-tabs button[data-tab="entry"]');
+    const entryTabs = queryAllFloating('.panel-tabs button[data-tab="entry"]');
     entryTabs.forEach(tab => tab.classList.add('active'));
 
     // 设置默认选中entry panel
-    const entryPanel = document.querySelector('.panel-entry');
-    const commentPanel = document.querySelector('.panel-comment');
+    const entryPanel = queryFloating('.panel-entry');
+    const commentPanel = queryFloating('.panel-comment');
     if (entryPanel) entryPanel.classList.add('active');
     if (commentPanel) commentPanel.classList.remove('active');
     currentTab = "entry";
@@ -208,7 +240,8 @@ function ensureExpandButton() {
         });
 
         // 将按钮添加到 panel 中
-        const panel = document.getElementById('floating-panel');
+        const panel = getFloatingPanel();
+        if (!panel) return;
         panel.appendChild(expandBtn);
 
         // 添加动画样式到页面
@@ -258,7 +291,7 @@ function ensureExpandButton() {
 }
 
 function togglePanelWidth() {
-    const panel = document.getElementById('floating-panel');
+    const panel = getFloatingPanel();
     const expandBtn = document.getElementById('expand-btn');
 
     if (!panel || !expandBtn) return;
@@ -280,7 +313,8 @@ function togglePanelWidth() {
 
 
 export function hideFloatingPanel() {
-    const panel = document.getElementById('floating-panel');
+    const panel = getFloatingPanel();
+    if (!panel) return;
     panel.classList.add('hidden');
     panel.classList.remove('expanded');
     isPanelVisible = false;
@@ -293,15 +327,17 @@ export function hideFloatingPanel() {
     }
 
     // 重置tabs显示（显示所有panel的tabs）
-    const allTabs = document.querySelectorAll('.panel-tabs');
+    const allTabs = queryAllFloating('.panel-tabs');
     allTabs.forEach(tabs => {
         if (tabs) tabs.style.display = 'flex';
     });
 
     // 重置scroll markers显示
-    const scrollTrack = document.querySelector('.scroll-track');
-    const scrollMarkers = scrollTrack.querySelectorAll('.scroll-marker');
-    scrollMarkers.forEach(marker => marker.style.display = 'block');
+    const scrollTrack = queryFloating('.scroll-track');
+    if (scrollTrack) {
+        const scrollMarkers = scrollTrack.querySelectorAll('.scroll-marker');
+        scrollMarkers.forEach(marker => marker.style.display = 'block');
+    }
 
     const view = document.getElementById("universe-view");
     view.style.left = "0";
@@ -352,14 +388,14 @@ export function renderPanelSections() {
 
     scrollToTop('entry');
 
-    const entryPanel = document.querySelector('.panel-entry');
+    const entryPanel = queryFloating('.panel-entry');
     if (!entryPanel) return;
 
     // Upper section
     const title = entryPanel.querySelector('.panel-top');
     title.innerHTML = `
     <p> ${String(currentWord.id).padStart(4, '0')} </p>
-    <img src = "${resolveImagePath(currentWord.concept_image)}" alt = "concept image"></img> 
+    <img src = "${resolveImagePath(currentWord.concept_image)}" alt = "concept image" loading="lazy" decoding="async"></img> 
     <div>
     <div class = "term-main"> ${currentWord.term?.[lang] || '未知单词'} </div>
     <div class = "term-ori"> ${currentWord.termOri || '无'} </div></div>
@@ -418,7 +454,7 @@ export function renderPanelSections() {
         currentWord.diagrams.forEach(diagram => {
             const block = document.createElement("div");
             block.innerHTML = `
-      <img src="${resolveImagePath(diagram.src)}" alt="diagram image">
+      <img src="${resolveImagePath(diagram.src)}" alt="diagram image" loading="lazy" decoding="async">
       <p class="diagram-caption">${diagram.caption?.[lang]}</p>
     `;
             diagramContainer.appendChild(block);
@@ -433,7 +469,7 @@ export function renderPanelSections() {
         const proposerBlock = document.createElement("div");
         proposerBlock.classList = "proposer-block";
         proposerBlock.innerHTML = `
-        <img alt="proposer's img" src=${resolveImagePath(proposer.image)}></img>
+        <img alt="proposer's img" src=${resolveImagePath(proposer.image)} loading="lazy" decoding="async"></img>
         <div>
             <p class="proposer-name">${proposer.name?.[lang]}</p>
             <p class="proposer-year">${proposer.year}</p>
@@ -469,6 +505,7 @@ export function renderPanelSections() {
                         <div id="editors-container">
                         ${currentWord.editors.map(editor => `<p>${editor?.[lang]}</p>`).join('')}
                         </div>`
+    setupLazyImages(entryPanel);
     renderScrollMarkers('entry');
 }
 
@@ -480,7 +517,7 @@ function renderCommentSection() {
 
     scrollToTop('comment');
 
-    const commentPanel = document.querySelector('.panel-comment');
+    const commentPanel = queryFloating('.panel-comment');
     if (!commentPanel) return;
 
     // Upper section
@@ -495,7 +532,7 @@ function renderCommentSection() {
     // FIXED: Don't wrap in additional tags since JSON already contains HTML
     const contentScroll = commentPanel.querySelector('.panel-bottom');
     const comments = Array.isArray(currentWord.comments) ? currentWord.comments : [];
-    const emptyCommentsLabel = lang === "en" ? "No comments" : "????";
+    const emptyCommentsLabel = lang === "en" ? "No comments" : "暂无评论";
     contentScroll.innerHTML = `
         ${comments.length ? comments.map((c, idx) => {
             const roleLabel = c?.role?.[lang] || "";
@@ -547,7 +584,7 @@ function renderCommentSection() {
 // tab 切换逻辑
 function initTabs() {
     // 为所有panel的tab按钮添加事件监听
-    const allTabs = document.querySelectorAll('.panel-tabs button');
+    const allTabs = queryAllFloating('.panel-tabs button');
     allTabs.forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.stopPropagation(); // 防止触发panel的点击事件
@@ -571,11 +608,11 @@ let currentTab = "entry"; // 默认是 entry
 // 监听 tab 按钮，保证 currentTab 同步（已在initTabs中处理）
 
 function switchTab(tabName) {
-    const entryPanel = document.querySelector('.panel-entry');
-    const commentPanel = document.querySelector('.panel-comment');
+    const entryPanel = queryFloating('.panel-entry');
+    const commentPanel = queryFloating('.panel-comment');
     
     // 更新所有panel的tab按钮状态
-    const allTabs = document.querySelectorAll('.panel-tabs button');
+    const allTabs = queryAllFloating('.panel-tabs button');
     allTabs.forEach(btn => {
         btn.classList.remove('active');
         if (btn.dataset.tab === tabName) {
@@ -602,7 +639,7 @@ function switchTab(tabName) {
 
 // 获取当前激活的panel-main
 function getActivePanelMain() {
-    const activePanel = document.querySelector('.panel-entry.active, .panel-comment.active');
+    const activePanel = queryFloating('.panel-entry.active, .panel-comment.active');
     return activePanel ? activePanel.querySelector('.panel-main') : null;
 }
 
@@ -668,8 +705,8 @@ function handleTouchEnd(e) {
 // 滚动到最顶端（panel-top位置）
 export function scrollToTop(panelType = 'entry') {
     const panel = panelType === 'entry' 
-        ? document.querySelector('.panel-entry')
-        : document.querySelector('.panel-comment');
+        ? queryFloating('.panel-entry')
+        : queryFloating('.panel-comment');
     
     if (!panel) return;
     
@@ -684,7 +721,8 @@ export function scrollToTop(panelType = 'entry') {
 
 // 滚动到对应 section
 function updateTabContent(tabType = "brief") {
-    const panel = document.getElementById('floating-panel');
+    const panel = getFloatingPanel();
+    if (!panel) return;
     const panelMain = panel.querySelector('.panel-main');
 
     if (!panelMain) return;
@@ -718,7 +756,7 @@ const SCROLL_CONFIG = {
 
 // 更新滚动条和markers绑定到当前激活的panel
 function updateScrollHandlers() {
-    const activePanel = document.querySelector('.panel-entry.active, .panel-comment.active');
+    const activePanel = queryFloating('.panel-entry.active, .panel-comment.active');
     if (!activePanel) return;
     
     const panelMain = activePanel.querySelector('.panel-main');
@@ -745,7 +783,7 @@ function updateScrollHandlers() {
 
 // 滚动处理函数
 function handleScroll() {
-    const activePanel = document.querySelector('.panel-entry.active, .panel-comment.active');
+    const activePanel = queryFloating('.panel-entry.active, .panel-comment.active');
     if (!activePanel) return;
     
     const panelMain = activePanel.querySelector('.panel-main');
@@ -855,8 +893,8 @@ function adjustMarkerTooltip(marker) {
 
 function renderScrollMarkers(panelType = 'entry') {
     const panel = panelType === 'entry' 
-        ? document.querySelector('.panel-entry')
-        : document.querySelector('.panel-comment');
+        ? queryFloating('.panel-entry')
+        : queryFloating('.panel-comment');
     
     if (!panel) return;
 
@@ -973,8 +1011,8 @@ function renderScrollMarkers(panelType = 'entry') {
 
 function renderCommentMarkers(panelType = 'comment') {
     const panel = panelType === 'comment' 
-        ? document.querySelector('.panel-comment')
-        : document.querySelector('.panel-entry');
+        ? queryFloating('.panel-comment')
+        : queryFloating('.panel-entry');
     
     if (!panel) return;
 
@@ -1051,9 +1089,9 @@ function renderCommentMarkers(panelType = 'comment') {
 // 点击外部关闭浮窗
 function initClickOutsideHandler() {
     document.addEventListener('click', (e) => {
-        const panel = document.getElementById('floating-panel');
-        const about = document.getElementById("about-button");
-        if (isPanelVisible && !panel.contains(e.target) && !about.contains(e.target)) {
+        const panel = getFloatingPanel();
+        const aboutButton = document.getElementById("about-button");
+        if (isPanelVisible && panel && !panel.contains(e.target) && !aboutButton.contains(e.target)) {
             hideFloatingPanel();
         }
     });
@@ -1100,8 +1138,8 @@ imageDiv.addEventListener("click", (e) => {
 
 // 添加下层panel边缘点击事件
 function initPanelClickHandlers() {
-    const entryPanel = document.querySelector('.panel-entry');
-    const commentPanel = document.querySelector('.panel-comment');
+    const entryPanel = queryFloating('.panel-entry');
+    const commentPanel = queryFloating('.panel-comment');
     
     // 点击entry panel的可见边缘切换到entry
     if (entryPanel) {
@@ -1137,6 +1175,11 @@ function initPanelClickHandlers() {
 // 初始化浮窗功能
 initClickOutsideHandler();
 initPanelClickHandlers();
+document.addEventListener('about-panel:show', () => {
+    if (isPanelVisible) {
+        hideFloatingPanel();
+    }
+});
 
 
 // 显示About页面的浮窗
@@ -1163,67 +1206,4 @@ export function showAboutPanel() {
             scrollMarkers.forEach(marker => marker.style.display = 'none');
         }
     }
-}
-
-// 渲染About页面内容
-function renderAboutContent() {
-    let lang = state.currentLang;
-    // 使用entry panel来显示About内容
-    const entryPanel = document.querySelector('.panel-entry');
-    if (!entryPanel) return;
-    
-    // 确保entry panel是激活的
-    entryPanel.classList.add('active');
-    const commentPanel = document.querySelector('.panel-comment');
-    if (commentPanel) commentPanel.classList.remove('active');
-    
-    // 上半部分
-    const title = entryPanel.querySelector('.panel-top');
-    // 下半部分 - 留空给你填写内容
-    const bottomDiv = entryPanel.querySelector('.panel-bottom');
-    
-    if(lang == "en"){
-        title.innerHTML = `
-        <div>
-            <div class = "term-main">  </div>
-            <div class = "term-ori"> About Us </div>
-        </div>
-        `;
-
-        bottomDiv.innerHTML = `
-        <section>
-            <div>
-                ${window.about.content.en}
-            </div>
-        </section>
-        <section>
-            <p class="left-title">Contact</p>
-                <div>
-                    <p>hello@dunesworkshop.org</p>
-                </div>
-        </section>
-    `;
-    } else{
-        title.innerHTML = `
-        <div>
-            <div class = "term-main"> 关于我们 </div>
-            <div class = "term-ori"> About Us </div>
-        </div>
-        `;
-        
-        bottomDiv.innerHTML = `
-            <section>
-                <div>
-                    ${window.about.content.zh}
-                </div>
-            </section>
-            <section>
-                <p class="left-title">联系我们</p>
-                    <div>
-                        <p>hello@dunesworkshop.org</p>
-                    </div>
-            </section>
-        `;
-    }
-    
 }
