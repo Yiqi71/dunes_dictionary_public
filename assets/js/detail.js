@@ -365,12 +365,12 @@ export function hideFloatingPanel() {
 // 定义标题中英文映�?
 const sectionTitles = {
     brief: { zh: "简要释义", en: "Definition" },
-    example: { zh: "例句", en: "Example Sentences" },
-    proposers: { zh: "提出者", en: "Proposers" },
+    example: { zh: "例句", en: "e.g." },
+    proposers: { zh: "提出者", en: "Proponent" },
     source: { zh: "出处", en: "Source" },
     relatedWorks: { zh: "相关著作", en: "Related Works" },
     contributors: { zh: "贡献者", en: "Contributors" },
-    editors: { zh: "编辑", en: "Editors" }
+    editors: { zh: "编辑", en: "Edit" }
 };
 
 
@@ -384,6 +384,91 @@ function resolveImagePath(src) {
     if (src.startsWith("http") || src.startsWith("data:") || src.startsWith("/")) return src;
     if (src.startsWith("images/")) return `/content/${src}`;
     return src;
+}
+
+function getCaptionText(caption, lang) {
+    if (caption === null || caption === undefined) return "";
+    if (typeof caption === "string") return caption;
+    if (typeof caption === "object") {
+        return caption?.[lang] || caption?.zh || caption?.en || "";
+    }
+    return "";
+}
+
+function buildDiagramCarousel(items, lang, options = {}) {
+    if (!Array.isArray(items) || items.length === 0) return null;
+
+    let currentIndex = 0;
+    const arrowLeftSrc = options.arrowLeftSrc || "assets/images/left_arrow.svg";
+    const arrowRightSrc = options.arrowRightSrc || "assets/images/right_arrow.svg";
+
+    const carousel = document.createElement("div");
+    carousel.className = "diagram-carousel";
+
+    const stage = document.createElement("div");
+    stage.className = "diagram-stage";
+
+    const leftBtn = document.createElement("button");
+    leftBtn.className = "diagram-arrow diagram-arrow-left";
+    leftBtn.type = "button";
+    leftBtn.setAttribute("aria-label", "Previous image");
+    leftBtn.innerHTML = `<img src="${arrowLeftSrc}" alt="">`;
+
+    const rightBtn = document.createElement("button");
+    rightBtn.className = "diagram-arrow diagram-arrow-right";
+    rightBtn.type = "button";
+    rightBtn.setAttribute("aria-label", "Next image");
+    rightBtn.innerHTML = `<img src="${arrowRightSrc}" alt="">`;
+
+    const img = document.createElement("img");
+    img.className = "diagram-image";
+    img.alt = "diagram image";
+    img.loading = "lazy";
+    img.decoding = "async";
+
+    const caption = document.createElement("p");
+    caption.className = "diagram-caption";
+
+    const source = document.createElement("p");
+    source.className = "diagram-source";
+
+    function renderAt(index) {
+        const safeIndex = Math.max(0, Math.min(index, items.length - 1));
+        currentIndex = safeIndex;
+        const item = items[safeIndex] || {};
+        img.src = resolveImagePath(item.src);
+        caption.innerHTML = applyHashItalics(getCaptionText(item.caption, lang));
+        if (options.includeSource) {
+            source.innerHTML = applyHashItalics(getCaptionText(item.source, lang));
+        } else {
+            source.innerHTML = "";
+        }
+
+        leftBtn.classList.toggle("is-hidden", safeIndex === 0);
+        rightBtn.classList.toggle("is-hidden", safeIndex === items.length - 1);
+    }
+
+    leftBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (currentIndex > 0) renderAt(currentIndex - 1);
+    });
+
+    rightBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (currentIndex < items.length - 1) renderAt(currentIndex + 1);
+    });
+
+    stage.appendChild(leftBtn);
+    stage.appendChild(img);
+    stage.appendChild(rightBtn);
+    carousel.appendChild(stage);
+    carousel.appendChild(caption);
+    if (options.includeSource) {
+        carousel.appendChild(source);
+    }
+
+    renderAt(0);
+    return carousel;
 }
 
 export function renderPanelSections() {
@@ -417,6 +502,7 @@ export function renderPanelSections() {
         <section id="section-source"> </section>
         <section id="section-related-works"> </section>
         <section id="section-contributors"> </section>
+        <section id="section-contact"> </section>
         <section id="section-editors"> </section>
     `;
 
@@ -426,8 +512,9 @@ export function renderPanelSections() {
     const proposerSec = document.getElementById("section-proposers");
     const sourceSec = document.getElementById("section-source");
     const relatedSec = document.getElementById("section-related-works");
-    const contributorsSec = document.getElementById("section-contributors");
-    const editorsSec = document.getElementById("section-editors");
+    const contributorsSec = entryPanel.querySelector("#section-contributors");
+    const contactSec = entryPanel.querySelector("#section-contact");
+    const editorsSec = entryPanel.querySelector("#section-editors");
 
     const briefText = applyHashItalics(currentWord.brief_definition?.[lang] || "\u6682\u65e0\u7b80\u8981\u91ca\u4e49");
     briefSec.innerHTML = `<p class="left-title">${sectionTitles.brief[lang]}</p>
@@ -457,14 +544,9 @@ export function renderPanelSections() {
 
     const diagramContainer = entryPanel.querySelector(".diagram-container");
     if (currentWord.diagrams && currentWord.diagrams.length > 0) {
-        currentWord.diagrams.forEach(diagram => {
-            const block = document.createElement("div");
-            block.innerHTML = `
-      <img src="${resolveImagePath(diagram.src)}" alt="diagram image" loading="lazy" decoding="async">
-      <p class="diagram-caption">${applyHashItalics(diagram.caption?.[lang])}</p>
-    `;
-            diagramContainer.appendChild(block);
-        });
+        const diagramItems = currentWord.diagrams.map(d => ({ src: d?.src, caption: d?.caption, source: d?.source }));
+        const carousel = buildDiagramCarousel(diagramItems, lang, { includeSource: false });
+        if (carousel) diagramContainer.appendChild(carousel);
     }
 
     proposerSec.innerHTML = `<p class="left-title">${sectionTitles.proposers[lang]}</p>
@@ -478,7 +560,7 @@ export function renderPanelSections() {
         <img alt="proposer's img" src=${resolveImagePath(proposer.image)} loading="lazy" decoding="async"></img>
         <div>
             <p class="proposer-name">${proposer.name?.[lang]}</p>
-            <p class="proposer-year">${proposer.year}</p>
+            <p class="proposer-year">${proposer.year?.[lang] || proposer.year?.zh || proposer.year?.en || proposer.year || ""}</p>
             <p class="proposer-year">${proposer.role?.[lang]}</p>
         </div>
     `;
@@ -492,28 +574,43 @@ export function renderPanelSections() {
                             <p>${applyHashItalics(currentWord.source?.[lang] || '暂无出处')}</p>
                         </div>`;
 
+    const relatedWorks = Array.isArray(currentWord.related_works) ? currentWord.related_works : [];
+    const relatedHtml = relatedWorks.length
+        ? relatedWorks.map(work => `<p>${applyHashItalics(work?.[lang] || "")}</p>`).join("")
+        : `<p>${lang === "en" ? "No related works yet." : "暂无相关著作"}</p>`;
     relatedSec.innerHTML = `<p class="left-title">${sectionTitles.relatedWorks[lang]}</p>
                         <div id="related-works-container">
-                        ${currentWord.related_works.map(work => `<p>${applyHashItalics(work?.[lang])}</p>`).join('')}
+                        ${relatedHtml}
                         </div>`;
 
     const contributors = Array.isArray(currentWord.contributors) ? currentWord.contributors : [];
     const contributorNames = contributors.map(c => {
         const name = c?.name?.[lang] || "";
         const role = c?.role?.[lang] || "";
-        return name ? `${name}${role ? ` ，${role}` : ""}` : "";
+        return name ? `${name}${role ? ` (${role})` : ""}` : "";
     }).filter(Boolean);
     const contributorText = contributorNames.length
         ? (lang === "en"
             ? `The contributor for this entry is ${contributorNames.join(", ")}.`
-            : `本期词条的贡献者是${contributorNames.join(", ")}`)
+            : `本期词条的贡献者是${contributorNames.join(", ")}。`)
         : (lang === "en" ? "No contributor information yet." : "暂无贡献者信息");
     contributorsSec.innerHTML = `<p>${contributorText}</p>`;
+
+    const contactPrimaryText = lang === "en" ? "Please feel free to email us at the address below to report any errors or inaccuracies in our content; you are also welcome to submit entries for terms you are interested in. " : "欢迎邮件以下邮箱，告知我们内容上的讹误或不准确的地方，您也可以邮件投稿您感兴趣的词条。";
+    const contactSecondaryText = "hello@dunesworkshop.org";
+    if (contactSec) {
+        contactSec.innerHTML = `
+                            <div>
+                                <p>${contactPrimaryText}</p>
+                                <p>${contactSecondaryText}</p>
+                            </div>`;
+    }
 
     editorsSec.innerHTML = `<p class="left-title">${sectionTitles.editors[lang]}</p>
                         <div id="editors-container">
                         ${currentWord.editors.map(editor => `<p>${applyHashItalics(editor?.[lang])}</p>`).join('')}
                         </div>`
+
     setupLazyImages(entryPanel);
     renderScrollMarkers('entry');
 }
@@ -551,49 +648,100 @@ function renderCommentSection() {
             const titleLabel = (roleLabel || nameLabel)
                 ? `${roleLabel}${roleLabel && nameLabel ? "<br>" : ""}${nameLabel}`
                 : fallbackLabel;
-            const content = applyHashItalics(c?.content?.[lang] || "");
+            const rawContent = c?.content?.[lang];
+            const contentParts = Array.isArray(rawContent)
+                ? rawContent
+                : (typeof rawContent === "string" ? rawContent.split(/\r?\n|\u2028/) : []);
+            const content = contentParts.length
+                ? contentParts.map(p => `<p>${applyHashItalics(p)}</p>`).join("")
+                : "";
+            const images = Array.isArray(c?.images) ? c.images : [];
+            const imagesHtml = images.length
+                ? (idx === 0
+                    ? `<div class="note-images note-images-carousel"></div>`
+                    : `<div class="note-images">
+                        ${images.map(img => {
+                            const cap = applyHashItalics(getCaptionText(img?.caption, lang));
+                            return `
+                                <img src="${resolveImagePath(img?.src)}" alt="note image" loading="lazy" decoding="async">
+                                ${cap ? `<p class="diagram-caption">${cap}</p>` : ""}
+                            `;
+                        }).join("")}
+                      </div>`)
+                : "";
             return `<section>
                 <p class="left-title">${titleLabel}</p>
-                <div class="note-body"><br><br><br><br>${content}</div>
+                <div class="note-body"><br><br><br><br>${content}${imagesHtml}</div>
             </section>`;
         }).join('') : emptyCommentsLabel}
 
         <section id="section-contributors"> </section>
+        <section id="section-contact"> </section>
         <section id="section-editors"> </section>        
     `;
 
-    const contributorsSec = document.getElementById("section-contributors");
-    const editorsSec = document.getElementById("section-editors");
+    const contributorsSec = commentPanel.querySelector("#section-contributors");
+    const contactSec = commentPanel.querySelector("#section-contact");
+    const editorsSec = commentPanel.querySelector("#section-editors");
 
     const contributorsInComment = Array.isArray(currentWord.contributors) ? currentWord.contributors : [];
     const contributorNamesInComment = contributorsInComment.map(c => {
         const name = c?.name?.[lang] || "";
         const role = c?.role?.[lang] || "";
-        return name ? `${name}${role ? `，${role}` : ""}` : "";
+        return name ? `${name}${role ? ` (${role})` : ""}` : "";
     }).filter(Boolean);
     const contributorTextInComment = contributorNamesInComment.length
         ? (lang === "en"
             ? `The contributor for this entry is ${contributorNamesInComment.join(", ")}.`
-            : `本期词条的贡献者是${contributorNamesInComment.join("、")}`)
+            : `本期词条的贡献者是${contributorNamesInComment.join(", ")}。`)
         : (lang === "en" ? "No contributor information yet." : "暂无贡献者信息");
-    contributorsSec.innerHTML = `<p>${applyHashItalics(contributorTextInComment)}</p>`;
+    contributorsSec.innerHTML = `<p>${contributorTextInComment}</p>`;
+
+    const contactPrimaryTextInComment = lang === "en" ? "If you have any historical anecdotes or extended reflections regarding this entry, or if you have experienced a direct connection between this theoretical concept and daily life, we welcome you to submit your notes to the following email address: " : "如果您知道关于这个词条的历史趣闻，延展思考或者能感受到过这个理论概念与生活的直接联系，欢迎将你的笔记投稿至以下邮箱。";
+    const contactSecondaryTextInComment = "hello@dunesworkshop.org";
+    if (contactSec) {
+        contactSec.innerHTML = `
+                            <div>
+                                <p>${contactPrimaryTextInComment}</p>
+                                <p>${contactSecondaryTextInComment}</p>
+                            </div>`;
+    }
 
     editorsSec.innerHTML = `<p class="left-title">${sectionTitles.editors[lang]}</p>
                         <div id="editors-container">
                         ${currentWord.editors.map(editor => `<p>${applyHashItalics(editor?.[lang])}</p>`).join('')}
                         </div>`
 
+    const firstComment = comments[0];
+    const firstImages = Array.isArray(firstComment?.images) ? firstComment.images : [];
+    if (firstImages.length > 0) {
+        const target = contentScroll.querySelector(".note-images-carousel");
+        if (target) {
+            const items = firstImages.map(img => ({ src: img?.src, caption: img?.caption, source: img?.source }));
+            const carousel = buildDiagramCarousel(items, lang, {
+                includeSource: true,
+                arrowLeftSrc: "assets/images/left_arrow_dark.svg",
+                arrowRightSrc: "assets/images/right_arrow_dark.svg"
+            });
+            if (carousel) target.appendChild(carousel);
+        }
+    }
+
     // 为每个note section添加折叠/展开功能
     const noteSections = Array.from(
-        contentScroll.querySelectorAll('section:not(#section-contributors):not(#section-editors)')
+        contentScroll.querySelectorAll('section:not(#section-contributors):not(#section-contact):not(#section-editors)')
     );
 
-    const clearNoteLayout = () => {
+    const clearNoteLayout = ({ scrollToTop = false } = {}) => {
         contentScroll.classList.remove('notes-mode');
         if (panelMain) panelMain.classList.remove('notes-fixed');
         noteSections.forEach(sec => {
             sec.classList.remove('note-expanded', 'note-above', 'note-below', 'note-below-first');
+            sec.scrollTop = 0;
         });
+        if (scrollToTop && panelMain) {
+            panelMain.scrollTo({ top: 0, behavior: "smooth" });
+        }
     };
 
     const applyNoteLayout = (activeSection) => {
@@ -615,7 +763,7 @@ function renderCommentSection() {
         section.addEventListener('click', (e) => {
             e.stopPropagation();
             if (section.classList.contains('note-expanded')) {
-                clearNoteLayout();
+                clearNoteLayout({ scrollToTop: true });
                 return;
             }
             applyNoteLayout(section);
@@ -642,13 +790,13 @@ initTabs();
 
 // === Tab 边缘切换逻辑 ===
 
-// 阈值（像素），表示一�?scroll �?touchmove 的力�?
-const SWITCH_THRESHOLD = 180;
+// 阈值（像素），表示scroll touchmove 的力�?
+const SWITCH_THRESHOLD = 280;
 
 // 当前 tab 状�?
-let currentTab = "entry"; // 默认�?entry
+let currentTab = "entry"; // 默认entry
 
-// 监听 tab 按钮，保�?currentTab 同步（已在initTabs中处理）
+// 监听 tab 按钮，保 currentTab 同步（已在initTabs中处理）
 
 function switchTab(tabName) {
     const entryPanel = queryFloating('.panel-entry');
@@ -665,6 +813,7 @@ function switchTab(tabName) {
     
     // 切换panel的active状�?
     if (tabName === "entry") {
+        resetFloatingPanelState();
         if (entryPanel) entryPanel.classList.add('active');
         if (commentPanel) commentPanel.classList.remove('active');
     } else if (tabName === "comment") {
@@ -759,6 +908,36 @@ export function scrollToTop(panelType = 'entry') {
     panelMain.scrollTo({
         top: 0,
         behavior: "smooth"
+    });
+}
+
+// Reset panels to default state (top + comments collapsed)
+export function resetFloatingPanelState() {
+    const entryPanel = queryFloating('.panel-entry');
+    if (entryPanel) {
+        const entryMain = entryPanel.querySelector('.panel-main');
+        if (entryMain) {
+            entryMain.scrollTo({ top: 0, behavior: "auto" });
+        }
+    }
+
+    const commentPanel = queryFloating('.panel-comment');
+    if (!commentPanel) return;
+
+    const commentMain = commentPanel.querySelector('.panel-main');
+    if (commentMain) {
+        commentMain.scrollTo({ top: 0, behavior: "auto" });
+        commentMain.classList.remove('notes-fixed');
+    }
+
+    const contentScroll = commentPanel.querySelector('.panel-bottom');
+    if (!contentScroll) return;
+
+    contentScroll.classList.remove('notes-mode');
+    const noteSections = contentScroll.querySelectorAll('section:not(#section-contributors):not(#section-contact):not(#section-editors)');
+    noteSections.forEach((sec) => {
+        sec.classList.remove('note-expanded', 'note-above', 'note-below', 'note-below-first');
+        sec.scrollTop = 0;
     });
 }
 
@@ -981,6 +1160,10 @@ function renderScrollMarkers(panelType = 'entry') {
             label: sectionTitles.contributors
         },
         {
+            id: "section-contact",
+            label: sectionTitles.contact
+        },
+        {
             id: "section-editors",
             label: sectionTitles.editors
         }
@@ -1193,6 +1376,7 @@ function initPanelClickHandlers() {
                 const rect = entryPanel.getBoundingClientRect();
                 const clickX = e.clientX - rect.left;
                 if (clickX < 100) { // 允许点击左侧100px区域
+                    e.stopPropagation();
                     switchTab('entry');
                 }
             }
@@ -1208,6 +1392,7 @@ function initPanelClickHandlers() {
                 const rect = commentPanel.getBoundingClientRect();
                 const clickX = e.clientX - rect.left;
                 if (clickX < 100) { // 允许点击左侧100px区域
+                    e.stopPropagation();
                     switchTab('comment');
                 }
             }
@@ -1235,10 +1420,10 @@ export function showAboutPanel() {
     renderAboutContent();
 
     // 隐藏tabs（隐藏所有panel的tabs�?
-    const allTabs = document.querySelectorAll('.panel-tabs');
-    allTabs.forEach(tabs => {
-        if (tabs) tabs.style.display = 'none';
-    });
+    // const allTabs = document.querySelectorAll('.panel-tabs');
+    // allTabs.forEach(tabs => {
+    //     if (tabs) tabs.style.display = 'none';
+    // });
 
     // 隐藏scroll markers
     const entryPanel = document.querySelector('.panel-entry');

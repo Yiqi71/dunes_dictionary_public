@@ -2,11 +2,12 @@
 import { state } from "./state.js";
 import { draw, updateWordNodeTransforms, updateScaleForNodes } from "./uni-canvas.js";
 import { updateRelations } from "./relationManager.js";
-import { renderPanelSections , showFloatingPanel, scrollToTop} from "./detail.js";
+import { renderPanelSections , showFloatingPanel, scrollToTop, resetFloatingPanelState } from "./detail.js";
 import { moveIndicator } from "./menu.js";
 
 
 let focusedWord = null;
+let lastFocusedNodeId = null;
 const MENU_COMPACT_CLASS = "menu-compact";
 function prepareLazyImage(img) {
     if (!img) return;
@@ -176,6 +177,11 @@ function normalizeLang(code) {
     return v.startsWith("en") ? "en" : "zh";
 }
 
+function applyHashItalics(text) {
+    if (text === null || text === undefined) return "";
+    return String(text).replace(/#([^#]+)#/g, "<i>$1</i>");
+}
+
 function resolveImagePath(src) {
     if (!src) return "";
     if (src.startsWith("http") || src.startsWith("data:") || src.startsWith("/")) return src;
@@ -189,6 +195,7 @@ export function updateWordFocus() {
         focusedWord.classList.remove('focused');
         focusedWord = null;
         state.focusedNodeId = null;
+        lastFocusedNodeId = null;
         restoreAllNodes();
         resetPositions();
         const detailDiv = document.getElementById("word-details");
@@ -237,6 +244,10 @@ export function updateWordFocus() {
             focusedWord = closestWord;
             state.focusedNodeId = closestWord.id;
             setMenuCompact(true);
+            if (lastFocusedNodeId !== closestWord.id) {
+                resetFloatingPanelState();
+                lastFocusedNodeId = closestWord.id;
+            }
 
             updateRelations();
             hideNearbyNodes(closestWord);
@@ -301,9 +312,9 @@ export function updateWordDetails() {
     const relatedWorksEl = document.querySelector('#image .related-works');
     prepareLazyImage(imageEl);
     if (normalizeLang(state.currentLang) == "en") {
-        imageTitle.textContent = 'Related Works';
+        imageTitle.textContent = 'Source';
     } else if (normalizeLang(state.currentLang) == "zh") {
-        imageTitle.textContent = '相关著作';
+        imageTitle.textContent = '出处';
     }
 
     if (word.source_image) {
@@ -315,6 +326,9 @@ export function updateWordDetails() {
         imageEl.style.display = 'none';
     }
 
+    relatedWorksEl.innerHTML = "";
+    relatedWorksEl.style.display = "none";
+
     // proposer section
     const proposerTitle = document.querySelector('#proposer .detail-title');
     const proposerPrimary = document.querySelector('#proposer .proposer-primary');
@@ -322,9 +336,9 @@ export function updateWordDetails() {
     const proposerImg = document.querySelector('#proposer img');
     prepareLazyImage(proposerImg);
     if(normalizeLang(state.currentLang)=="en"){
-        proposerTitle.textContent = 'Proposer';
+        proposerTitle.textContent = 'Proponent';
     }else if(normalizeLang(state.currentLang)=="zh"){
-        proposerTitle.textContent = '提出人';
+        proposerTitle.textContent = '提出者';
     }
     if (word.proposers && word.proposers.length>0) {
         const proposer = word.proposers[0];
@@ -352,7 +366,7 @@ export function updateWordDetails() {
     }
     if (word.commentAbs) {
         const comment = word.commentAbs;
-        const content = comment.content?.[lang] || "";
+        const content = applyHashItalics(comment.content?.[lang] || "");
         const author = comment.author?.[lang] || "";
         const authorBlock = author ? ` <p>${author}</p>` : "";
         commentContent.innerHTML = `<div class="comment-abs-content">${content}</div>${authorBlock}`;
