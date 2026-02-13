@@ -69,6 +69,354 @@ function ensureTerminalPunctuation(text, lang) {
     return raw + suffix;
 }
 
+const ENTRY_VOTE_COUNTS_KEY = "dd_entry_understanding_vote_counts_v1";
+const ENTRY_USER_VOTES_KEY = "dd_entry_understanding_user_votes_v1";
+const ENTRY_VOTE_SYNC_QUEUE_KEY = "dd_entry_understanding_vote_sync_queue_v1";
+const ENTRY_VOTE_SYNC_INTERVAL_MS = 15000;
+const ENTRY_VOTE_LOCAL_KEYS = [
+    ENTRY_VOTE_COUNTS_KEY,
+    ENTRY_USER_VOTES_KEY,
+    ENTRY_VOTE_SYNC_QUEUE_KEY
+];
+let voteSyncState = navigator.onLine ? "checking" : "disconnected";
+let voteSyncInFlight = false;
+let voteSyncInitialized = false;
+let voteResetHotkeyInitialized = false;
+const voteHotkeysPressed = new Set();
+let voteResetComboTriggered = false;
+
+function safeParseStorage(key, fallback = {}) {
+    try {
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+    } catch (_) {
+        return fallback;
+    }
+}
+
+function safeWriteStorage(key, value) {
+    try {
+        localStorage.setItem(key, JSON.stringify(value));
+    } catch (_) {
+        // ignore storage failures
+    }
+}
+
+function getVoteSessionId() {
+    const key = "dd_session_id";
+    let id = sessionStorage.getItem(key);
+    if (!id) {
+        id = `s_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+        sessionStorage.setItem(key, id);
+    }
+    return id;
+}
+
+function isVoteSyncConnected() {
+    return voteSyncState === "connected";
+}
+
+function refreshVisibleVoteNote() {
+    const noteEl = queryFloating(".panel-entry #section-understanding-vote .entry-vote-note");
+    if (!noteEl) return;
+    noteEl.style.display = isVoteSyncConnected() ? "none" : "block";
+}
+
+function setVoteSyncState(next) {
+    if (voteSyncState === next) return;
+    voteSyncState = next;
+    refreshVisibleVoteNote();
+}
+
+function getVoteSyncQueue() {
+    const parsed = safeParseStorage(ENTRY_VOTE_SYNC_QUEUE_KEY, []);
+    return Array.isArray(parsed) ? parsed : [];
+}
+
+function setVoteSyncQueue(queue) {
+    safeWriteStorage(ENTRY_VOTE_SYNC_QUEUE_KEY, Array.isArray(queue) ? queue : []);
+}
+
+function clearLocalVoteData() {
+    ENTRY_VOTE_LOCAL_KEYS.forEach((key) => {
+        try {
+            localStorage.removeItem(key);
+        } catch (_) {
+            // ignore
+        }
+    });
+}
+
+function initVoteResetHotkey() {
+    if (voteResetHotkeyInitialized) return;
+    voteResetHotkeyInitialized = true;
+
+    document.addEventListener("keydown", (e) => {
+        const key = (e.key || "").toLowerCase();
+        if (key !== "a" && key !== "t") return;
+        voteHotkeysPressed.add(key);
+        if (e.repeat) return;
+
+        if (voteHotkeysPressed.has("a") && voteHotkeysPressed.has("t") && !voteResetComboTriggered) {
+            voteResetComboTriggered = true;
+            const panel = getFloatingPanel();
+            const voteSection = queryFloating(".panel-entry #section-understanding-vote");
+            if (!panel || panel.classList.contains("hidden") || !voteSection) return;
+
+            const lang = normalizeLang(document.documentElement.lang || state.currentLang || "zh");
+            const message = lang === "en"
+                ? "Clear local vote data on this browser?"
+                : "清空当前浏览器的本地投票数据？";
+            if (!window.confirm(message)) return;
+
+            clearLocalVoteData();
+            renderPanelSections();
+            syncVoteQueue();
+        }
+    });
+
+    document.addEventListener("keyup", (e) => {
+        const key = (e.key || "").toLowerCase();
+        if (key !== "a" && key !== "t") return;
+        voteHotkeysPressed.delete(key);
+        if (!voteHotkeysPressed.has("a") || !voteHotkeysPressed.has("t")) {
+            voteResetComboTriggered = false;
+        }
+    });
+}
+
+function buildVoteSyncEvent(wordId, choice) {
+    return {
+        id: `e_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+        name: "entry_understanding_vote",
+        ts: Date.now(),
+        sessionId: getVoteSessionId(),
+        data: {
+            wordId,
+            choice,
+            lang: normalizeLang(document.documentElement.lang || state.currentLang || "zh")
+        }
+    };
+}
+
+function enqueueVoteSync(wordId, choice) {
+    const queue = getVoteSyncQueue();
+    queue.push(buildVoteSyncEvent(wordId, choice));
+    setVoteSyncQueue(queue);
+}
+
+async function probeVoteSyncConnection() {
+    if (!navigator.onLine) {
+        setVoteSyncState("disconnected");
+        return false;
+    }
+    try {
+        const response = await fetch("/events", { method: "HEAD", cache: "no-store" });
+        if (response.ok) {
+            setVoteSyncState("connected");
+            return true;
+        }
+        setVoteSyncState("disconnected");
+        return false;
+    } catch (_) {
+        setVoteSyncState("disconnected");
+        return false;
+    }
+}
+
+async function syncVoteQueue() {
+    if (voteSyncInFlight) return;
+    if (!navigator.onLine) {
+        setVoteSyncState("disconnected");
+        return;
+    }
+
+    let queue = getVoteSyncQueue();
+    if (queue.length === 0) {
+        await probeVoteSyncConnection();
+        return;
+    }
+
+    voteSyncInFlight = true;
+    try {
+        while (queue.length > 0) {
+            const eventPayload = queue[0];
+            try {
+                const response = await fetch("/events", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(eventPayload),
+                    keepalive: true
+                });
+
+                if (response.ok) {
+                    setVoteSyncState("connected");
+                    queue.shift();
+                    setVoteSyncQueue(queue);
+                    continue;
+                }
+                setVoteSyncState("disconnected");
+                break;
+            } catch (_) {
+                setVoteSyncState("disconnected");
+                break;
+            }
+        }
+    } finally {
+        voteSyncInFlight = false;
+    }
+}
+
+function initVoteSync() {
+    if (voteSyncInitialized) return;
+    voteSyncInitialized = true;
+
+    window.addEventListener("online", () => {
+        setVoteSyncState("checking");
+        syncVoteQueue();
+    });
+    window.addEventListener("offline", () => {
+        setVoteSyncState("disconnected");
+    });
+    document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "visible") {
+            syncVoteQueue();
+        }
+    });
+
+    setTimeout(() => {
+        syncVoteQueue();
+    }, 800);
+    setInterval(syncVoteQueue, ENTRY_VOTE_SYNC_INTERVAL_MS);
+}
+
+function getWordVoteStats(wordId) {
+    const counts = safeParseStorage(ENTRY_VOTE_COUNTS_KEY, {});
+    const id = String(wordId);
+    const current = counts[id] || {};
+    const clear = Math.max(0, Number(current.clear) || 0);
+    const unclear = Math.max(0, Number(current.unclear) || 0);
+    const total = clear + unclear;
+    const clearPct = total > 0 ? Math.round((clear / total) * 100) : 0;
+    const unclearPct = total > 0 ? 100 - clearPct : 0;
+    return { clear, unclear, total, clearPct, unclearPct };
+}
+
+function getUserVote(wordId) {
+    const votes = safeParseStorage(ENTRY_USER_VOTES_KEY, {});
+    const choice = votes[String(wordId)];
+    return choice === "clear" || choice === "unclear" ? choice : null;
+}
+
+function submitWordVote(wordId, choice) {
+    if (choice !== "clear" && choice !== "unclear") return null;
+
+    const id = String(wordId);
+    const counts = safeParseStorage(ENTRY_VOTE_COUNTS_KEY, {});
+    const current = counts[id] || { clear: 0, unclear: 0 };
+
+    current.clear = Math.max(0, Number(current.clear) || 0);
+    current.unclear = Math.max(0, Number(current.unclear) || 0);
+    current[choice] += 1;
+
+    counts[id] = current;
+    safeWriteStorage(ENTRY_VOTE_COUNTS_KEY, counts);
+
+    const userVotes = safeParseStorage(ENTRY_USER_VOTES_KEY, {});
+    userVotes[id] = choice;
+    safeWriteStorage(ENTRY_USER_VOTES_KEY, userVotes);
+
+    return getWordVoteStats(id);
+}
+
+function renderUnderstandingVoteSection(sectionEl, currentWord, lang) {
+    if (!sectionEl || !currentWord) return;
+
+    const term = currentWord.term?.[lang] || currentWord.term?.zh || currentWord.term?.en || "";
+    const labels = lang === "en"
+        ? {
+            question: `Do you think "${term}" is easy to understand?`,
+            clear: "Understood",
+            unclear: "Not clear",
+            submit: "Vote",
+            syncNote: "Note: server connection is unavailable. Your vote will sync after recovery."
+        }
+        : {
+            question: `你觉得“${term}”这个词条好理解吗？`,
+            clear: "看明白了",
+            unclear: "没看明白",
+            submit: "投票",
+            syncNote: "注：当前与服务器连接异常，投票会暂存并在恢复后同步。"
+        };
+
+    sectionEl.innerHTML = `
+        <div class="entry-vote-wrap">
+            <p class="entry-vote-question">${labels.question}</p>
+            <div class="entry-vote-options">
+                <button type="button" class="entry-vote-option" data-vote="clear">${labels.clear}</button>
+                <button type="button" class="entry-vote-option" data-vote="unclear">${labels.unclear}</button>
+            </div>
+            <button type="button" class="entry-vote-submit">${labels.submit}</button>
+            <p class="entry-vote-note">${labels.syncNote}</p>
+        </div>
+    `;
+
+    const clearBtn = sectionEl.querySelector('[data-vote="clear"]');
+    const unclearBtn = sectionEl.querySelector('[data-vote="unclear"]');
+    const submitBtn = sectionEl.querySelector(".entry-vote-submit");
+    const noteEl = sectionEl.querySelector(".entry-vote-note");
+    if (!clearBtn || !unclearBtn || !submitBtn || !noteEl) return;
+
+    noteEl.style.display = isVoteSyncConnected() ? "none" : "block";
+
+    let selectedChoice = null;
+
+    const setSelected = () => {
+        clearBtn.classList.toggle("is-selected", selectedChoice === "clear");
+        unclearBtn.classList.toggle("is-selected", selectedChoice === "unclear");
+    };
+
+    const renderPercentages = (stats) => {
+        clearBtn.textContent = `${labels.clear} ${stats.clearPct}%`;
+        unclearBtn.textContent = `${labels.unclear} ${stats.unclearPct}%`;
+        clearBtn.classList.remove("is-selected");
+        unclearBtn.classList.remove("is-selected");
+        clearBtn.classList.add("is-voted");
+        unclearBtn.classList.add("is-voted");
+    };
+
+    const existingVote = getUserVote(currentWord.id);
+    if (existingVote) {
+        renderPercentages(getWordVoteStats(currentWord.id));
+        submitBtn.style.display = "none";
+        return;
+    }
+
+    clearBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        selectedChoice = "clear";
+        setSelected();
+    });
+
+    unclearBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        selectedChoice = "unclear";
+        setSelected();
+    });
+
+    submitBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (!selectedChoice) return;
+        const stats = submitWordVote(currentWord.id, selectedChoice);
+        if (!stats) return;
+
+        submitBtn.style.display = "none";
+        renderPercentages(stats);
+        enqueueVoteSync(currentWord.id, selectedChoice);
+        syncVoteQueue();
+    });
+}
+
 function filterProposer(name) {
     const focusedWord = window.allWords.find(w => w.id == state.focusedNodeId);
     if (!focusedWord) return [];
@@ -515,6 +863,7 @@ export function renderPanelSections() {
         <section id="section-proposers"> </section>
         <section id="section-source"> </section>
         <section id="section-related-works"> </section>
+        <section id="section-understanding-vote"> </section>
         <section id="section-contributors"> </section>
         <section id="section-contact"> </section>
         <section id="section-editors"> </section>
@@ -526,6 +875,7 @@ export function renderPanelSections() {
     const proposerSec = document.getElementById("section-proposers");
     const sourceSec = document.getElementById("section-source");
     const relatedSec = document.getElementById("section-related-works");
+    const voteSec = entryPanel.querySelector("#section-understanding-vote");
     const contributorsSec = entryPanel.querySelector("#section-contributors");
     const contactSec = entryPanel.querySelector("#section-contact");
     const editorsSec = entryPanel.querySelector("#section-editors");
@@ -597,6 +947,7 @@ export function renderPanelSections() {
                         <div id="related-works-container">
                         ${relatedHtml}
                         </div>`;
+    renderUnderstandingVoteSection(voteSec, currentWord, lang);
 
     const contributors = Array.isArray(currentWord.contributors) ? currentWord.contributors : [];
     const contributorNames = contributors.map(c => {
@@ -1171,6 +1522,10 @@ function renderScrollMarkers(panelType = 'entry') {
             label: sectionTitles.relatedWorks
         },
         {
+            id: "section-understanding-vote",
+            label: { zh: "理解投票", en: "Vote" }
+        },
+        {
             id: "section-contributors",
             label: sectionTitles.contributors
         },
@@ -1416,6 +1771,8 @@ function initPanelClickHandlers() {
 }
 
 // 初始化浮窗功�?
+initVoteSync();
+initVoteResetHotkey();
 initClickOutsideHandler();
 initPanelClickHandlers();
 document.addEventListener('about-panel:show', () => {
