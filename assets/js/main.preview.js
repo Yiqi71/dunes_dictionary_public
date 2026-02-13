@@ -19,7 +19,13 @@ let sessionStartTs = null;
 
 function normalizeLang(code) {
     const v = (code || "").toLowerCase();
-    return v.startsWith("en") ? "en" : "zh";
+    return v.startsWith("zh") ? "zh" : "en";
+}
+
+function resolveInitialLang() {
+    const browserLang = (navigator.languages && navigator.languages[0]) || navigator.language || "";
+    if (browserLang) return normalizeLang(browserLang);
+    return normalizeLang(document.documentElement.lang || state.currentLang || "en");
 }
 
 function attachImageVisibility(img) {
@@ -601,7 +607,7 @@ function renderWordUniverse(wordsData) {
 document.addEventListener('DOMContentLoaded', () => {
     sessionStartTs = Date.now();
     logEvent("session_start", {});
-    const initialLang = normalizeLang(document.documentElement.lang || "zh");
+    const initialLang = resolveInitialLang();
     document.documentElement.lang = initialLang;
     state.currentLang = initialLang;
     langBtn.textContent = initialLang;
