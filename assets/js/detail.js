@@ -73,6 +73,8 @@ const ENTRY_VOTE_COUNTS_KEY = "dd_entry_understanding_vote_counts_v1";
 const ENTRY_USER_VOTES_KEY = "dd_entry_understanding_user_votes_v1";
 const ENTRY_VOTE_SYNC_QUEUE_KEY = "dd_entry_understanding_vote_sync_queue_v1";
 const ENTRY_VOTE_SYNC_INTERVAL_MS = 15000;
+const COMMENT_LIKE_SYNC_QUEUE_KEY = "dd_comment_like_sync_queue_v1";
+const COMMENT_LIKE_SNAPSHOT_SESSION_KEY = "dd_comment_like_snapshot_sent_v1";
 const ENTRY_VOTE_LOCAL_KEYS = [
     ENTRY_VOTE_COUNTS_KEY,
     ENTRY_USER_VOTES_KEY,
@@ -81,6 +83,8 @@ const ENTRY_VOTE_LOCAL_KEYS = [
 let voteSyncState = navigator.onLine ? "checking" : "disconnected";
 let voteSyncInFlight = false;
 let voteSyncInitialized = false;
+let commentLikeSyncInFlight = false;
+let commentLikeSnapshotQueued = false;
 let voteResetHotkeyInitialized = false;
 const voteHotkeysPressed = new Set();
 let voteResetComboTriggered = false;
@@ -259,8 +263,13 @@ function refreshVisibleVoteNote() {
 
 function setVoteSyncState(next) {
     if (voteSyncState === next) return;
+    const prev = voteSyncState;
     voteSyncState = next;
     refreshVisibleVoteNote();
+    if (next === "connected" && prev !== "connected") {
+        queueCommentLikeSnapshotFromLocal({ force: true });
+        syncCommentLikeQueue();
+    }
     const commentPanel = queryFloating(".panel-comment");
     const contentScroll = commentPanel?.querySelector(".panel-bottom");
     if (contentScroll && state.focusedNodeId !== null && state.focusedNodeId !== undefined) {
@@ -275,6 +284,15 @@ function getVoteSyncQueue() {
 
 function setVoteSyncQueue(queue) {
     safeWriteStorage(ENTRY_VOTE_SYNC_QUEUE_KEY, Array.isArray(queue) ? queue : []);
+}
+
+function getCommentLikeSyncQueue() {
+    const parsed = safeParseStorage(COMMENT_LIKE_SYNC_QUEUE_KEY, []);
+    return Array.isArray(parsed) ? parsed : [];
+}
+
+function setCommentLikeSyncQueue(queue) {
+    safeWriteStorage(COMMENT_LIKE_SYNC_QUEUE_KEY, Array.isArray(queue) ? queue : []);
 }
 
 function clearLocalVoteData() {
@@ -339,10 +357,58 @@ function buildVoteSyncEvent(wordId, choice) {
     };
 }
 
+function buildCommentLikeSyncEvent(wordId, commentIndex, liked, langOverride) {
+    return {
+        id: `e_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+        name: COMMENT_LIKE_EVENT_NAME,
+        ts: Date.now(),
+        sessionId: getVoteSessionId(),
+        data: {
+            wordId,
+            commentIndex,
+            liked: Boolean(liked),
+            lang: normalizeLang(langOverride || document.documentElement.lang || state.currentLang || "zh")
+        }
+    };
+}
+
 function enqueueVoteSync(wordId, choice) {
     const queue = getVoteSyncQueue();
     queue.push(buildVoteSyncEvent(wordId, choice));
     setVoteSyncQueue(queue);
+}
+
+function enqueueCommentLikeSync(wordId, commentIndex, liked, langOverride) {
+    const queue = getCommentLikeSyncQueue();
+    queue.push(buildCommentLikeSyncEvent(wordId, commentIndex, liked, langOverride));
+    setCommentLikeSyncQueue(queue);
+}
+
+function queueCommentLikeSnapshotFromLocal({ force = false } = {}) {
+    if (!force && commentLikeSnapshotQueued) return;
+    if (!force && sessionStorage.getItem(COMMENT_LIKE_SNAPSHOT_SESSION_KEY) === "1") return;
+    commentLikeSnapshotQueued = true;
+
+    const likes = getCommentLikeStorage();
+    const entries = Object.entries(likes);
+    if (!entries.length) {
+        sessionStorage.setItem(COMMENT_LIKE_SNAPSHOT_SESSION_KEY, "1");
+        return;
+    }
+
+    const lang = normalizeLang(document.documentElement.lang || state.currentLang || "zh");
+    entries.forEach(([key, liked]) => {
+        if (!liked) return;
+        const parts = String(key).split(":");
+        if (parts.length !== 2) return;
+        const wordId = parts[0];
+        const commentIndex = Number(parts[1]);
+        if (!wordId || !Number.isFinite(commentIndex)) return;
+        enqueueCommentLikeSync(wordId, commentIndex, true, lang);
+    });
+    if (!force) {
+        sessionStorage.setItem(COMMENT_LIKE_SNAPSHOT_SESSION_KEY, "1");
+    }
 }
 
 async function probeVoteSyncConnection() {
@@ -374,6 +440,7 @@ async function syncVoteQueue() {
     let queue = getVoteSyncQueue();
     if (queue.length === 0) {
         await probeVoteSyncConnection();
+        await syncCommentLikeQueue();
         return;
     }
 
@@ -405,11 +472,44 @@ async function syncVoteQueue() {
     } finally {
         voteSyncInFlight = false;
     }
+
+    await syncCommentLikeQueue();
+}
+
+async function syncCommentLikeQueue() {
+    if (commentLikeSyncInFlight) return;
+    if (!navigator.onLine) return;
+
+    let queue = getCommentLikeSyncQueue();
+    if (queue.length === 0) return;
+
+    commentLikeSyncInFlight = true;
+    try {
+        while (queue.length > 0) {
+            const eventPayload = queue[0];
+            try {
+                const response = await fetch("/events", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(eventPayload),
+                    keepalive: true
+                });
+                if (!response.ok) break;
+                queue.shift();
+                setCommentLikeSyncQueue(queue);
+            } catch (_) {
+                break;
+            }
+        }
+    } finally {
+        commentLikeSyncInFlight = false;
+    }
 }
 
 function initVoteSync() {
     if (voteSyncInitialized) return;
     voteSyncInitialized = true;
+    queueCommentLikeSnapshotFromLocal();
 
     window.addEventListener("online", () => {
         setVoteSyncState("checking");
@@ -1259,12 +1359,8 @@ function renderCommentSection() {
             btn.classList.toggle("is-liked", liked);
             btn.setAttribute("aria-pressed", liked ? "true" : "false");
             btn.setAttribute("aria-label", liked ? likedAriaLabel : unlikedAriaLabel);
-            logEvent(COMMENT_LIKE_EVENT_NAME, {
-                wordId: currentWord.id,
-                commentIndex,
-                liked,
-                lang
-            });
+            enqueueCommentLikeSync(currentWord.id, commentIndex, liked, lang);
+            syncVoteQueue();
             refreshCommentLikeBadges(contentScroll, currentWord.id, { force: true });
         });
     });
