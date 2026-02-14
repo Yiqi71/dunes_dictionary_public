@@ -43,6 +43,12 @@ let isDragging = false;
 let dragStartX = 0;
 let dragStartY = 0;
 
+function endDrag() {
+    if (!isDragging) return;
+    isDragging = false;
+    updateRelations();
+}
+
 // 更新 word-nodes 的位�?
 export function updateWordNodeTransforms() {
     const scale = state.currentScale;
@@ -93,13 +99,19 @@ canvas.addEventListener("mousemove", (e) => {
 });
 
 canvas.addEventListener("mouseup", () => {
-    isDragging = false;
-    updateRelations();
+    endDrag();
 });
 
 canvas.addEventListener("mouseleave", () => {
-    isDragging = false;
-    updateRelations();
+    endDrag();
+});
+
+window.addEventListener("mouseup", endDrag);
+window.addEventListener("blur", endDrag);
+document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState !== "visible") {
+        endDrag();
+    }
 });
 
 // 缩放事件监听
