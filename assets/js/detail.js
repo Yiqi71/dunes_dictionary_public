@@ -102,6 +102,141 @@ function safeWriteStorage(key, value) {
     }
 }
 
+const COMMENT_LIKES_KEY = "dd_comment_likes_v1";
+const COMMENT_LIKE_EVENT_NAME = "comment_like_toggle";
+const COMMENT_LIKE_COUNTS_CACHE_TTL_MS = 30000;
+const COMMENT_LIKE_EVENTS_LIMIT = 2000;
+const commentLikeCountsCache = new Map();
+
+function getCommentLikeStorage() {
+    const parsed = safeParseStorage(COMMENT_LIKES_KEY, {});
+    return parsed && typeof parsed === "object" ? parsed : {};
+}
+
+function setCommentLikeStorage(value) {
+    safeWriteStorage(COMMENT_LIKES_KEY, value && typeof value === "object" ? value : {});
+}
+
+function getCommentLikeKey(wordId, commentIndex) {
+    return `${String(wordId)}:${Number(commentIndex)}`;
+}
+
+function isCommentLiked(wordId, commentIndex) {
+    const likes = getCommentLikeStorage();
+    return Boolean(likes[getCommentLikeKey(wordId, commentIndex)]);
+}
+
+function toggleCommentLiked(wordId, commentIndex) {
+    const likes = getCommentLikeStorage();
+    const key = getCommentLikeKey(wordId, commentIndex);
+    const next = !Boolean(likes[key]);
+    if (next) {
+        likes[key] = true;
+    } else {
+        delete likes[key];
+    }
+    setCommentLikeStorage(likes);
+    return next;
+}
+
+function normalizeEventsPayload(payload) {
+    if (Array.isArray(payload)) return payload;
+    if (!payload || typeof payload !== "object") return [];
+    if (Array.isArray(payload.events)) return payload.events;
+    if (Array.isArray(payload.items)) return payload.items;
+    if (Array.isArray(payload.data)) return payload.data;
+    return [];
+}
+
+function buildCommentLikeCounts(events, wordId) {
+    const latestByUserAndComment = new Map();
+    const targetWordId = String(wordId);
+
+    events.forEach((event) => {
+        if (!event || event.name !== COMMENT_LIKE_EVENT_NAME) return;
+        const data = event.data || {};
+        if (String(data.wordId) !== targetWordId) return;
+
+        const sessionId = String(event.sessionId || "");
+        const commentIndex = Number(data.commentIndex);
+        if (!sessionId || !Number.isFinite(commentIndex)) return;
+
+        const key = `${commentIndex}::${sessionId}`;
+        const ts = Number(event.ts) || 0;
+        const liked = Boolean(data.liked);
+        const prev = latestByUserAndComment.get(key);
+        if (!prev || ts >= prev.ts) {
+            latestByUserAndComment.set(key, { ts, liked, commentIndex });
+        }
+    });
+
+    const counts = {};
+    latestByUserAndComment.forEach((entry) => {
+        if (!entry.liked) return;
+        const idx = String(entry.commentIndex);
+        counts[idx] = (counts[idx] || 0) + 1;
+    });
+    return counts;
+}
+
+async function fetchCommentLikeCounts(wordId, { force = false } = {}) {
+    const cacheKey = String(wordId);
+    const now = Date.now();
+    const cached = commentLikeCountsCache.get(cacheKey);
+    if (!force && cached && now - cached.ts < COMMENT_LIKE_COUNTS_CACHE_TTL_MS) {
+        return cached.counts;
+    }
+
+    const response = await fetch(`/events?limit=${COMMENT_LIKE_EVENTS_LIMIT}`, { cache: "no-store" });
+    if (!response.ok) {
+        throw new Error(`failed_to_fetch_comment_like_counts_${response.status}`);
+    }
+
+    const payload = await response.json();
+    const events = normalizeEventsPayload(payload);
+    const counts = buildCommentLikeCounts(events, wordId);
+    commentLikeCountsCache.set(cacheKey, { ts: now, counts });
+    return counts;
+}
+
+function setCommentLikeBadge(buttonEl, count, shouldShow) {
+    const countEl = buttonEl?.querySelector(".note-like-count");
+    if (!countEl) return;
+    if (!shouldShow) {
+        countEl.textContent = "";
+        countEl.style.display = "none";
+        return;
+    }
+    countEl.textContent = String(Math.max(0, Number(count) || 0));
+    countEl.style.display = "block";
+}
+
+async function refreshCommentLikeBadges(contentScroll, wordId, { force = false } = {}) {
+    if (!contentScroll) return;
+    const buttons = Array.from(contentScroll.querySelectorAll(".note-like-toggle"));
+    if (!buttons.length) return;
+
+    const connected = isVoteSyncConnected();
+    const anyLiked = buttons.some((btn) => btn.classList.contains("is-liked"));
+
+    if (!connected || !anyLiked) {
+        buttons.forEach((btn) => setCommentLikeBadge(btn, 0, false));
+        return;
+    }
+
+    try {
+        const counts = await fetchCommentLikeCounts(wordId, { force });
+        buttons.forEach((btn) => {
+            const idx = String(Number(btn.dataset.commentIndex));
+            const liked = btn.classList.contains("is-liked");
+            const count = counts[idx] || 0;
+            setCommentLikeBadge(btn, count, connected && liked);
+        });
+    } catch (_) {
+        buttons.forEach((btn) => setCommentLikeBadge(btn, 0, false));
+    }
+}
+
 function getVoteSessionId() {
     const key = "dd_session_id";
     let id = sessionStorage.getItem(key);
@@ -126,6 +261,11 @@ function setVoteSyncState(next) {
     if (voteSyncState === next) return;
     voteSyncState = next;
     refreshVisibleVoteNote();
+    const commentPanel = queryFloating(".panel-comment");
+    const contentScroll = commentPanel?.querySelector(".panel-bottom");
+    if (contentScroll && state.focusedNodeId !== null && state.focusedNodeId !== undefined) {
+        refreshCommentLikeBadges(contentScroll, state.focusedNodeId, { force: next === "connected" });
+    }
 }
 
 function getVoteSyncQueue() {
@@ -1006,6 +1146,8 @@ function renderCommentSection() {
     const contentScroll = commentPanel.querySelector('.panel-bottom');
     const comments = Array.isArray(currentWord.comments) ? currentWord.comments : [];
     const emptyCommentsLabel = lang === "en" ? "No comments" : "暂无评论";
+    const likedAriaLabel = lang === "en" ? "Unlike this comment" : "取消喜欢这条评论";
+    const unlikedAriaLabel = lang === "en" ? "Like this comment" : "喜欢这条评论";
     contentScroll.innerHTML = `
         ${comments.length ? comments.map((c, idx) => {
             const roleLabel = c?.role?.[lang] || "";
@@ -1035,7 +1177,16 @@ function renderCommentSection() {
                         }).join("")}
                       </div>`)
                 : "";
+            const liked = isCommentLiked(currentWord.id, idx);
+            const ariaLabel = liked ? likedAriaLabel : unlikedAriaLabel;
             return `<section>
+                <button
+                    type="button"
+                    class="note-like-toggle${liked ? " is-liked" : ""}"
+                    data-comment-index="${idx}"
+                    aria-pressed="${liked ? "true" : "false"}"
+                    aria-label="${ariaLabel}"
+                ><span class="note-like-count" aria-hidden="true"></span></button>
                 <p class="left-title">${titleLabel}</p>
                 <div class="note-body"><br><br><br><br>${content}${imagesHtml}</div>
             </section>`;
@@ -1094,6 +1245,31 @@ function renderCommentSection() {
     }
 
     // 为每个note section添加折叠/展开功能
+    const likeButtons = contentScroll.querySelectorAll(".note-like-toggle");
+    likeButtons.forEach((btn) => {
+        btn.addEventListener("mousedown", (e) => {
+            e.stopPropagation();
+        });
+        btn.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const commentIndex = Number(btn.dataset.commentIndex);
+            if (!Number.isFinite(commentIndex)) return;
+            const liked = toggleCommentLiked(currentWord.id, commentIndex);
+            btn.classList.toggle("is-liked", liked);
+            btn.setAttribute("aria-pressed", liked ? "true" : "false");
+            btn.setAttribute("aria-label", liked ? likedAriaLabel : unlikedAriaLabel);
+            logEvent(COMMENT_LIKE_EVENT_NAME, {
+                wordId: currentWord.id,
+                commentIndex,
+                liked,
+                lang
+            });
+            refreshCommentLikeBadges(contentScroll, currentWord.id, { force: true });
+        });
+    });
+    refreshCommentLikeBadges(contentScroll, currentWord.id);
+
     const noteSections = Array.from(
         contentScroll.querySelectorAll('section:not(#section-contributors):not(#section-contact):not(#section-editors)')
     );
