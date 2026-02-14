@@ -510,7 +510,7 @@ function renderWordUniverse(wordsData) {
                         endWordView("switch");
                         startWordView(node.id);
                         zoomToWord(node.id, state.scaleThreshold);
-                        updateWordFocus();
+                        updateWordFocus(node.id);
                         renderPanelSections();
                         logEvent("word-node-click", { wordId: node.id });
                     }
@@ -589,7 +589,7 @@ function renderWordUniverse(wordsData) {
                         endWordView("switch");
                         startWordView(node.id);
                         zoomToWord(node.id, state.scaleThreshold);
-                        updateWordFocus();
+                        updateWordFocus(node.id);
                         renderPanelSections();
                         logEvent("word-node-click", { wordId: node.id });
                     }

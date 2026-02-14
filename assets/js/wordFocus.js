@@ -189,7 +189,7 @@ function resolveImagePath(src) {
     return src;
 }
 
-export function updateWordFocus() {
+export function updateWordFocus(targetNodeId = null) {
     // 清除之前聚焦的单词
     if (focusedWord) {
         focusedWord.classList.remove('focused');
@@ -216,27 +216,34 @@ export function updateWordFocus() {
     if (state.currentScale >= state.scaleThreshold) {
         // 找出距离视图中心最近的单词
         let closestWord = null;
-        let minDistance = window.innerHeight / 4;
+        const targetId = targetNodeId !== null && targetNodeId !== undefined ? String(targetNodeId) : "";
+        if (targetId) {
+            closestWord = document.getElementById(targetId);
+        }
 
-        document.querySelectorAll('.word-node').forEach(node => {
-            const rect = node.getBoundingClientRect();
-            const nodeCenter = {
-                x: rect.left + rect.width / 2,
-                y: rect.top + rect.height / 2
-            };
+        if (!closestWord) {
+            let minDistance = window.innerHeight / 4;
 
-            // 计算距离
-            const distance = Math.sqrt(
-                Math.pow(nodeCenter.x - viewportCenter.x, 2) +
-                Math.pow(nodeCenter.y - viewportCenter.y, 2)
-            );
+            document.querySelectorAll('.word-node').forEach(node => {
+                const rect = node.getBoundingClientRect();
+                const nodeCenter = {
+                    x: rect.left + rect.width / 2,
+                    y: rect.top + rect.height / 2
+                };
 
-            // 更新最近单词
-            if (distance < minDistance) {
-                minDistance = distance;
-                closestWord = node;
-            }
-        });
+                // Calculate distance from viewport center.
+                const distance = Math.sqrt(
+                    Math.pow(nodeCenter.x - viewportCenter.x, 2) +
+                    Math.pow(nodeCenter.y - viewportCenter.y, 2)
+                );
+
+                // Keep nearest word candidate.
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closestWord = node;
+                }
+            });
+        }
 
         // 聚焦最近的单词
         if (closestWord) {

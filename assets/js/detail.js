@@ -687,7 +687,7 @@ function filterProposer(name) {
             startWordView(targetNodeId);
             logEvent("link_click", { fromWordId, toWordId: targetNodeId });
             zoomToWord(targetNodeId, state.currentScale);
-            updateWordFocus();
+            updateWordFocus(targetNodeId);
 
             renderPanelSections();
             updateTabContent("book");
