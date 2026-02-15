@@ -20,6 +20,14 @@ import {
 import { logEvent, startWordView, endWordView } from "/analytics.js";
 import { yearPeriods } from "./menu.js";
 
+const BOOT_PROGRESS_EVENT = "dunes:boot-progress";
+
+function setBootProgress(value, label) {
+    window.dispatchEvent(new CustomEvent(BOOT_PROGRESS_EVENT, {
+        detail: { value, label }
+    }));
+}
+
 // Shared runtime state
 let sessionStartTs = null;
 window.allWords = [];
@@ -577,6 +585,7 @@ function setupImageVisibilityWatcher() {
 
 // App lifecycle
 document.addEventListener('DOMContentLoaded', () => {
+    setBootProgress(30, "Loading app...");
     sessionStartTs = Date.now();
     logEvent("session_start", {});
     const initialLang = resolveInitialLang();
@@ -585,6 +594,7 @@ document.addEventListener('DOMContentLoaded', () => {
     langBtn.textContent = initialLang;
     updateTabLabels();
     logEvent("page_loaded", { lang: initialLang });
+    setBootProgress(42, "Loading data...");
     fetch('/content/data.json')
         .then(response => {
             if (!response.ok) {
@@ -593,6 +603,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return response.json();
         })
         .then(data => {
+            setBootProgress(72, "Rendering words...");
             window.allWords = data.words;
             const homeIdRaw = data?.meta?.home_node_id;
             const homeIdNum = Number(homeIdRaw);
@@ -607,9 +618,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (state.focusedNodeId !== null && state.focusedNodeId !== undefined) {
                 startWordView(state.focusedNodeId);
             }
+            setBootProgress(100, "Loaded");
         })
         .catch(error => {
             logEvent("data_loaded", { status: "error" });
+            setBootProgress(100, "Load failed, please refresh");
             console.error('加载数据失败:', error);
             // Optional UI error handling can be added here.
             document.getElementById('word-nodes-container').innerHTML =

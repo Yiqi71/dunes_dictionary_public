@@ -21,6 +21,7 @@
     <script type="module" src="assets/js/relationManager.js" defer></script>
     <script type="module" src="assets/js/state.js" defer></script>
     <script type="module" src="assets/js/countryBoundingBoxes.js" defer></script>
+    <script type="module" src="assets/js/boot-progress.js" defer></script>
     <script type="module" src="assets/js/main.preview.js"></script>
     <script type="module" src="assets/js/invite-gate.js" defer></script>
 
@@ -30,7 +31,15 @@
     <!-- <script type="module" src="sandtest.js" defer></script> -->
 </head>
 
-<body>
+<body class="boot-pending">
+    <div id="boot-progress" role="status" aria-live="polite" aria-label="Page loading">
+        <div id="boot-progress-track">
+            <div id="boot-progress-indicator"></div>
+        </div>
+        <p id="boot-progress-text">Loading...</p>
+    </div>
+
+    <div id="app-root">
     <!-- <div id="center-dot"></div> -->
     <div id="invite-gate">
         <main class="invite-card">
@@ -215,6 +224,7 @@
     <div id="overlay" class="hidden"></div>
 
     <div id="tooltipDiv"></div>
+    </div>
 </body>
 
 </html>
