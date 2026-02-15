@@ -72,7 +72,7 @@ function endSession(reason = "unknown") {
 const langBtn = document.getElementById("language-icon");
 function updateTabLabels() {
     const currentLang = normalizeLang(state.currentLang);
-    document.querySelectorAll('button').forEach(button => {
+    document.querySelectorAll('.panel-tabs button[data-tab]').forEach(button => {
         if (!button) return;
 
         let span = button.querySelector('span');
