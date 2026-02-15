@@ -703,6 +703,26 @@ function renderUnderstandingVoteSection(sectionEl, currentWord, lang) {
         btn.style.overflow = "hidden";
     };
 
+    const ensureVoteBar = (btn) => {
+        let bar = btn.querySelector(".entry-vote-bar");
+        if (!bar) {
+            bar = document.createElement("span");
+            bar.className = "entry-vote-bar";
+            bar.setAttribute("aria-hidden", "true");
+            btn.insertBefore(bar, btn.firstChild);
+        }
+        bar.style.position = "absolute";
+        bar.style.left = "0";
+        bar.style.top = "0";
+        bar.style.height = "100%";
+        bar.style.width = "0%";
+        bar.style.background = "rgba(249, 214, 122, 0.30)";
+        bar.style.pointerEvents = "none";
+        bar.style.display = "none";
+        bar.style.zIndex = "0";
+        return bar;
+    };
+
     const renderChosenIcon = () => {
         clearBtn.querySelectorAll(".entry-vote-chosen-icon").forEach((el) => el.remove());
         unclearBtn.querySelectorAll(".entry-vote-chosen-icon").forEach((el) => el.remove());
@@ -724,11 +744,18 @@ function renderUnderstandingVoteSection(sectionEl, currentWord, lang) {
         icon.style.height = "6px";
         icon.style.pointerEvents = "none";
         icon.style.display = "block";
+        icon.style.zIndex = "2";
         targetBtn.appendChild(icon);
     };
 
     setVoteButtonBaseStyle(clearBtn);
     setVoteButtonBaseStyle(unclearBtn);
+    const clearBar = ensureVoteBar(clearBtn);
+    const unclearBar = ensureVoteBar(unclearBtn);
+    clearText.style.position = "relative";
+    clearText.style.zIndex = "1";
+    unclearText.style.position = "relative";
+    unclearText.style.zIndex = "1";
 
     noteEl.style.display = isVoteSyncConnected() ? "none" : "block";
 
@@ -750,6 +777,10 @@ function renderUnderstandingVoteSection(sectionEl, currentWord, lang) {
         displayedStats = normalizedStats;
         clearText.textContent = voted ? `${labels.clear} ${normalizedStats.clearPct}%` : labels.clear;
         unclearText.textContent = voted ? `${labels.unclear} ${normalizedStats.unclearPct}%` : labels.unclear;
+        clearBar.style.display = voted ? "block" : "none";
+        unclearBar.style.display = voted ? "block" : "none";
+        clearBar.style.width = voted ? `${normalizedStats.clearPct}%` : "0%";
+        unclearBar.style.width = voted ? `${normalizedStats.unclearPct}%` : "0%";
         clearBtn.classList.toggle("is-voted", voted);
         unclearBtn.classList.toggle("is-voted", voted);
         setSelected();
