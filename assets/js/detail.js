@@ -126,6 +126,8 @@ const COMMENT_LIKES_KEY = "dd_comment_likes_v1";
 const COMMENT_LIKE_EVENT_NAME = "comment_like_toggle";
 const COMMENT_LIKE_COUNTS_CACHE_TTL_MS = 30000;
 const commentLikeCountsCache = new Map();
+const voteStatsSessionRefreshedWordIds = new Set();
+const commentLikeSessionRefreshedWordIds = new Set();
 
 function getCommentLikeStorage() {
     const parsed = safeParseStorage(COMMENT_LIKES_KEY, {});
@@ -156,6 +158,22 @@ function toggleCommentLiked(wordId, commentIndex) {
     }
     setCommentLikeStorage(likes);
     return next;
+}
+
+function getPendingCommentLikeState(wordId, commentIndex) {
+    const targetWordId = String(wordId);
+    const targetCommentIndex = Number(commentIndex);
+    if (!Number.isFinite(targetCommentIndex)) return null;
+    const queue = getCommentLikeSyncQueue();
+    for (let i = queue.length - 1; i >= 0; i--) {
+        const eventPayload = queue[i];
+        if (!eventPayload || eventPayload.name !== COMMENT_LIKE_EVENT_NAME) continue;
+        const data = eventPayload.data || {};
+        if (String(data.wordId) !== targetWordId) continue;
+        if (Number(data.commentIndex) !== targetCommentIndex) continue;
+        return Boolean(data.liked);
+    }
+    return null;
 }
 
 async function fetchCommentLikeCounts(wordId, { force = false } = {}) {
@@ -204,13 +222,24 @@ async function refreshCommentLikeBadges(contentScroll, wordId, { force = false }
         return;
     }
 
+    const wordKey = String(wordId);
+    const shouldForceSessionRefresh = !commentLikeSessionRefreshedWordIds.has(wordKey);
+
     try {
-        const counts = await fetchCommentLikeCounts(wordId, { force });
+        const counts = await fetchCommentLikeCounts(wordId, { force: force || shouldForceSessionRefresh });
+        commentLikeSessionRefreshedWordIds.add(wordKey);
         buttons.forEach((btn) => {
             const idx = String(Number(btn.dataset.commentIndex));
+            const commentIndex = Number(btn.dataset.commentIndex);
             const liked = btn.classList.contains("is-liked");
             const rawCount = Math.max(0, Number(counts[idx]) || 0);
-            const displayCount = liked ? Math.max(1, rawCount) : rawCount;
+            const pendingState = getPendingCommentLikeState(wordId, commentIndex);
+            let displayCount = rawCount;
+            if (pendingState === true) {
+                displayCount = rawCount + 1;
+            } else if (pendingState === false) {
+                displayCount = Math.max(0, rawCount - 1);
+            }
             setCommentLikeBadge(btn, displayCount, liked);
         });
     } catch (_) {
@@ -757,7 +786,10 @@ function renderUnderstandingVoteSection(sectionEl, currentWord, lang) {
 
     const loadServerStats = async () => {
         try {
-            let serverStats = await fetchServerWordVoteStats(currentWord.id);
+            const wordKey = String(currentWord.id);
+            const shouldForceSessionRefresh = !voteStatsSessionRefreshedWordIds.has(wordKey);
+            let serverStats = await fetchServerWordVoteStats(currentWord.id, { force: shouldForceSessionRefresh });
+            voteStatsSessionRefreshedWordIds.add(wordKey);
             const pendingChoice = getPendingVoteChoice(currentWord.id);
             if (pendingChoice) {
                 serverStats = applyVoteChoiceToStats(serverStats, pendingChoice);
