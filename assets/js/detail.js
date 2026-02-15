@@ -197,10 +197,9 @@ async function refreshCommentLikeBadges(contentScroll, wordId, { force = false }
     const buttons = Array.from(contentScroll.querySelectorAll(".note-like-toggle"));
     if (!buttons.length) return;
 
-    const connected = isVoteSyncConnected();
     const anyLiked = buttons.some((btn) => btn.classList.contains("is-liked"));
 
-    if (!connected || !anyLiked) {
+    if (!anyLiked) {
         buttons.forEach((btn) => setCommentLikeBadge(btn, 0, false));
         return;
     }
@@ -210,8 +209,9 @@ async function refreshCommentLikeBadges(contentScroll, wordId, { force = false }
         buttons.forEach((btn) => {
             const idx = String(Number(btn.dataset.commentIndex));
             const liked = btn.classList.contains("is-liked");
-            const count = counts[idx] || 0;
-            setCommentLikeBadge(btn, count, connected && liked);
+            const rawCount = Math.max(0, Number(counts[idx]) || 0);
+            const displayCount = liked ? Math.max(1, rawCount) : rawCount;
+            setCommentLikeBadge(btn, displayCount, liked);
         });
     } catch (_) {
         buttons.forEach((btn) => setCommentLikeBadge(btn, 0, false));
