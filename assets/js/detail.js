@@ -73,6 +73,8 @@ const ENTRY_VOTE_COUNTS_KEY = "dd_entry_understanding_vote_counts_v1";
 const ENTRY_USER_VOTES_KEY = "dd_entry_understanding_user_votes_v1";
 const ENTRY_VOTE_SYNC_QUEUE_KEY = "dd_entry_understanding_vote_sync_queue_v1";
 const ENTRY_VOTE_SYNC_INTERVAL_MS = 15000;
+const ENTRY_VOTE_STATS_CACHE_TTL_MS = 30000;
+const ENTRY_VOTE_DEVICE_ID_KEY = "dd_vote_device_id_v1";
 const COMMENT_LIKE_SYNC_QUEUE_KEY = "dd_comment_like_sync_queue_v1";
 const COMMENT_LIKE_SNAPSHOT_SESSION_KEY = "dd_comment_like_snapshot_sent_v1";
 const ENTRY_VOTE_LOCAL_KEYS = [
@@ -83,6 +85,7 @@ const ENTRY_VOTE_LOCAL_KEYS = [
 let voteSyncState = navigator.onLine ? "checking" : "disconnected";
 let voteSyncInFlight = false;
 let voteSyncInitialized = false;
+const entryVoteStatsCache = new Map();
 let commentLikeSyncInFlight = false;
 let commentLikeSnapshotQueued = false;
 let voteResetHotkeyInitialized = false;
@@ -251,6 +254,19 @@ function getVoteSessionId() {
     return id;
 }
 
+function getVoteDeviceId() {
+    try {
+        let id = localStorage.getItem(ENTRY_VOTE_DEVICE_ID_KEY);
+        if (!id) {
+            id = `d_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
+            localStorage.setItem(ENTRY_VOTE_DEVICE_ID_KEY, id);
+        }
+        return id;
+    } catch (_) {
+        return "";
+    }
+}
+
 function isVoteSyncConnected() {
     return voteSyncState === "connected";
 }
@@ -280,6 +296,49 @@ function setVoteSyncState(next) {
 function getVoteSyncQueue() {
     const parsed = safeParseStorage(ENTRY_VOTE_SYNC_QUEUE_KEY, []);
     return Array.isArray(parsed) ? parsed : [];
+}
+
+function normalizeVoteChoice(choice) {
+    const v = String(choice || "").toLowerCase();
+    return v === "clear" || v === "unclear" ? v : null;
+}
+
+function toVoteStats(clear, unclear) {
+    const safeClear = Math.max(0, Number(clear) || 0);
+    const safeUnclear = Math.max(0, Number(unclear) || 0);
+    const total = safeClear + safeUnclear;
+    const clearPct = total > 0 ? Math.round((safeClear / total) * 100) : 0;
+    const unclearPct = total > 0 ? 100 - clearPct : 0;
+    return { clear: safeClear, unclear: safeUnclear, total, clearPct, unclearPct };
+}
+
+function normalizeVoteStats(stats) {
+    if (!stats || typeof stats !== "object") return toVoteStats(0, 0);
+    return toVoteStats(stats.clear, stats.unclear);
+}
+
+function applyVoteChoiceToStats(stats, choice) {
+    const next = normalizeVoteStats(stats);
+    const normalizedChoice = normalizeVoteChoice(choice);
+    if (!normalizedChoice) return next;
+    return toVoteStats(
+        next.clear + (normalizedChoice === "clear" ? 1 : 0),
+        next.unclear + (normalizedChoice === "unclear" ? 1 : 0)
+    );
+}
+
+function getPendingVoteChoice(wordId) {
+    const targetWordId = String(wordId);
+    const queue = getVoteSyncQueue();
+    for (let i = queue.length - 1; i >= 0; i--) {
+        const eventPayload = queue[i];
+        if (!eventPayload || eventPayload.name !== "entry_understanding_vote") continue;
+        const data = eventPayload.data || {};
+        if (String(data.wordId) !== targetWordId) continue;
+        const choice = normalizeVoteChoice(data.choice);
+        if (choice) return choice;
+    }
+    return null;
 }
 
 function setVoteSyncQueue(queue) {
@@ -352,6 +411,7 @@ function buildVoteSyncEvent(wordId, choice) {
         data: {
             wordId,
             choice,
+            deviceId: getVoteDeviceId(),
             lang: normalizeLang(document.documentElement.lang || state.currentLang || "zh")
         }
     };
@@ -534,12 +594,28 @@ function getWordVoteStats(wordId) {
     const counts = safeParseStorage(ENTRY_VOTE_COUNTS_KEY, {});
     const id = String(wordId);
     const current = counts[id] || {};
-    const clear = Math.max(0, Number(current.clear) || 0);
-    const unclear = Math.max(0, Number(current.unclear) || 0);
-    const total = clear + unclear;
-    const clearPct = total > 0 ? Math.round((clear / total) * 100) : 0;
-    const unclearPct = total > 0 ? 100 - clearPct : 0;
-    return { clear, unclear, total, clearPct, unclearPct };
+    return toVoteStats(current.clear, current.unclear);
+}
+
+async function fetchServerWordVoteStats(wordId, { force = false } = {}) {
+    const cacheKey = String(wordId);
+    const now = Date.now();
+    const cached = entryVoteStatsCache.get(cacheKey);
+    if (!force && cached && now - cached.ts < ENTRY_VOTE_STATS_CACHE_TTL_MS) {
+        return cached.stats;
+    }
+
+    const response = await fetch(`/api/votes/understanding?wordId=${encodeURIComponent(cacheKey)}`, {
+        cache: "no-store"
+    });
+    if (!response.ok) {
+        throw new Error(`failed_to_fetch_vote_stats_${response.status}`);
+    }
+
+    const payload = await response.json();
+    const stats = normalizeVoteStats(payload?.stats);
+    entryVoteStatsCache.set(cacheKey, { ts: now, stats });
+    return stats;
 }
 
 function getUserVote(wordId) {
@@ -610,27 +686,49 @@ function renderUnderstandingVoteSection(sectionEl, currentWord, lang) {
     noteEl.style.display = isVoteSyncConnected() ? "none" : "block";
 
     let selectedChoice = null;
+    const existingVote = getUserVote(currentWord.id);
+    let hasVoted = Boolean(existingVote);
+    let displayedStats = hasVoted ? getWordVoteStats(currentWord.id) : toVoteStats(0, 0);
 
     const setSelected = () => {
         clearBtn.classList.toggle("is-selected", selectedChoice === "clear");
         unclearBtn.classList.toggle("is-selected", selectedChoice === "unclear");
     };
 
-    const renderPercentages = (stats) => {
-        clearBtn.textContent = `${labels.clear} ${stats.clearPct}%`;
-        unclearBtn.textContent = `${labels.unclear} ${stats.unclearPct}%`;
-        clearBtn.classList.remove("is-selected");
-        unclearBtn.classList.remove("is-selected");
-        clearBtn.classList.add("is-voted");
-        unclearBtn.classList.add("is-voted");
+    const renderVoteState = (stats, voted) => {
+        const normalizedStats = normalizeVoteStats(stats);
+        displayedStats = normalizedStats;
+        clearBtn.textContent = `${labels.clear} ${normalizedStats.clearPct}%`;
+        unclearBtn.textContent = `${labels.unclear} ${normalizedStats.unclearPct}%`;
+        clearBtn.classList.toggle("is-voted", voted);
+        unclearBtn.classList.toggle("is-voted", voted);
+        if (voted) {
+            clearBtn.classList.remove("is-selected");
+            unclearBtn.classList.remove("is-selected");
+            submitBtn.style.display = "none";
+        } else {
+            submitBtn.style.display = "";
+        }
     };
 
-    const existingVote = getUserVote(currentWord.id);
-    if (existingVote) {
-        renderPercentages(getWordVoteStats(currentWord.id));
-        submitBtn.style.display = "none";
-        return;
-    }
+    renderVoteState(displayedStats, hasVoted);
+
+    const loadServerStats = async () => {
+        try {
+            let serverStats = await fetchServerWordVoteStats(currentWord.id);
+            const pendingChoice = getPendingVoteChoice(currentWord.id);
+            if (pendingChoice) {
+                serverStats = applyVoteChoiceToStats(serverStats, pendingChoice);
+            }
+            renderVoteState(serverStats, hasVoted);
+        } catch (_) {
+            renderVoteState(hasVoted ? getWordVoteStats(currentWord.id) : displayedStats, hasVoted);
+        }
+    };
+
+    loadServerStats();
+    if (hasVoted) return;
+    
 
     clearBtn.addEventListener("click", (e) => {
         e.stopPropagation();
@@ -650,8 +748,8 @@ function renderUnderstandingVoteSection(sectionEl, currentWord, lang) {
         const stats = submitWordVote(currentWord.id, selectedChoice);
         if (!stats) return;
 
-        submitBtn.style.display = "none";
-        renderPercentages(stats);
+        hasVoted = true;
+        renderVoteState(applyVoteChoiceToStats(displayedStats, selectedChoice), true);
         enqueueVoteSync(currentWord.id, selectedChoice);
         syncVoteQueue();
     });
