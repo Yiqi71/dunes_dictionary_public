@@ -644,8 +644,8 @@ function renderUnderstandingVoteSection(sectionEl, currentWord, lang) {
         <div class="entry-vote-wrap">
             <p class="entry-vote-question">${labels.question}</p>
             <div class="entry-vote-options">
-                <button type="button" class="entry-vote-option" data-vote="clear">${labels.clear}</button>
-                <button type="button" class="entry-vote-option" data-vote="unclear">${labels.unclear}</button>
+                <button type="button" class="entry-vote-option" data-vote="clear"><span class="entry-vote-text">${labels.clear}</span></button>
+                <button type="button" class="entry-vote-option" data-vote="unclear"><span class="entry-vote-text">${labels.unclear}</span></button>
             </div>
             <button type="button" class="entry-vote-submit">${labels.submit}</button>
             <p class="entry-vote-note">${labels.syncNote}</p>
@@ -654,32 +654,99 @@ function renderUnderstandingVoteSection(sectionEl, currentWord, lang) {
 
     const clearBtn = sectionEl.querySelector('[data-vote="clear"]');
     const unclearBtn = sectionEl.querySelector('[data-vote="unclear"]');
+    const clearText = clearBtn?.querySelector(".entry-vote-text");
+    const unclearText = unclearBtn?.querySelector(".entry-vote-text");
     const submitBtn = sectionEl.querySelector(".entry-vote-submit");
     const noteEl = sectionEl.querySelector(".entry-vote-note");
-    if (!clearBtn || !unclearBtn || !submitBtn || !noteEl) return;
+    if (!clearBtn || !unclearBtn || !clearText || !unclearText || !submitBtn || !noteEl) return;
+
+    const setVoteButtonBaseStyle = (btn) => {
+        btn.style.position = "relative";
+        btn.style.overflow = "hidden";
+    };
+
+    const ensureVoteBar = (btn) => {
+        let bar = btn.querySelector(".entry-vote-bar");
+        if (!bar) {
+            bar = document.createElement("span");
+            bar.className = "entry-vote-bar";
+            bar.setAttribute("aria-hidden", "true");
+            btn.insertBefore(bar, btn.firstChild);
+        }
+        bar.style.position = "absolute";
+        bar.style.left = "0";
+        bar.style.top = "0";
+        bar.style.height = "100%";
+        bar.style.width = "0%";
+        bar.style.background = "rgba(249, 214, 122, 0.30)";
+        bar.style.pointerEvents = "none";
+        bar.style.display = "none";
+        bar.style.zIndex = "0";
+        return bar;
+    };
+
+    const renderChosenIcon = () => {
+        clearBtn.querySelectorAll(".entry-vote-chosen-icon").forEach((el) => el.remove());
+        unclearBtn.querySelectorAll(".entry-vote-chosen-icon").forEach((el) => el.remove());
+
+        if (!hasVoted) return;
+        if (selectedChoice !== "clear" && selectedChoice !== "unclear") return;
+
+        const targetBtn = selectedChoice === "clear" ? clearBtn : unclearBtn;
+        const icon = document.createElement("img");
+        icon.className = "entry-vote-chosen-icon";
+        icon.src = "assets/images/chosen.svg";
+        icon.alt = "";
+        icon.setAttribute("aria-hidden", "true");
+        icon.style.position = "absolute";
+        icon.style.left = "10px";
+        icon.style.top = "50%";
+        icon.style.transform = "translateY(-2px)";
+        icon.style.width = "7px";
+        icon.style.height = "6px";
+        icon.style.pointerEvents = "none";
+        icon.style.display = "block";
+        icon.style.zIndex = "2";
+        targetBtn.appendChild(icon);
+    };
+
+    setVoteButtonBaseStyle(clearBtn);
+    setVoteButtonBaseStyle(unclearBtn);
+    const clearBar = ensureVoteBar(clearBtn);
+    const unclearBar = ensureVoteBar(unclearBtn);
+    clearText.style.position = "relative";
+    clearText.style.zIndex = "1";
+    unclearText.style.position = "relative";
+    unclearText.style.zIndex = "1";
 
     noteEl.style.display = isVoteSyncConnected() ? "none" : "block";
 
-    let selectedChoice = null;
     const existingVote = getUserVote(currentWord.id);
+    let selectedChoice = existingVote || null;
     let hasVoted = Boolean(existingVote);
     let displayedStats = hasVoted ? getWordVoteStats(currentWord.id) : toVoteStats(0, 0);
 
     const setSelected = () => {
         clearBtn.classList.toggle("is-selected", selectedChoice === "clear");
         unclearBtn.classList.toggle("is-selected", selectedChoice === "unclear");
+        clearBtn.style.borderColor = selectedChoice === "clear" ? "#F9D67A" : "";
+        unclearBtn.style.borderColor = selectedChoice === "unclear" ? "#F9D67A" : "";
+        renderChosenIcon();
     };
 
     const renderVoteState = (stats, voted) => {
         const normalizedStats = normalizeVoteStats(stats);
         displayedStats = normalizedStats;
-        clearBtn.textContent = `${labels.clear} ${normalizedStats.clearPct}%`;
-        unclearBtn.textContent = `${labels.unclear} ${normalizedStats.unclearPct}%`;
+        clearText.textContent = voted ? `${labels.clear} ${normalizedStats.clearPct}%` : labels.clear;
+        unclearText.textContent = voted ? `${labels.unclear} ${normalizedStats.unclearPct}%` : labels.unclear;
+        clearBar.style.display = voted ? "block" : "none";
+        unclearBar.style.display = voted ? "block" : "none";
+        clearBar.style.width = voted ? `${normalizedStats.clearPct}%` : "0%";
+        unclearBar.style.width = voted ? `${normalizedStats.unclearPct}%` : "0%";
         clearBtn.classList.toggle("is-voted", voted);
         unclearBtn.classList.toggle("is-voted", voted);
+        setSelected();
         if (voted) {
-            clearBtn.classList.remove("is-selected");
-            unclearBtn.classList.remove("is-selected");
             submitBtn.style.display = "none";
         } else {
             submitBtn.style.display = "";
