@@ -1,5 +1,12 @@
 {
   "rewrites": [
-    { "source": "/events", "destination": "https://api.dunes-dictionary.com/events" }
+    { "source": "/events", "destination": "https://api.dunes-dictionary.com/events" },
+    { "source": "/en", "destination": "/index.html" },
+    { "source": "/cn", "destination": "/index.html" },
+    { "source": "/zh", "destination": "/index.html" },
+    { "source": "/en/:slug", "destination": "/index.html" },
+    { "source": "/cn/:slug", "destination": "/index.html" },
+    { "source": "/zh/:slug", "destination": "/index.html" },
+    { "source": "/:slug", "destination": "/index.html" }
   ]
 }

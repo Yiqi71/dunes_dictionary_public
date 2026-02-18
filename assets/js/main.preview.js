@@ -53,11 +53,111 @@ function normalizeLang(code) {
     return v.startsWith("zh") ? "zh" : "en";
 }
 
-function resolveInitialLang() {
+function routeLangToStateLang(routeLang) {
+    const v = String(routeLang || "").toLowerCase();
+    if (v === "cn" || v === "zh") return "zh";
+    if (v === "en") return "en";
+    return null;
+}
+
+function stateLangToRouteLang(lang) {
+    return normalizeLang(lang) === "zh" ? "cn" : "en";
+}
+
+function slugifyTerm(value) {
+    const raw = String(value || "")
+        .trim()
+        .normalize("NFKD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase();
+    return raw
+        .replace(/[^a-z0-9\u4e00-\u9fff]+/g, "-")
+        .replace(/^-+|-+$/g, "")
+        .replace(/-{2,}/g, "-");
+}
+
+function getWordSlug(word, lang = "en") {
+    if (!word) return "";
+    const preferred = word?.term?.[lang] || word?.term?.en || word?.term?.zh || word?.termOri || "";
+    return slugifyTerm(preferred);
+}
+
+function buildWordSlugCandidates(word) {
+    const candidates = new Set();
+    const add = (value) => {
+        const slug = slugifyTerm(value);
+        if (slug) candidates.add(slug);
+    };
+    add(word?.term?.en);
+    add(word?.term?.zh);
+    add(word?.termOri);
+    return candidates;
+}
+
+function findWordByRouteSlug(routeSlug, words = []) {
+    const normalized = slugifyTerm(decodeURIComponent(String(routeSlug || "")));
+    if (!normalized) return null;
+    for (const word of words) {
+        const candidates = buildWordSlugCandidates(word);
+        if (candidates.has(normalized)) return word;
+    }
+    return null;
+}
+
+function parseRouteState(pathname = window.location.pathname) {
+    const segments = String(pathname || "/")
+        .split("/")
+        .filter(Boolean)
+        .map((v) => decodeURIComponent(v));
+
+    if (!segments.length) return { routeLang: null, routeSlug: null };
+
+    const first = segments[0].toLowerCase();
+    const routeLang = routeLangToStateLang(first);
+    if (routeLang) {
+        return {
+            routeLang,
+            routeSlug: segments.slice(1).join("/")
+        };
+    }
+
+    return {
+        routeLang: null,
+        routeSlug: segments.join("/")
+    };
+}
+
+function resolveInitialLang(routeLang = null) {
+    if (routeLang) return normalizeLang(routeLang);
     const browserLang = (navigator.languages && navigator.languages[0]) || navigator.language || "";
     if (browserLang) return normalizeLang(browserLang);
     return normalizeLang(document.documentElement.lang || state.currentLang || "en");
 }
+
+let lastSyncedPath = null;
+
+function syncRouteFromState({ replace = true } = {}) {
+    const lang = normalizeLang(state.currentLang || document.documentElement.lang || "en");
+    const routeLang = stateLangToRouteLang(lang);
+    let nextPath = `/${routeLang}`;
+
+    if (state.focusedNodeId !== null && state.focusedNodeId !== undefined && window.allWords?.length) {
+        const word = window.allWords.find((w) => String(w.id) === String(state.focusedNodeId));
+        const slug = getWordSlug(word, lang);
+        if (slug) {
+            nextPath = `/${routeLang}/${encodeURIComponent(slug)}`;
+        }
+    }
+
+    if (window.location.pathname === nextPath || lastSyncedPath === nextPath) return;
+    const fn = replace ? window.history.replaceState : window.history.pushState;
+    fn.call(window.history, {}, "", nextPath);
+    lastSyncedPath = nextPath;
+}
+
+window.__DD_SYNC_ROUTE = () => {
+    syncRouteFromState({ replace: true });
+};
 
 // Session analytics
 function endSession(reason = "unknown") {
@@ -126,6 +226,7 @@ langBtn.addEventListener("click", () => {
     }else{
         updateWordFocus();
     }
+    syncRouteFromState({ replace: true });
 });
 
 // Color and date helpers
@@ -588,7 +689,8 @@ document.addEventListener('DOMContentLoaded', () => {
     setBootProgress(30, "Loading app...");
     sessionStartTs = Date.now();
     logEvent("session_start", {});
-    const initialLang = resolveInitialLang();
+    const routeState = parseRouteState(window.location.pathname);
+    const initialLang = resolveInitialLang(routeState.routeLang);
     document.documentElement.lang = initialLang;
     state.currentLang = initialLang;
     langBtn.textContent = initialLang;
@@ -605,9 +707,12 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(data => {
             setBootProgress(72, "Rendering words...");
             window.allWords = data.words;
+            const matchedWord = findWordByRouteSlug(routeState.routeSlug, data.words);
             const homeIdRaw = data?.meta?.home_node_id;
             const homeIdNum = Number(homeIdRaw);
-            if (Number.isFinite(homeIdNum)) {
+            if (matchedWord?.id !== null && matchedWord?.id !== undefined) {
+                state.focusedNodeId = matchedWord.id;
+            } else if (Number.isFinite(homeIdNum)) {
                 state.focusedNodeId = homeIdNum;
             }
             logEvent("data_loaded", { status: "success", count: data.words ? data.words.length : 0 });
@@ -618,6 +723,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (state.focusedNodeId !== null && state.focusedNodeId !== undefined) {
                 startWordView(state.focusedNodeId);
             }
+            syncRouteFromState({ replace: true });
             setBootProgress(100, "Loaded");
         })
         .catch(error => {

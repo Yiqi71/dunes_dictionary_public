@@ -277,6 +277,9 @@ export function updateWordFocus(targetNodeId = null) {
                     scrollToTop(); // 使用新的滚动到顶端函数
                 });
             }
+            if (typeof window.__DD_SYNC_ROUTE === "function") {
+                window.__DD_SYNC_ROUTE();
+            }
         }
     } else {
         setMenuCompact(false);
@@ -300,18 +303,6 @@ export function updateWordDetails() {
     }, {
         passive: false
     });
-
-    // term section
-    // const termTitle = document.querySelector('#term .detail-title');
-    // const termMainEl = document.querySelector('#term .term-main');
-    // const originalTermEl = document.querySelector('#term .term-ori');
-    // termTitle.textContent = String(word.id).padStart(4, '0');
-    // termMainEl.textContent = word.term || '未知单词';
-    // originalTermEl.textContent = word.termOri || '无';
-
-    // const node = document.getElementById(word.id);
-    // const termDiv = document.getElementById("term");
-    // termDiv.style.backgroundColor = node.style.backgroundColor;
 
     // related works + source image section
     const imageTitle = document.querySelector('#image .detail-title');
@@ -468,6 +459,3 @@ function stopBreathingAnimation() {
         });
     }
 }
-
-
-
