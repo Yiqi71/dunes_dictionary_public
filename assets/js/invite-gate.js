@@ -3,6 +3,9 @@ const INVITE_CODE_KEY = "dunes_invite_code_v1";
 const CODES_URL = "assets/data/invite-codes.json";
 const SUCCESS_HOLD_MS = 2000;
 const FADE_OUT_MS = 700;
+const ENTRY_READY_EVENT = "dunes:entry-ready";
+
+let entryReadyNotified = false;
 
 function normalizeInviteCode(value) {
     return String(value || "").trim().toUpperCase();
@@ -24,9 +27,18 @@ async function loadCodes() {
     return new Set(payload.codes.map(normalizeInviteCode));
 }
 
-function hideGate(gate) {
+function notifyEntryReady(source) {
+    if (entryReadyNotified) return;
+    entryReadyNotified = true;
+    window.dispatchEvent(new CustomEvent(ENTRY_READY_EVENT, {
+        detail: { source: source || "unknown", at: Date.now() }
+    }));
+}
+
+function hideGate(gate, source = "unknown") {
     if (!gate) return;
     gate.classList.add("is-hidden");
+    notifyEntryReady(source);
 }
 
 function showSuccessOverlay(gate, input, submit, message) {
@@ -38,7 +50,7 @@ function showSuccessOverlay(gate, input, submit, message) {
     window.setTimeout(() => {
         gate.classList.add("is-fading");
         window.setTimeout(() => {
-            hideGate(gate);
+            hideGate(gate, "invite-verified");
         }, FADE_OUT_MS);
     }, SUCCESS_HOLD_MS);
 }
@@ -60,13 +72,16 @@ function initInviteGate() {
     const submit = document.getElementById("invite-submit");
     const message = document.getElementById("invite-message");
 
-    if (!gate || !form || !input || !submit || !message) return;
+    if (!gate || !form || !input || !submit || !message) {
+        notifyEntryReady("no-gate");
+        return;
+    }
 
     ensureSuccessTitle(gate);
 
     try {
         if (localStorage.getItem(INVITE_OK_KEY) === "true") {
-            hideGate(gate);
+            hideGate(gate, "invite-cached");
             return;
         }
     } catch (_) {

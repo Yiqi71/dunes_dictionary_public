@@ -1,13 +1,13 @@
 // Imports
 import { state } from "./state.js";
-import { draw, updateWordNodeTransforms, updateScaleForNodes, handleZoomWheel } from "./uni-canvas.js";
+import { updateWordNodeTransforms, handleZoomWheel } from "./uni-canvas.js";
 import { country_bounding_boxes } from "./countryBoundingBoxes.js";
 import { resolveCountryCode } from "./countryMapping.js";
 import { renderPanelSections } from "./detail.js";
 import {updateRelations} from "./relationManager.js";
 import {
     zoomToWord,
-    updateWordDetails,
+    zoomInToWordOnSessionEntry,
     updateWordFocus
 } from "./wordFocus.js";
 import { applyStintFallbackToElement } from "./fontFallback.js";
@@ -21,6 +21,7 @@ import { logEvent, startWordView, endWordView } from "/analytics.js";
 import { yearPeriods } from "./menu.js";
 
 const BOOT_PROGRESS_EVENT = "dunes:boot-progress";
+const ENTRY_READY_EVENT = "dunes:entry-ready";
 
 function setBootProgress(value, label) {
     window.dispatchEvent(new CustomEvent(BOOT_PROGRESS_EVENT, {
@@ -44,8 +45,42 @@ const yearPeriodColors = [
 let wordsOnGrid = {};
 let usedPositions = new Set();
 let minGrid = 2;
+let entryGateReady = false;
+let entryDataReady = false;
+let entryFlowStarted = false;
 
 initSavedWordStorageSync();
+
+function hasGateBeenDismissed() {
+    const gate = document.getElementById("invite-gate");
+    return !gate || gate.classList.contains("is-hidden");
+}
+
+function wait(ms) {
+    return new Promise((resolve) => window.setTimeout(resolve, ms));
+}
+
+async function tryRunEntryFlow() {
+    if (entryFlowStarted || !entryDataReady || !entryGateReady) return;
+    entryFlowStarted = true;
+
+    const targetId = state.focusedNodeId;
+    setBootProgress(100, "Loaded");
+    await wait(620);
+    if (targetId !== null && targetId !== undefined) {
+        await zoomInToWordOnSessionEntry(targetId, {
+            minScale: 1,
+            targetScale: state.scaleThreshold,
+            duration: 1850
+        });
+    }
+
+    updateWordFocus(targetId);
+    if (targetId !== null && targetId !== undefined) {
+        startWordView(targetId);
+    }
+    syncRouteFromState({ replace: true });
+}
 
 // Language helpers
 function normalizeLang(code) {
@@ -687,6 +722,11 @@ function setupImageVisibilityWatcher() {
 // App lifecycle
 document.addEventListener('DOMContentLoaded', () => {
     setBootProgress(30, "Loading app...");
+    entryGateReady = hasGateBeenDismissed();
+    window.addEventListener(ENTRY_READY_EVENT, () => {
+        entryGateReady = true;
+        tryRunEntryFlow();
+    }, { once: true });
     sessionStartTs = Date.now();
     logEvent("session_start", {});
     const routeState = parseRouteState(window.location.pathname);
@@ -718,13 +758,8 @@ document.addEventListener('DOMContentLoaded', () => {
             logEvent("data_loaded", { status: "success", count: data.words ? data.words.length : 0 });
             // Render once data is loaded.
             renderWordUniverse(data.words);
-            zoomToWord(state.focusedNodeId,state.scaleThreshold);
-            updateWordFocus();
-            if (state.focusedNodeId !== null && state.focusedNodeId !== undefined) {
-                startWordView(state.focusedNodeId);
-            }
-            syncRouteFromState({ replace: true });
-            setBootProgress(100, "Loaded");
+            entryDataReady = true;
+            tryRunEntryFlow();
         })
         .catch(error => {
             logEvent("data_loaded", { status: "error" });

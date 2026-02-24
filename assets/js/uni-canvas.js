@@ -49,7 +49,7 @@ function endDrag() {
     updateRelations();
 }
 
-// 更新 word-nodes 的位�?
+// 更新 word-nodes 的 position
 export function updateWordNodeTransforms() {
     const scale = state.currentScale;
     const totalWidth = state.baseWidth * scale * 24;
@@ -125,25 +125,25 @@ export function handleZoomWheel(e) {
     const delta = e.deltaY > 0 ? -zoomStep : zoomStep;
     let newScale = Math.min(state.scaleThreshold, Math.max(minScale, scale + delta));
 
-    // 获取当前�?snapped scale 级别
+    // 获取当前的snapped scale 级别
     const currentSnapped = getSnappedScale(scale);
     const newSnapped = getSnappedScale(newScale);
 
-    // 如果当前�?scale 4-5 范围内，直接跳转
+    // 如果当前的scale 4-5 范围内，直接跳转
     if (currentSnapped === 4 || currentSnapped === 5) {
         if (delta > 0) {
             // 向上滚动 - zoom in
             if (currentSnapped === 4) {
                 newScale = state.scaleThreshold; // 跳到 scale 5
             } else {
-                newScale = state.scaleThreshold; // 已经�?scale 5，继续放大到最�?
+                newScale = state.scaleThreshold; // 已经 scale 5，继续放大到最大值
             }
         } else {
             // 向下滚动 - zoom out  
             if (currentSnapped === 5) {
                 newScale = 10; // 跳到 scale 4 的最大值，避免重复触发
             } else {
-                newScale = scale+delta; // �?scale 4 跳到 scale 3 的最大�?
+                newScale = scale+delta; // scale 4 跳到 scale 3 的最大
             }
         }
     }
@@ -288,6 +288,7 @@ function drawSpecialLatLines(offsetX, offsetY, gridHeight, totalWidth, gridWidth
 function initialize() {
     setupCanvas(); // 替换原始初始�?
     updateGridSizeToFitHeight();
+    updateScaleForNodes(state.currentScale);
     draw();
     updateWordNodeTransforms();
 }
