@@ -463,10 +463,12 @@ body[data-scale="5"] .detail-title {
     z-index: 100;
 
     box-shadow: #403b2c58 0px 0px 2px 2px;
+    cursor: pointer;
 }
 
 .detail * {
     margin: 15px 12px;
+    cursor: inherit;
 }
 
 .detail i {
