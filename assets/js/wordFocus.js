@@ -10,6 +10,7 @@ let focusedWord = null;
 let lastFocusedNodeId = null;
 let activeZoomAnimation = null;
 const MENU_COMPACT_CLASS = "menu-compact";
+const PENDING_FOCUS_CLASS = "pending-focus";
 
 function fadeOutDetailsForTransition() {
     const detailDiv = document.getElementById("word-details");
@@ -163,6 +164,10 @@ function cancelActiveZoomAnimation(resolveValue = false) {
 export function zoomToWord(id, newScale, options = {}) {
     const node = document.getElementById(String(id));
     if (!node) return Promise.resolve(false);
+    document.querySelectorAll(`.word-node.${PENDING_FOCUS_CLASS}`).forEach((n) => {
+        n.classList.remove(PENDING_FOCUS_CLASS);
+    });
+    node.classList.add(PENDING_FOCUS_CLASS);
 
     const {
         animated = false,
@@ -255,6 +260,10 @@ function resolveImagePath(src) {
 }
 
 export function updateWordFocus(targetNodeId = null) {
+    document.querySelectorAll(`.word-node.${PENDING_FOCUS_CLASS}`).forEach((node) => {
+        node.classList.remove(PENDING_FOCUS_CLASS);
+    });
+
     // 清除之前聚焦的单词
     if (focusedWord) {
         focusedWord.classList.remove('focused');
