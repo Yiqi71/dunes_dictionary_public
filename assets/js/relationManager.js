@@ -239,20 +239,20 @@ function addLineInteractions(hitbox, visualLine, word1, word2, relation, targetI
         // 高亮效果：变粗、变亮
         const currentWidth = parseFloat(visualLine.getAttribute('stroke-width'));
         visualLine.setAttribute('stroke-width', currentWidth * 1.8);
-        visualLine.setAttribute('stroke', '#FFE135'); // 高亮颜色
+        visualLine.setAttribute('stroke', '#F9D67A'); // 高亮颜色
         
         // hover时取消虚线效果，显示为实线
         visualLine.setAttribute('stroke-dasharray', 'none');
         
-        visualLine.style.filter = 'drop-shadow(0 0 4px rgba(255, 225, 53, 0.6))'; // 发光效果
+        visualLine.style.filter = 'drop-shadow(0 0 4px rgba(249, 214, 122, 0.6))'; // 发光效果
         
         // 显示tooltip
         const wordLabel = getLangText(word2?.term, state.currentLang) || String(targetId || "");
         const relationLabel = getRelationLabel(relation, state.currentLang);
         tooltipDiv.textContent = `${relationLabel}: ${wordLabel}`;
         tooltipDiv.style.position = 'fixed';
-        tooltipDiv.style.background = 'rgba(0, 0, 0, 0.85)';
-        tooltipDiv.style.color = '#FFE135';
+        tooltipDiv.style.background = '#1E1C16';
+        tooltipDiv.style.color = '#F9D67A';
         tooltipDiv.style.padding = '6px 10px';
         tooltipDiv.style.borderRadius = '6px';
         tooltipDiv.style.fontSize = '13px';
@@ -261,7 +261,7 @@ function addLineInteractions(hitbox, visualLine, word1, word2, relation, targetI
         tooltipDiv.style.zIndex = '9999';
         tooltipDiv.style.display = 'block';
         tooltipDiv.style.opacity = "1";
-        tooltipDiv.style.border = '1px solid #FFE135';
+        tooltipDiv.style.border = '1px solid #F9D67A';
         tooltipDiv.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.3)';
         tooltipDiv.style.left = (e.clientX + 12) + 'px';
         tooltipDiv.style.top = (e.clientY + 12) + 'px';
