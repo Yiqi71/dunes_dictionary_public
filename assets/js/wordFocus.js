@@ -1,6 +1,7 @@
 // wordFocus.js - 专门处理单词焦点和缩放
 import { state } from "./state.js";
-import { draw, updateWordNodeTransforms, updateScaleForNodes } from "./uni-canvas.js";
+import { draw, updateWordNodeTransforms } from "./uni-canvas.js";
+import { updateScaleForNodes } from "./zoom.js";
 import { updateRelations } from "./relationManager.js";
 import { renderPanelSections , showFloatingPanel, scrollToTop, resetFloatingPanelState } from "./detail.js";
 import { moveIndicator } from "./menu.js";

@@ -14,12 +14,18 @@ import {
     draw,
     updateWordNodeTransforms,
     clampOffsetX,
-    clampOffsetY,
-    updateScaleForNodes
+    clampOffsetY
 } from "./uni-canvas.js";
+import {
+    updateScaleForNodes,
+    getScaleFromSliderPercent,
+    getIndicatorScaleValue,
+    clampIndicatorScaleValue,
+    getIndicatorPercent
+} from "./zoom.js";
 import { logEvent, startWordView, endWordView } from "/analytics.js";
 
-// �?menu.js 文件顶部�?import 部分添加
+// �?menu.js 文件顶部�?import 部分添加
 import { showAboutPanel } from "./aboutPanel.js";
 
 function normalizeLang(code) {
@@ -53,7 +59,7 @@ numbersContainer.innerHTML = '';
 for (let i = 0; i < numSteps; i++) {
     const percent = (i / (numSteps - 1)) * 100;
 
-    // 刻度�?
+    // 刻度�?
     const tick = document.createElement('div');
     tick.style.left = percent + '%';
     ticksContainer.appendChild(tick);
@@ -71,7 +77,7 @@ let isDragging = false;
 let containerRect;
 
 
-// 初始�?indicator 在中�?
+// 初始�?indicator 在中�?
 if(state.scaleThreshold){
     moveIndicator(state.scaleThreshold);
 }
@@ -103,7 +109,7 @@ function onDrag(e) {
 
 
     let scale = state.currentScale;
-    let newScale = percent * 19 / 100 + 1;
+    let newScale = getScaleFromSliderPercent(percent);
 
     const mouseX = window.innerWidth / 2;
     const mouseY = window.innerHeight / 2;
@@ -115,8 +121,8 @@ function onDrag(e) {
     offsetY = mouseY - (mouseY - offsetY) * (newScale / scale);
 
     state.panX = clampOffsetX(offsetX);
-    state.panY = clampOffsetY(offsetY); // 加边�?
-    state.currentScale = percent * 19 / 100 + 1;
+    state.panY = clampOffsetY(offsetY); // 加边�?
+    state.currentScale = newScale;
 
     draw();
     updateWordNodeTransforms();
@@ -138,10 +144,9 @@ function snapToStep() {
 
 // 可程序化移动 indicator
 export function moveIndicator(scaleValue) {
-    scaleValue = (scaleValue-1) * 4 / (state.scaleThreshold-1)+1;
-    if (scaleValue < 1) scaleValue = 1;
-    if (scaleValue > 5) scaleValue = 5;
-    const percent = (scaleValue - 1) * 25; // 5 个刻�?
+    scaleValue = getIndicatorScaleValue(scaleValue, state.scaleThreshold);
+    scaleValue = clampIndicatorScaleValue(scaleValue);
+    const percent = getIndicatorPercent(scaleValue); // 5 个刻�?
     indicator.style.left = percent + '%';
 }
 
@@ -371,7 +376,7 @@ export function resetYearFilter() {
 
 
 
-// �?menu.js 文件�?DOMContentLoaded 事件监听器中添加About按钮的事件处�?
+// �?menu.js 文件�?DOMContentLoaded 事件监听器中添加About按钮的事件处�?
 window.addEventListener('DOMContentLoaded', () => {
  
     // 新增：About按钮点击事件
@@ -564,4 +569,5 @@ document.addEventListener('mousedown', (e) => {
         closeMenuSearch("outside");
     }
 });
+
 

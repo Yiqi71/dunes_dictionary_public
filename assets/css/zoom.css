@@ -1,0 +1,287 @@
+/* Zoom level styles for word nodes */
+body[data-scale="1"] .word-node {
+    min-width: 36px;
+    width: auto;
+    height: 24px;
+    border-radius: 2px;
+    box-shadow: #403b2c58 0px 0px 2px 2px;
+}
+
+body[data-scale="1"] .word-node .detail-title,
+body[data-scale="1"] .word-node .terms {
+    display: none;
+}
+
+body[data-scale="2"] .word-node {
+    padding: 1px 5px;
+    min-width: 93px;
+    width: auto;
+    height: 32px;
+    flex-shrink: 0;
+    opacity: 1;
+    border-radius: 4px;
+    text-align: left;
+    font-size: 12px;
+    line-height: 12px;
+    text-wrap: nowrap;
+    justify-content: center;
+    gap: 0;
+    box-shadow: #403b2c58 0px 0px 2px 2px;
+}
+
+body[data-scale="2"] .word-node .detail-title {
+    display: none;
+}
+
+body[data-scale="2"] .word-node .terms {
+    display: flex;
+}
+
+body[data-scale="2"] .word-node .terms .term-ori {
+    color: #544011;
+    font-family: "Barlow Condensed", "ChillDIN";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+}
+
+body[data-scale="3"] .word-node,
+body[data-scale="4"] .word-node {
+    min-width: 180px;
+    width: auto;
+    height: 117px;
+    justify-content: space-between !important;
+    align-items: flex-start;
+    box-shadow: #403b2c58 0px 0px 3px 3px;
+}
+
+body[data-scale="3"] .word-node .detail-title,
+body[data-scale="4"] .word-node .detail-title {
+    display: flex;
+    margin: 8px;
+}
+
+body[data-scale="3"] .word-node .terms,
+body[data-scale="4"] .word-node .terms {
+    margin: 8px;
+}
+
+body[data-scale="3"] .word-node .terms .term-main,
+body[data-scale="4"] .word-node .terms .term-main {
+    color: #43403B;
+    font-family: "ChillDIN";
+    font-size: 23.493px;
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: -1.287px;
+}
+
+body[data-scale="3"] .word-node .terms .term-ori,
+body[data-scale="4"] .word-node .terms .term-ori {
+    color: #43403B;
+    font-family: "Stint Ultra Condensed";
+    font-size: 33.428px;
+    font-style: normal;
+    font-weight: 400;
+}
+
+body[data-scale="5"] .word-node {
+    min-width: 328px;
+    width: auto;
+    height: 213px;
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between !important;
+    box-shadow: #403b2c58 0px 0px 2px 2px;
+}
+
+body[data-scale="5"] .word-node .terms {
+    margin: 20px;
+}
+
+body[data-scale="5"] .word-node .terms .term-main {
+    color: #43403B;
+    font-family: "ChillDIN";
+    font-size: 42.911px;
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: -1.287px;
+}
+
+body[data-scale="5"] .word-node .terms .term-ori {
+    color: #43403B;
+    font-family: "Stint Ultra Condensed";
+    font-size: 61.06px;
+    font-style: normal;
+    font-weight: 400;
+}
+
+html:lang(en) body[data-scale="2"] .word-node .terms .term-main {
+    color: #544011;
+    font-family: "Barlow Condensed", "ChillDIN";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+}
+
+html:lang(en) body[data-scale="2"] .word-node {
+    justify-content: flex-end;
+    padding-bottom: 4px;
+}
+
+html:lang(en) body[data-scale="3"] .word-node .terms .term-main,
+html:lang(en) body[data-scale="4"] .word-node .terms .term-main {
+    color: #43403B;
+    font-family: "Stint Ultra Condensed";
+    font-size: 33.428px;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: -0.2px;
+}
+
+html:lang(en) body[data-scale="5"] .word-node .terms .term-main {
+    color: #43403B;
+    font-family: "Stint Ultra Condensed";
+    font-size: 61.06px;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: -0.4px;
+}
+
+html:lang(en) .word-node .terms .term-ori {
+    display: none;
+}
+
+body[data-scale="5"] .detail-title {
+    margin: 24px;
+    color: #43403B;
+    font-family: "Barlow Condensed";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 19.835px;
+}
+
+/* Zoom slider styles */
+#scaleContainer {
+    position: relative;
+    width: 255px;
+    height: 32px;
+    flex-shrink: 0;
+}
+
+.scale-line {
+    position: absolute;
+    top: 80%;
+    left: 0;
+    right: 0;
+    height: 1.37px;
+    background-color: #392F17;
+    transform: translateY(-50%);
+}
+
+.scale-numbers,
+.scale-ticks {
+    position: absolute;
+    top: 28%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.scale-numbers span {
+    position: absolute;
+    top: -30%;
+    transform: translateX(-50%);
+    color: #392F17;
+    text-align: center;
+    font-family: "Barlow Condensed";
+    font-size: 13.778px;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.scale-indicator {
+    position: absolute;
+    top: 80%;
+    width: 13px;
+    height: 13px;
+    flex-shrink: 0;
+    background-color: #392F17;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    z-index: 10;
+}
+
+.scale-ticks div {
+    position: absolute;
+    width: 1.37px;
+    height: 8px;
+    background-color: black;
+    top: 50%;
+    transform: translateX(-50%) translateY(-100%);
+}
+
+#indicator {
+    cursor: grab;
+}
+
+#indicator.dragging {
+    cursor: grabbing;
+}
+
+/* Saved indicator by zoom scale */
+body[data-scale="1"] .word-node.is-saved .save-indicator {
+    display: block;
+    background-image: url("../images/saved_small.svg");
+    width: 15px;
+    height: 19px;
+    top: -6px;
+    right: 3px;
+    transform: none;
+}
+
+body[data-scale="2"] .word-node.is-saved .save-indicator {
+    display: block;
+    background-image: url("../images/saved_small.svg");
+    width: 15px;
+    height: 19px;
+    top: -4px;
+    right: 7px;
+    transform: none;
+}
+
+body[data-scale="3"] .word-node.is-saved .save-indicator,
+body[data-scale="4"] .word-node.is-saved .save-indicator {
+    display: block;
+    background-image: url("../images/saved_big.svg");
+    width: 10px;
+    height: 13px;
+    top: 8px;
+    right: 6.7px;
+    transform: none;
+}
+
+body[data-scale="5"] .word-node .save-indicator {
+    display: block;
+    pointer-events: auto;
+    cursor: pointer;
+    width: 16px;
+    height: 21px;
+    top: 13px;
+    right: 15px;
+    transform: none;
+}
+
+body[data-scale="5"] .word-node.is-saved .save-indicator {
+    background-image: url("../images/saved_big.svg");
+}
+
+body[data-scale="5"] .word-node:not(.is-saved) .save-indicator {
+    background-image: url("../images/unsaved.svg");
+}

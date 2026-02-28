@@ -2,6 +2,7 @@ import { state } from "./state.js";
 import { updateRelations } from "./relationManager.js";
 import { moveIndicator } from "./menu.js";
 import { hideFloatingPanel } from "./detail.js"
+import { resolveWheelScale, updateScaleForNodes } from "./zoom.js";
 import { logEvent } from "/analytics.js";
 
 const canvas = document.getElementById("universe-canvas");
@@ -118,36 +119,12 @@ document.addEventListener("visibilitychange", () => {
 export function handleZoomWheel(e) {
     e.preventDefault();
 
-    let scale = state.currentScale;
-    const isPreview = window.location.pathname.endsWith('index.html');
-    const minScale = isPreview ? 1.2 : 1;
-    const zoomStep = 0.28;
-    const delta = e.deltaY > 0 ? -zoomStep : zoomStep;
-    let newScale = Math.min(state.scaleThreshold, Math.max(minScale, scale + delta));
+    const scale = state.currentScale;
+    const { newScale } = resolveWheelScale(scale, e.deltaY, {
+        maxScale: state.scaleThreshold
+    });
 
     // 获取当前的snapped scale 级别
-    const currentSnapped = getSnappedScale(scale);
-    const newSnapped = getSnappedScale(newScale);
-
-    // 如果当前的scale 4-5 范围内，直接跳转
-    if (currentSnapped === 4 || currentSnapped === 5) {
-        if (delta > 0) {
-            // 向上滚动 - zoom in
-            if (currentSnapped === 4) {
-                newScale = state.scaleThreshold; // 跳到 scale 5
-            } else {
-                newScale = state.scaleThreshold; // 已经 scale 5，继续放大到最大值
-            }
-        } else {
-            // 向下滚动 - zoom out  
-            if (currentSnapped === 5) {
-                newScale = 10; // 跳到 scale 4 的最大值，避免重复触发
-            } else {
-                newScale = scale+delta; // scale 4 跳到 scale 3 的最大
-            }
-        }
-    }
-
     state.panX = e.clientX - (e.clientX - state.panX) * (newScale / scale);
     state.panY = e.clientY - (e.clientY - state.panY) * (newScale / scale);
 
@@ -167,27 +144,7 @@ export function handleZoomWheel(e) {
 
 canvas.addEventListener("wheel", handleZoomWheel, { passive: false });
 
-// 辅助函数：获�?snapped scale 级别
-function getSnappedScale(scale) {
-    if (scale < 1.5) return 1;
-    else if (scale < 5) return 2;
-    else if (scale < 10) return 3;
-    else if (scale < 11) return 4;
-    else return 5;
-}
-
-export function updateScaleForNodes(newScale) {
-    let snapped;
-    if (newScale < 1.5) snapped = 1;
-    else if (newScale < 5) snapped = 2;
-    else if (newScale < 10) snapped = 3;
-    else if (newScale < 11) snapped = 4;
-    else snapped = 5;
-
-    document.body.dataset.scale = snapped;
-}
-
-// 主绘图函�?
+// 主绘图函数
 export function draw() {
     const offsetX = clampOffsetX(state.panX);
     const offsetY = clampOffsetY(state.panY);
