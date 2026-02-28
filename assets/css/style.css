@@ -130,6 +130,10 @@ h1.English {
     z-index: 40;
 }
 
+#word-details:hover {
+    z-index: 42;
+}
+
 #word-details.details-transition-out {
     opacity: 0;
     pointer-events: none;
@@ -197,6 +201,17 @@ h1.English {
     background: rgba(0, 0, 0, 0.1);
     pointer-events: none;
     z-index: 20;
+}
+
+#focused-node-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 41;
+}
+
+#focused-node-layer .word-node {
+    pointer-events: auto;
 }
 
 .word-node {
@@ -365,7 +380,7 @@ body[data-scale="5"] .word-node {
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-between !important;
-    box-shadow: #403b2c 0px 0px 2px 2px;
+    box-shadow: #403b2c58 0px 0px 2px 2px;
 }
 
 body[data-scale="5"] .word-node .terms {
@@ -471,6 +486,10 @@ body[data-scale="5"] .detail-title {
 
     box-shadow: #403b2c58 0px 0px 2px 2px;
     cursor: pointer;
+}
+
+#word-details .detail:hover {
+    z-index: 101;
 }
 
 .detail * {
