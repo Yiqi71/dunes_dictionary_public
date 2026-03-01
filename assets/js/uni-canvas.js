@@ -162,22 +162,28 @@ export function draw() {
 }
 
 function drawTimezoneLabels(offsetX, offsetY, gridWidth, lonCount) {
+    // Ruler mode: keep longitude labels pinned to top edge.
     ctx.save();
     ctx.fillStyle = "#665539";
     ctx.font = `15px ChillDINGothic`;
     ctx.textAlign = "center";
-    ctx.textBaseline = "bottom";
+    ctx.textBaseline = "middle";
+
+    const fixedTopY = 18;
+    const minVisibleX = 32;
+    const maxVisibleX = window.innerWidth - 8;
+    const minLabelSpacing = 26;
+    let lastDrawnX = -Infinity;
 
     for (let lonIdx = 0; lonIdx < lonCount; lonIdx++) {
         const centerX = lonIdx * gridWidth + offsetX + gridWidth / 2;
-        const topY = offsetY + 25;
-        const bottomY = offsetY + state.baseHeight * state.currentScale - 10;
+        if (centerX < minVisibleX || centerX > maxVisibleX) continue;
+        if (centerX - lastDrawnX < minLabelSpacing) continue;
 
         const tz = -11 + lonIdx;
         const label = tz > 0 ? `+${tz}` : `${tz}`;
-
-        ctx.fillText(label, centerX, topY);
-        ctx.fillText(label, centerX, bottomY);
+        ctx.fillText(label, centerX, fixedTopY);
+        lastDrawnX = centerX;
     }
     ctx.restore();
 }
@@ -210,37 +216,37 @@ function drawGrid(offsetX, offsetY, gridWidth, gridHeight, lonCount) {
 }
 
 function drawSpecialLatLines(offsetX, offsetY, gridHeight, totalWidth, gridWidth) {
+    // Ruler mode: keep latitude labels pinned to left edge.
     ctx.save();
-    const latitudes = [
+    const rulerLatitudes = [
         { lat: 0, label: "0°", color: "#665539", dash: [], lineWidth: 1 },
         { lat: 23.5, label: "23.5°N", color: "#665539", dash: [], lineWidth: 1 },
         { lat: -23.5, label: "23.5°S", color: "#665539", dash: [], lineWidth: 1 }
     ];
 
-    latitudes.forEach(({ lat, label, color, dash, lineWidth }) => {
+    rulerLatitudes.forEach(({ lat, label, color, dash, lineWidth }) => {
         const latIdx = (90 - lat) / 180;
-        const y = latIdx * gridHeight + offsetY + 0.5; // 半像素对�?
+        const y = latIdx * gridHeight + offsetY + 0.5;
+        if (y < 0 || y > window.innerHeight) return;
 
         ctx.strokeStyle = color;
         ctx.lineWidth = lineWidth;
         ctx.setLineDash(dash);
-
         ctx.beginPath();
-        ctx.moveTo(offsetX + gridWidth, y);
-        ctx.lineTo(offsetX + totalWidth - gridWidth, y);
+        ctx.moveTo(offsetX, y);
+        ctx.lineTo(offsetX + totalWidth, y);
         ctx.stroke();
 
         ctx.setLineDash([]);
         ctx.fillStyle = color;
         ctx.font = "14px ChillDINGothic";
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-
-        ctx.fillText(label, offsetX + gridWidth / 2, y);
-        ctx.fillText(label, offsetX + totalWidth - gridWidth / 2, y);
+        ctx.textAlign = "left";
+        ctx.textBaseline = "bottom";
+        ctx.fillText(label, 8, y - 4);
     });
 
     ctx.restore();
+    return;
 }
 
 function initialize() {
