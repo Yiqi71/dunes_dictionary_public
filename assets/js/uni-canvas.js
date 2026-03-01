@@ -129,6 +129,7 @@ export function handleZoomWheel(e) {
     state.panY = e.clientY - (e.clientY - state.panY) * (newScale / scale);
 
     state.currentScale = newScale;
+    console.log("scale:", Number(state.currentScale.toFixed(3)));
     state.panX = clampOffsetX(state.panX);
     state.panY = clampOffsetY(state.panY);
 

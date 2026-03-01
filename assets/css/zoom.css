@@ -1,95 +1,21 @@
-/* Zoom level styles for word nodes */
-body[data-scale="1"] .word-node {
-    min-width: 36px;
-    width: auto;
-    height: 24px;
-    border-radius: 2px;
-    box-shadow: #403b2c58 0px 0px 2px 2px;
+/* Word node scale is linear and continuous with scroll:
+   min view ~= 1/5 of full node, max view = full node. */
+body {
+    --word-node-scale-factor: 0.2;
 }
 
-body[data-scale="1"] .word-node .detail-title,
-body[data-scale="1"] .word-node .terms {
-    display: none;
-}
-
-body[data-scale="2"] .word-node {
-    padding: 1px 5px;
-    min-width: 93px;
-    width: auto;
-    height: 32px;
-    flex-shrink: 0;
-    opacity: 1;
-    border-radius: 4px;
-    text-align: left;
-    font-size: 12px;
-    line-height: 12px;
-    text-wrap: nowrap;
-    justify-content: center;
-    gap: 0;
-    box-shadow: #403b2c58 0px 0px 2px 2px;
-}
-
-body[data-scale="2"] .word-node .detail-title {
-    display: none;
-}
-
-body[data-scale="2"] .word-node .terms {
+/* Keep node content layout stable at all times. */
+.word-node {
     display: flex;
-}
-
-body[data-scale="2"] .word-node .terms .term-ori {
-    color: #544011;
-    font-family: "Barlow Condensed", "ChillDIN";
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 600;
-}
-
-body[data-scale="3"] .word-node,
-body[data-scale="4"] .word-node {
-    min-width: 180px;
-    width: auto;
-    height: 117px;
     justify-content: space-between !important;
-    align-items: flex-start;
-    box-shadow: #403b2c58 0px 0px 3px 3px;
-}
-
-body[data-scale="3"] .word-node .detail-title,
-body[data-scale="4"] .word-node .detail-title {
-    display: flex;
-    margin: 8px;
-}
-
-body[data-scale="3"] .word-node .terms,
-body[data-scale="4"] .word-node .terms {
-    margin: 8px;
-}
-
-body[data-scale="3"] .word-node .terms .term-main,
-body[data-scale="4"] .word-node .terms .term-main {
-    color: #43403B;
-    font-family: "ChillDIN";
-    font-size: 23.493px;
-    font-style: normal;
-    font-weight: 600;
-    letter-spacing: -1.287px;
-}
-
-body[data-scale="3"] .word-node .terms .term-ori,
-body[data-scale="4"] .word-node .terms .term-ori {
-    color: #43403B;
-    font-family: "Stint Ultra Condensed";
-    font-size: 33.428px;
-    font-style: normal;
-    font-weight: 400;
 }
 
 body[data-scale="5"] .word-node {
-    min-width: 328px;
+    min-width: calc(328px * var(--word-node-scale-factor));
     width: auto;
-    height: 213px;
-    font-size: 20px;
+    height: calc(213px * var(--word-node-scale-factor));
+    border-radius: calc(5px * var(--word-node-scale-factor));
+    font-size: calc(20px * var(--word-node-scale-factor));
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -97,58 +23,42 @@ body[data-scale="5"] .word-node {
     box-shadow: #403b2c58 0px 0px 2px 2px;
 }
 
+body[data-scale="5"] .word-node .detail-title {
+    display: flex;
+    align-items: center;
+    margin: calc(24px * var(--word-node-scale-factor));
+    gap: calc(6px * var(--word-node-scale-factor));
+    line-height: 1;
+}
+
 body[data-scale="5"] .word-node .terms {
-    margin: 20px;
+    margin: calc(20px * var(--word-node-scale-factor));
 }
 
 body[data-scale="5"] .word-node .terms .term-main {
     color: #43403B;
     font-family: "ChillDIN";
-    font-size: 42.911px;
+    font-size: calc(42.911px * var(--word-node-scale-factor));
     font-style: normal;
     font-weight: 600;
-    letter-spacing: -1.287px;
+    letter-spacing: calc(-1.287px * var(--word-node-scale-factor));
 }
 
 body[data-scale="5"] .word-node .terms .term-ori {
     color: #43403B;
     font-family: "Stint Ultra Condensed";
-    font-size: 61.06px;
+    font-size: calc(61.06px * var(--word-node-scale-factor));
     font-style: normal;
     font-weight: 400;
-}
-
-html:lang(en) body[data-scale="2"] .word-node .terms .term-main {
-    color: #544011;
-    font-family: "Barlow Condensed", "ChillDIN";
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 600;
-    letter-spacing: -0.2px;
-}
-
-html:lang(en) body[data-scale="2"] .word-node {
-    justify-content: flex-end;
-    padding-bottom: 4px;
-}
-
-html:lang(en) body[data-scale="3"] .word-node .terms .term-main,
-html:lang(en) body[data-scale="4"] .word-node .terms .term-main {
-    color: #43403B;
-    font-family: "Stint Ultra Condensed";
-    font-size: 33.428px;
-    font-style: normal;
-    font-weight: 400;
-    letter-spacing: -0.2px;
 }
 
 html:lang(en) body[data-scale="5"] .word-node .terms .term-main {
     color: #43403B;
     font-family: "Stint Ultra Condensed";
-    font-size: 61.06px;
+    font-size: calc(61.06px * var(--word-node-scale-factor));
     font-style: normal;
     font-weight: 400;
-    letter-spacing: -0.4px;
+    letter-spacing: calc(-0.4px * var(--word-node-scale-factor));
 }
 
 html:lang(en) .word-node .terms .term-ori {
@@ -156,13 +66,21 @@ html:lang(en) .word-node .terms .term-ori {
 }
 
 body[data-scale="5"] .detail-title {
-    margin: 24px;
+    margin: calc(24px * var(--word-node-scale-factor));
     color: #43403B;
     font-family: "Barlow Condensed";
-    font-size: 16px;
+    font-size: calc(16px * var(--word-node-scale-factor));
     font-style: normal;
     font-weight: 600;
-    line-height: 19.835px;
+    line-height: calc(19.835px * var(--word-node-scale-factor));
+}
+
+body[data-scale="5"] .word-node .detail-title::before {
+    display: block;
+    flex-shrink: 0;
+    align-self: center;
+    width: calc(10px * var(--word-node-scale-factor));
+    height: calc(10px * var(--word-node-scale-factor));
 }
 
 /* Zoom slider styles */
@@ -175,18 +93,18 @@ body[data-scale="5"] .detail-title {
 
 .scale-line {
     position: absolute;
-    top: 80%;
+    top: 50%;
     left: 0;
     right: 0;
     height: 1.37px;
-    background-color: #392F17;
+    background-color: #43403B;
     transform: translateY(-50%);
 }
 
 .scale-numbers,
 .scale-ticks {
     position: absolute;
-    top: 28%;
+    top: 12%;
     left: 0;
     width: 100%;
     height: 100%;
@@ -197,7 +115,7 @@ body[data-scale="5"] .detail-title {
     position: absolute;
     top: -30%;
     transform: translateX(-50%);
-    color: #392F17;
+    color: #43403B;
     text-align: center;
     font-family: "Barlow Condensed";
     font-size: 13.778px;
@@ -207,11 +125,11 @@ body[data-scale="5"] .detail-title {
 
 .scale-indicator {
     position: absolute;
-    top: 80%;
+    top: 50%;
     width: 13px;
     height: 13px;
     flex-shrink: 0;
-    background-color: #392F17;
+    background-color: #43403B;
     border-radius: 50%;
     transform: translate(-50%, -50%);
     cursor: pointer;
@@ -235,46 +153,15 @@ body[data-scale="5"] .detail-title {
     cursor: grabbing;
 }
 
-/* Saved indicator by zoom scale */
-body[data-scale="1"] .word-node.is-saved .save-indicator {
-    display: block;
-    background-image: url("../images/saved_small.svg");
-    width: 15px;
-    height: 19px;
-    top: -6px;
-    right: 3px;
-    transform: none;
-}
-
-body[data-scale="2"] .word-node.is-saved .save-indicator {
-    display: block;
-    background-image: url("../images/saved_small.svg");
-    width: 15px;
-    height: 19px;
-    top: -4px;
-    right: 7px;
-    transform: none;
-}
-
-body[data-scale="3"] .word-node.is-saved .save-indicator,
-body[data-scale="4"] .word-node.is-saved .save-indicator {
-    display: block;
-    background-image: url("../images/saved_big.svg");
-    width: 10px;
-    height: 13px;
-    top: 8px;
-    right: 6.7px;
-    transform: none;
-}
-
+/* Saved indicator follows the same linear node scale. */
 body[data-scale="5"] .word-node .save-indicator {
     display: block;
     pointer-events: auto;
     cursor: pointer;
-    width: 16px;
-    height: 21px;
-    top: 13px;
-    right: 15px;
+    width: calc(16px * var(--word-node-scale-factor));
+    height: calc(21px * var(--word-node-scale-factor));
+    top: calc(13px * var(--word-node-scale-factor));
+    right: calc(15px * var(--word-node-scale-factor));
     transform: none;
 }
 

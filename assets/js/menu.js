@@ -25,7 +25,7 @@ import {
 } from "./zoom.js";
 import { logEvent, startWordView, endWordView } from "/analytics.js";
 
-// �?menu.js 文件顶部�?import 部分添加
+// �?menu.js 文件顶部�?import 部分添加
 import { showAboutPanel } from "./aboutPanel.js";
 
 function normalizeLang(code) {
@@ -58,17 +58,11 @@ numbersContainer.innerHTML = '';
 
 for (let i = 0; i < numSteps; i++) {
     const percent = (i / (numSteps - 1)) * 100;
-
-    // 刻度�?
-    const tick = document.createElement('div');
-    tick.style.left = percent + '%';
-    ticksContainer.appendChild(tick);
-
-    // 数字
-    const num = document.createElement('span');
-    num.textContent = (i + 1);
-    num.style.left = percent + '%';
-    numbersContainer.appendChild(num);
+    if (i === 0 || i === numSteps - 1) {
+        const tick = document.createElement('div');
+        tick.style.left = percent + '%';
+        ticksContainer.appendChild(tick);
+    }
 }
 
 const indicator = document.getElementById('indicator');
@@ -77,7 +71,7 @@ let isDragging = false;
 let containerRect;
 
 
-// 初始�?indicator 在中�?
+// 初始�?indicator 在中�?
 if(state.scaleThreshold){
     moveIndicator(state.scaleThreshold);
 }
@@ -121,7 +115,7 @@ function onDrag(e) {
     offsetY = mouseY - (mouseY - offsetY) * (newScale / scale);
 
     state.panX = clampOffsetX(offsetX);
-    state.panY = clampOffsetY(offsetY); // 加边�?
+    state.panY = clampOffsetY(offsetY); // 加边�?
     state.currentScale = newScale;
 
     draw();
@@ -146,7 +140,7 @@ function snapToStep() {
 export function moveIndicator(scaleValue) {
     scaleValue = getIndicatorScaleValue(scaleValue, state.scaleThreshold);
     scaleValue = clampIndicatorScaleValue(scaleValue);
-    const percent = getIndicatorPercent(scaleValue); // 5 个刻�?
+    const percent = getIndicatorPercent(scaleValue); // 5 个刻�?
     indicator.style.left = percent + '%';
 }
 
@@ -268,6 +262,7 @@ function updateYearDisplay() {
 function filterWordsByYear() {
     const selectedPeriod = yearPeriods[currentYearIndex];
     const cutoffYear = selectedPeriod.year;
+    const hasFocusedNode = Boolean(document.querySelector('.word-node.focused'));
     
     document.querySelectorAll('.word-node').forEach(node => {
         const wordId = node.id;
@@ -288,9 +283,9 @@ function filterWordsByYear() {
         if (cutoffYear === null || 
             (!isNaN(wordYear) && wordYear <= cutoffYear) ||
             (isNaN(wordYear) && cutoffYear !== null)) {
-            node.style.display = 'block';
+            node.style.display = '';
             node.style.opacity = node.classList.contains('focused') ? '1' : 
-                                 (state.focusedNodeId && !node.classList.contains('focused') ? '0.5' : '1');
+                                 (hasFocusedNode ? '0.5' : '1');
         } else {
             node.style.display = 'none';
         }
@@ -376,7 +371,7 @@ export function resetYearFilter() {
 
 
 
-// �?menu.js 文件�?DOMContentLoaded 事件监听器中添加About按钮的事件处�?
+// �?menu.js 文件�?DOMContentLoaded 事件监听器中添加About按钮的事件处�?
 window.addEventListener('DOMContentLoaded', () => {
  
     // 新增：About按钮点击事件

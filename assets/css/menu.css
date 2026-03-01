@@ -21,7 +21,7 @@
 }
 
 #upper-menu p {
-    color: #392F17;
+    color: #43403B;
     font-family: "Barlow Condensed";
     font-size: 20px;
     font-style: normal;
@@ -249,7 +249,7 @@
     border: none;
     outline: none;
     background: transparent;
-    color: #392F17;
+    color: #43403B;
     font-family: "Barlow Condensed";
     font-size: 18px;
     opacity: 0;
@@ -362,7 +362,7 @@
 }
 
 .menu-search-results .search-result-term {
-    color: #392F17;
+    color: #43403B;
     font-family: "ChillDIN";
     font-size: 18px;
     font-weight: 600;
@@ -455,7 +455,7 @@
     position: absolute;
     width: 1px;
     height: 100%;
-    background-color: #392F17;
+    background-color: #43403B;
     top: 0;
     transform: translateX(-50%);
 }
@@ -473,7 +473,7 @@
 .year-numbers span {
     position: absolute;
     transform: translateX(-50%);
-    color: #392F17;
+    color: #43403B;
     text-align: center;
     font-family: "Barlow Condensed";
     font-size: 13.778px;
@@ -492,7 +492,7 @@
     top: 70%;
     width: 13px;
     height: 13px;
-    background-color: #392F17;
+    background-color: #43403B;
     border-radius: 50%;
     transform: translate(-50%, -50%);
     cursor: pointer;
