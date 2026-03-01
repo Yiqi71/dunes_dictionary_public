@@ -463,7 +463,7 @@ export function updateWordDetails() {
     const commentContent = document.querySelector('#comment #comment-content');
 
     if(normalizeLang(state.currentLang)=="en"){
-        commentTitle.textContent = 'Notes';
+        commentTitle.textContent = 'Echoes';
     }else if(normalizeLang(state.currentLang)=="zh"){
         commentTitle.textContent = '笔记';
     }
