@@ -58,7 +58,7 @@ export function clampOffsetX(offsetX) {
 }
 
 export function getMobileFocusedNodeAnchor() {
-    const ratioX = 126 / 440;
+    const ratioX = 100 / 440;
     const ratioY = 460 / 956;
     const vv = window.visualViewport;
     if (vv) {
@@ -150,7 +150,6 @@ export function updateWordNodeTransforms() {
     const totalWidth = state.baseWidth * scale * 24;
     const totalHeight = state.baseHeight * scale;
     const isMobile = window.matchMedia("(max-width: 768px)").matches;
-    const mobileAnchor = getMobileFocusedNodeAnchor();
 
     const nodes = document.querySelectorAll(".word-node");
 
@@ -168,6 +167,7 @@ export function updateWordNodeTransforms() {
         // On mobile, keep the focused node pinned to the requested viewport spot.
         const isFocusedNode = node.parentElement?.id === "focused-node-layer";
         if (isMobile && isFocusedNode) {
+            const mobileAnchor = getMobileFocusedNodeAnchor();
             node.style.transform = `translate(${mobileAnchor.x}px, ${mobileAnchor.y}px)`;
             return;
         }

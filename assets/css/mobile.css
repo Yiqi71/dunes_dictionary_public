@@ -22,6 +22,23 @@
 
   #proposer .proposer-text .proposer-primary {
     font-size: 32.469px !important;
+    line-height: 30px !important;
+  }
+
+  #proposer .proposer-text {
+    gap: 2px !important;
+  }
+
+  #proposer .proposer-text .proposer-primary,
+  #proposer .proposer-text .proposer-ori {
+    margin: 0 !important;
+  }
+
+  html:lang(zh) #proposer .proposer-text .proposer-primary {
+    font-size: 30px !important;
+    line-height: 30px !important;
+    text-align: center !important;
+    max-width: 80% !important;
   }
 
   #image {

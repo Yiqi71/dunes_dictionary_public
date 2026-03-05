@@ -463,6 +463,7 @@ html:lang(en) .word-node .terms .term-main {
     width: 260px;
     min-height: 160px;
     background-color: #E6D9D0;
+    --proposer-name-color: #E6D9D0;
 }
 
 #proposer .detail-title {
@@ -497,7 +498,7 @@ html:lang(en) .word-node .terms .term-main {
 }
 
 #proposer .proposer-text .proposer-primary {
-    color:#E6D9D0;
+    color: var(--proposer-name-color);
     margin: 0;
     font-family: ChillDINGothic Condensed;
     font-size: 24px;
@@ -507,7 +508,7 @@ html:lang(en) .word-node .terms .term-main {
     letter-spacing: 1.2px;
 }
 html:lang(en) #proposer .proposer-text .proposer-primary {
-    color: #E6D9D0;
+    color: var(--proposer-name-color);
     text-align: center;
     font-family: "Stint Ultra Condensed";
     font-size: 39.48px;
@@ -519,7 +520,7 @@ html:lang(en) #proposer .proposer-text .proposer-primary {
 }
 
 #proposer .proposer-ori {
-    color: #E6D9D0;
+    color: var(--proposer-name-color);
     text-align: center;
     font-family: "Stint Ultra Condensed";
     font-size: 21.933px;
