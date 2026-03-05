@@ -9,20 +9,36 @@ const canvas = document.getElementById("universe-canvas");
 const universeView = document.getElementById("universe-view");
 const ctx = canvas.getContext("2d");
 
+function getViewportSize() {
+    const vv = window.visualViewport;
+    if (vv) {
+        return {
+            width: vv.width,
+            height: vv.height
+        };
+    }
+    return {
+        width: window.innerWidth,
+        height: window.innerHeight
+    };
+}
+
 // 初始化尺�?+ 高清屏支�?
 function setupCanvas() {
+    const viewport = getViewportSize();
     const dpr = window.devicePixelRatio || 1;
-    canvas.style.width = window.innerWidth + "px";
-    canvas.style.height = window.innerHeight + "px";
-    canvas.width = window.innerWidth * dpr;
-    canvas.height = window.innerHeight * dpr;
+    canvas.style.width = viewport.width + "px";
+    canvas.style.height = viewport.height + "px";
+    canvas.width = viewport.width * dpr;
+    canvas.height = viewport.height * dpr;
     ctx.setTransform(1, 0, 0, 1, 0, 0); // 重置
     ctx.scale(dpr, dpr);
 }
 
 function updateGridSizeToFitHeight() {
-    state.baseWidth = window.innerWidth / 24;
-    state.baseHeight = window.innerHeight;
+    const viewport = getViewportSize();
+    state.baseWidth = viewport.width / 24;
+    state.baseHeight = viewport.height;
 }
 
 // 限制 Y 方向边界
@@ -39,6 +55,22 @@ export function clampOffsetX(offsetX) {
     const minX = -totalWidth + canvas.width / (window.devicePixelRatio || 1);
     const maxX = 0;
     return Math.min(Math.max(offsetX, minX), maxX);
+}
+
+export function getMobileFocusedNodeAnchor() {
+    const ratioX = 126 / 440;
+    const ratioY = 460 / 956;
+    const vv = window.visualViewport;
+    if (vv) {
+        return {
+            x: vv.offsetLeft + vv.width * ratioX,
+            y: vv.offsetTop + vv.height * ratioY
+        };
+    }
+    return {
+        x: ratioX * window.innerWidth,
+        y: ratioY * window.innerHeight
+    };
 }
 
 let isDragging = false;
@@ -118,8 +150,7 @@ export function updateWordNodeTransforms() {
     const totalWidth = state.baseWidth * scale * 24;
     const totalHeight = state.baseHeight * scale;
     const isMobile = window.matchMedia("(max-width: 768px)").matches;
-    const mobileFocusedX = (126 / 440) * window.innerWidth;
-    const mobileFocusedY = (460 / 956) * window.innerHeight;
+    const mobileAnchor = getMobileFocusedNodeAnchor();
 
     const nodes = document.querySelectorAll(".word-node");
 
@@ -137,7 +168,7 @@ export function updateWordNodeTransforms() {
         // On mobile, keep the focused node pinned to the requested viewport spot.
         const isFocusedNode = node.parentElement?.id === "focused-node-layer";
         if (isMobile && isFocusedNode) {
-            node.style.transform = `translate(${mobileFocusedX}px, ${mobileFocusedY}px)`;
+            node.style.transform = `translate(${mobileAnchor.x}px, ${mobileAnchor.y}px)`;
             return;
         }
 
@@ -419,5 +450,8 @@ function initialize() {
 }
 
 window.addEventListener("resize", initialize);
+if (window.visualViewport) {
+    window.visualViewport.addEventListener("resize", initialize);
+}
 initialize();
 

@@ -1,6 +1,6 @@
 // wordFocus.js - 专门处理单词焦点和缩放
 import { state } from "./state.js";
-import { draw, updateWordNodeTransforms } from "./uni-canvas.js";
+import { draw, getMobileFocusedNodeAnchor, updateWordNodeTransforms } from "./uni-canvas.js";
 import { updateScaleForNodes } from "./zoom.js";
 import { updateRelations } from "./relationManager.js";
 import { renderPanelSections , showFloatingPanel, scrollToTop, resetFloatingPanelState } from "./detail.js";
@@ -247,6 +247,11 @@ export function zoomToWord(id, newScale, options = {}) {
 
     const previousFocusedNode = document.querySelector(".word-node.focused");
     const oldFocusedNode = previousFocusedNode && previousFocusedNode !== node ? previousFocusedNode : null;
+    if (oldFocusedNode && isMobileLayout()) {
+        // On mobile, release previous focused node from the pinned layer
+        // before zoom animation so it follows world transform immediately.
+        restoreNodeToContainer(oldFocusedNode);
+    }
     const oldFocusedStartOpacity = oldFocusedNode ? Number(window.getComputedStyle(oldFocusedNode).opacity) || 1 : 1;
     const newFocusedStartOpacity = Number(window.getComputedStyle(node).opacity) || 1;
 
@@ -613,12 +618,18 @@ function getCenteredPanForScale(scale) {
 function getPanForWordAtScale(node, scale) {
     const logicalX = parseFloat(node.dataset.x);
     const logicalY = parseFloat(node.dataset.y);
-    const container = document.getElementById("word-nodes-container");
-    if (!container || Number.isNaN(logicalX) || Number.isNaN(logicalY)) return null;
+    if (Number.isNaN(logicalX) || Number.isNaN(logicalY)) return null;
 
-    const containerRect = container.getBoundingClientRect();
-    const worldX = logicalX * containerRect.width;
-    const worldY = logicalY * containerRect.height;
+    const worldX = logicalX * state.baseWidth * 24;
+    const worldY = logicalY * state.baseHeight;
+
+    if (isMobileLayout()) {
+        const anchor = getMobileFocusedNodeAnchor();
+        return {
+            panX: anchor.x - worldX * scale,
+            panY: anchor.y - worldY * scale
+        };
+    }
 
     const viewportCenterX = window.innerWidth / 2;
     const viewportCenterY = window.innerHeight / 2;
