@@ -4,6 +4,11 @@ body {
     /* 禁止双击缩放 */
 }
 
+:root {
+    --app-vh: 100vh;
+    --app-bottom-inset: env(safe-area-inset-bottom, 0px);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -12,7 +17,7 @@ body {
 
 body {
     overflow: hidden;
-    height: 100vh;
+    height: var(--app-vh);
     background: #1E1C16;
     color: #43403B;
     font-family: "ChillDIN", "Barlow Condensed", "ChillDINGothic";
@@ -138,7 +143,7 @@ h1.English {
 #universe-view {
     position: relative;
     width: 100vw;
-    height: 100vh;
+    height: var(--app-vh);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -162,7 +167,7 @@ h1.English {
     top: 0;
     left: 0;
     width: 100vw;
-    height: 100vh;
+    height: var(--app-vh);
 }
 
 #universe-canvas {
@@ -192,7 +197,7 @@ h1.English {
     top: 0;
     left: 0;
     width: 100vw;
-    height: 100vh;
+    height: var(--app-vh);
     background: rgba(0, 0, 0, 0.1);
     pointer-events: none;
     z-index: 20;
@@ -579,7 +584,7 @@ html:lang(en) #proposer .proposer-ori {
     top: 0;
     left: 0;
     width: 100vw;
-    height: 100vh;
+    height: var(--app-vh);
     background-color: #625136;
     opacity: 0;
     transition: opacity 0.8s;

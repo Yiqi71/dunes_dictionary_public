@@ -18,7 +18,7 @@
     position: fixed;
     top: 0;
     right: 0;
-    height: 100vh;
+    height: var(--app-vh);
     width: 37vw;
     border-radius: 8px 0 0 8px;
     background: transparent; /* 改为透明，因为子panel有自己的背景 */
@@ -100,7 +100,7 @@
 /* 主内容区�?- 包含top和bottom，可整体滚动 */
 .panel-main {
     flex: 1;
-    height: 100vh;
+    height: var(--app-vh);
     overflow-y: scroll;
     /* padding-right: 12px; */
 
