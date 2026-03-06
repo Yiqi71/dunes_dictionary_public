@@ -1,4 +1,5 @@
-﻿const STORAGE_KEY = "dd_events";
+﻿import { getOrCreateDeviceId } from "./assets/js/device-id.js";
+const STORAGE_KEY = "dd_events";
 const MAX_EVENTS = 500;
 let currentWordView = null;
 const API_BASE = (() => {
@@ -35,17 +36,7 @@ function getSessionId() {
 }
 
 function getDeviceId() {
-  const key = "dd_vote_device_id_v1";
-  try {
-    let id = localStorage.getItem(key);
-    if (!id) {
-      id = `d_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
-      localStorage.setItem(key, id);
-    }
-    return id;
-  } catch (_) {
-    return "";
-  }
+  return getOrCreateDeviceId();
 }
 
 export function logEvent(name, data = {}) {
@@ -113,3 +104,4 @@ export function endWordView(reason = "unknown") {
   });
   currentWordView = null;
 }
+

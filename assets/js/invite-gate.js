@@ -1,4 +1,6 @@
-﻿const INVITE_OK_KEY = "dunes_invite_verified_v1";
+﻿import { getOrCreateDeviceId, isValidDeviceId } from "./device-id.js";
+
+const INVITE_OK_KEY = "dunes_invite_verified_v1";
 const INVITE_CODE_KEY = "dunes_invite_code_v1";
 const CODES_URL = "assets/data/invite-codes.json";
 const SUCCESS_HOLD_MS = 2000;
@@ -9,6 +11,10 @@ let entryReadyNotified = false;
 
 function normalizeInviteCode(value) {
     return String(value || "").trim().toUpperCase();
+}
+
+function isValidInviteCode(value) {
+    return /^DUNES-[A-Z0-9]{4}$/.test(normalizeInviteCode(value));
 }
 
 function setMessage(el, text, type) {
@@ -80,9 +86,25 @@ function initInviteGate() {
     ensureSuccessTitle(gate);
 
     try {
-        if (localStorage.getItem(INVITE_OK_KEY) === "true") {
+        const cachedOk = localStorage.getItem(INVITE_OK_KEY) === "true";
+        const cachedCode = normalizeInviteCode(localStorage.getItem(INVITE_CODE_KEY));
+        const hasValidCode = isValidInviteCode(cachedCode);
+        const deviceId = getOrCreateDeviceId();
+        const hasValidDeviceId = isValidDeviceId(deviceId);
+
+        if (!hasValidDeviceId) {
+            localStorage.removeItem(INVITE_OK_KEY);
+            localStorage.removeItem(INVITE_CODE_KEY);
+        }
+
+        if (cachedOk && hasValidCode && hasValidDeviceId) {
             hideGate(gate, "invite-cached");
             return;
+        }
+
+        if (cachedOk || cachedCode) {
+            localStorage.removeItem(INVITE_OK_KEY);
+            localStorage.removeItem(INVITE_CODE_KEY);
         }
     } catch (_) {
         // ignore and continue with invite form
@@ -123,7 +145,7 @@ function initInviteGate() {
         const code = normalizeInviteCode(input.value);
         input.value = code;
 
-        if (!/^DUNES-[A-Z0-9]{4}$/.test(code)) {
+        if (!isValidInviteCode(code)) {
             setMessage(message, "格式不正确，请输入 DUNES-XXXX", "error");
             return;
         }
@@ -133,6 +155,18 @@ function initInviteGate() {
 
         if (!set.has(code)) {
             setMessage(message, "邀请码无效", "error");
+            return;
+        }
+
+        const deviceId = getOrCreateDeviceId();
+        if (!isValidDeviceId(deviceId)) {
+            try {
+                localStorage.removeItem(INVITE_OK_KEY);
+                localStorage.removeItem(INVITE_CODE_KEY);
+            } catch (_) {
+                // ignore storage cleanup errors
+            }
+            setMessage(message, "设备标识异常，请刷新后重试", "error");
             return;
         }
 

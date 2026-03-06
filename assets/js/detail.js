@@ -15,7 +15,7 @@ import {
 
 import { applyStintFallbackIn } from "./fontFallback.js";
 import { getDisplayOriText } from "./oriDisplay.js";
-
+import { getOrCreateDeviceId } from "./device-id.js";
 import { logEvent, startWordView, endWordView } from "/analytics.js";
 // Floating panel UI state
 let isPanelVisible = false;
@@ -96,7 +96,6 @@ const ENTRY_USER_VOTES_KEY = "dd_entry_understanding_user_votes_v1";
 const ENTRY_VOTE_SYNC_QUEUE_KEY = "dd_entry_understanding_vote_sync_queue_v1";
 const ENTRY_VOTE_SYNC_INTERVAL_MS = 15000;
 const ENTRY_VOTE_STATS_CACHE_TTL_MS = 30000;
-const ENTRY_VOTE_DEVICE_ID_KEY = "dd_vote_device_id_v1";
 const COMMENT_LIKE_SYNC_QUEUE_KEY = "dd_comment_like_sync_queue_v1";
 const COMMENT_LIKE_SNAPSHOT_SESSION_KEY = "dd_comment_like_snapshot_sent_v1";
 const ENTRY_VOTE_LOCAL_KEYS = [
@@ -267,16 +266,7 @@ function getVoteSessionId() {
 }
 
 function getVoteDeviceId() {
-    try {
-        let id = localStorage.getItem(ENTRY_VOTE_DEVICE_ID_KEY);
-        if (!id) {
-            id = `d_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
-            localStorage.setItem(ENTRY_VOTE_DEVICE_ID_KEY, id);
-        }
-        return id;
-    } catch (_) {
-        return "";
-    }
+    return getOrCreateDeviceId();
 }
 
 function isVoteSyncConnected() {
@@ -2214,3 +2204,5 @@ document.addEventListener('about-panel:show', () => {
         hideFloatingPanel();
     }
 });
+
+
