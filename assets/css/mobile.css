@@ -1,5 +1,15 @@
 /* Mobile-specific styles (scaffold). */
 @media (max-width: 768px) {
+  body[data-scale="5"] .word-node .save-indicator {
+    width: max(24px, calc(16px * var(--word-node-scale-factor))) !important;
+    height: max(24px, calc(21px * var(--word-node-scale-factor))) !important;
+    top: calc(-6px) !important;
+    right: calc(-6px) !important;
+    z-index: 6 !important;
+    pointer-events: auto !important;
+    touch-action: manipulation;
+  }
+
   body[data-scale="5"] .word-node {
     width: auto !important;
     min-width: calc(270.443px * var(--word-node-scale-factor)) !important;
