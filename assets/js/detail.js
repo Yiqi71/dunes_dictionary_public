@@ -1380,11 +1380,17 @@ function renderCommentSection() {
 
     // Upper section
     const title = commentPanel.querySelector('.panel-top');
+    const echoHeading = lang === "en" ? "Echoes" : "回声";
+    const echoIntro = lang === "en"
+        ? "From personal narratives, field notes, to multidisciplinary dialogues, these echoes translate abstract entries into concrete lived experiences."
+        : "基于词条撰写的个人视角、田野观察与对话，将抽象概念引入具体的生命经验";
     title.innerHTML = `
-    <p> ${String(currentWord.id).padStart(4, '0')} </p>
-    <div>
-    <div class = "term-main"> ${currentWord.term?.[lang] || '未知单词'} </div>
-    <div class = "term-ori"> ${currentWord.termOri || '无'} </div></div>
+    <div class="comment-top-id">${String(currentWord.id).padStart(4, '0')}</div>
+    <div class="comment-top-center">
+        <div class="term-main">${currentWord.term?.[lang] || (lang === "en" ? "Unknown term" : "未知词条")}</div>
+        <div class="comment-top-echoes">${echoHeading}</div>
+        <p class="comment-top-intro">${echoIntro}</p>
+    </div>
     `
 
     const contentScroll = commentPanel.querySelector('.panel-bottom');
