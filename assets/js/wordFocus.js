@@ -690,7 +690,7 @@ export function updateWordDetails(options = {}) {
     if(normalizeLang(state.currentLang)=="en"){
         commentTitle.textContent = 'Echoes';
     }else if(normalizeLang(state.currentLang)=="zh"){
-        commentTitle.textContent = '笔记';
+        commentTitle.textContent = '回声';
     }
     if (word.commentAbs) {
         const comment = word.commentAbs;
@@ -699,7 +699,7 @@ export function updateWordDetails(options = {}) {
         const authorBlock = author ? ` <p>${author}</p>` : "";
         commentContent.innerHTML = `<div class="comment-abs-content">${content}</div>${authorBlock}`;
     } else {
-        commentContent.innerHTML = `<h3>暂无笔记</h3> <p></p>`;
+        commentContent.innerHTML = `<h3>暂无回声</h3> <p></p>`;
     }
 
     return Promise.all([

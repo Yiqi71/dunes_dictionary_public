@@ -226,7 +226,7 @@ function updateTabLabels() {
         if (tabName === "entry") {
             span.textContent = currentLang === "en" ? "ENTRY" : "\u8bcd\u6761";
         } else if (tabName === "comment") {
-            span.textContent = currentLang === "en" ? "NOTES" : "\u7b14\u8bb0";
+            span.textContent = currentLang === "en" ? "ECHOES" : "回声";
         } else if (tabName === "about") {
             span.textContent = currentLang === "en" ? "ABOUT" : "\u5173\u4e8e";
         } else if (tabName === "devlog") {

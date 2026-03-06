@@ -1458,7 +1458,7 @@ function renderCommentSection() {
         : (lang === "en" ? "No contributor information yet." : "暂无贡献者信息");
     contributorsSec.innerHTML = `<p>${contributorTextInComment}</p>`;
 
-    const contactPrimaryTextInComment = lang === "en" ? "If you have any historical anecdotes or extended reflections regarding this entry, or if you have experienced a direct connection between this theoretical concept and daily life, we welcome you to submit your notes to the following email address: " : "如果您知道关于这个词条的历史趣闻，延展思考或者能感受到过这个理论概念与生活的直接联系，欢迎将你的笔记投稿至以下邮箱。";
+    const contactPrimaryTextInComment = lang === "en" ? "If you have any historical anecdotes or extended reflections regarding this entry, or if you have experienced a direct connection between this theoretical concept and daily life, we welcome you to submit your echoes to the following email address: " : "如果您知道关于这个词条的历史趣闻，延展思考或者能感受到过这个理论概念与生活的直接联系，欢迎将你的回声投稿至以下邮箱。";
     const contactSecondaryTextInComment = "hello@dunesworkshop.org";
     if (contactSec) {
         contactSec.innerHTML = `
