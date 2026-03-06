@@ -14,6 +14,7 @@ import {
 } from "./relationManager.js"
 
 import { applyStintFallbackIn } from "./fontFallback.js";
+import { getDisplayOriText } from "./oriDisplay.js";
 
 import { logEvent, startWordView, endWordView } from "/analytics.js";
 // Floating panel UI state
@@ -1231,12 +1232,13 @@ export function renderPanelSections() {
 
     // Upper section
     const title = entryPanel.querySelector('.panel-top');
+    const displayTermOri = getDisplayOriText(currentWord.termOri, lang, currentWord.term?.zh || "");
     title.innerHTML = `
     <p> ${String(currentWord.id).padStart(4, '0')} </p>
     <img src = "${resolveImagePath(currentWord.concept_image)}" alt = "concept image" loading="lazy" decoding="async"></img> 
     <div>
     <div class = "term-main"> ${currentWord.term?.[lang] || '未知单词'} </div>
-    <div class = "term-ori"> ${currentWord.termOri || '无'} </div></div>
+    ${displayTermOri ? `<div class = "term-ori"> ${displayTermOri} </div>` : ""}</div>
     `
 
     // Lower section

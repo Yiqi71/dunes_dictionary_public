@@ -5,6 +5,7 @@ import { updateScaleForNodes } from "./zoom.js";
 import { updateRelations } from "./relationManager.js";
 import { renderPanelSections , showFloatingPanel, scrollToTop, resetFloatingPanelState } from "./detail.js";
 import { moveIndicator } from "./menu.js";
+import { getDisplayOriText } from "./oriDisplay.js";
 
 
 let focusedWord = null;
@@ -659,12 +660,13 @@ export function updateWordDetails(options = {}) {
         const proposer = word.proposers[0];
         const localizedName = proposer.name?.[lang] || '';
         const sourceName = proposer.name?.ori || '';
+        const zhName = proposer.name?.zh || '';
         const displayName = (localizedName || sourceName || '未知').trim();
         const proposerImagePath = hasUsableImageSource(proposer.image)
             ? resolveImagePath(proposer.image)
             : "";
         proposerPrimary.textContent = displayName;
-        proposerOri.textContent = sourceName;
+        proposerOri.textContent = getDisplayOriText(sourceName, lang, zhName);
         if (proposerImagePath) {
             proposerImg.src = proposerImagePath;
             proposerImg.alt = localizedName || sourceName || '';
