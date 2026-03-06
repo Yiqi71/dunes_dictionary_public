@@ -2,12 +2,19 @@
 
 const INVITE_OK_KEY = "dunes_invite_verified_v1";
 const INVITE_CODE_KEY = "dunes_invite_code_v1";
-const CODES_URL = "assets/data/invite-codes.json";
 const SUCCESS_HOLD_MS = 2000;
 const FADE_OUT_MS = 700;
 const ENTRY_READY_EVENT = "dunes:entry-ready";
 
 let entryReadyNotified = false;
+
+const API_BASE = (() => {
+    const injected = (typeof window !== "undefined" && window.DD_API_BASE) ? String(window.DD_API_BASE).trim() : "";
+    if (injected) return injected.replace(/\/+$/, "");
+    const host = (typeof location !== "undefined" && location.hostname) ? location.hostname : "";
+    if (host === "localhost" || host === "127.0.0.1") return "http://localhost:3000";
+    return "https://api.dunes-dictionary.com";
+})();
 
 function normalizeInviteCode(value) {
     return String(value || "").trim().toUpperCase();
@@ -23,14 +30,34 @@ function setMessage(el, text, type) {
     el.className = type ? type : "";
 }
 
-async function loadCodes() {
-    const response = await fetch(CODES_URL, { cache: "no-store" });
-    if (!response.ok) throw new Error("failed_to_load_codes");
-    const payload = await response.json();
-    if (!payload || !Array.isArray(payload.codes)) {
-        throw new Error("invalid_code_payload");
+async function verifyInvite(code, deviceId, options = {}) {
+    const legacyCached = Boolean(options.legacyCached);
+    const response = await fetch(`${API_BASE}/api/invite/verify`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            code,
+            device_id: deviceId,
+            legacy_cached: legacyCached
+        })
+    });
+
+    let payload = null;
+    try {
+        payload = await response.json();
+    } catch (_) {
+        payload = null;
     }
-    return new Set(payload.codes.map(normalizeInviteCode));
+
+    if (!response.ok || !payload || payload.ok !== true || payload.allowed !== true) {
+        const err = new Error((payload && payload.message) ? payload.message : "邀请码验证失败");
+        err.code = payload && payload.error ? payload.error : "verify_failed";
+        throw err;
+    }
+
+    return payload;
 }
 
 function notifyEntryReady(source) {
@@ -85,58 +112,64 @@ function initInviteGate() {
 
     ensureSuccessTitle(gate);
 
-    try {
-        const cachedOk = localStorage.getItem(INVITE_OK_KEY) === "true";
-        const cachedCode = normalizeInviteCode(localStorage.getItem(INVITE_CODE_KEY));
-        const hasValidCode = isValidInviteCode(cachedCode);
-        const deviceId = getOrCreateDeviceId();
-        const hasValidDeviceId = isValidDeviceId(deviceId);
-
-        if (!hasValidDeviceId) {
+    const clearLocalVerify = () => {
+        try {
             localStorage.removeItem(INVITE_OK_KEY);
             localStorage.removeItem(INVITE_CODE_KEY);
+        } catch (_) {
+            // ignore
         }
+    };
 
-        if (cachedOk && hasValidCode && hasValidDeviceId) {
-            hideGate(gate, "invite-cached");
-            return;
-        }
-
-        if (cachedOk || cachedCode) {
-            localStorage.removeItem(INVITE_OK_KEY);
-            localStorage.removeItem(INVITE_CODE_KEY);
-        }
-    } catch (_) {
-        // ignore and continue with invite form
+    const deviceId = getOrCreateDeviceId();
+    if (!isValidDeviceId(deviceId)) {
+        clearLocalVerify();
+        setMessage(message, "设备标识异常，请刷新后重试", "error");
+        return;
     }
 
-    let codeSet = null;
-    let loading = false;
     let unlocking = false;
-
-    const ensureCodes = async () => {
-        if (codeSet) return codeSet;
-        if (loading) return null;
-
-        loading = true;
+    const verifyAndUnlock = async (code, options = {}) => {
+        const silent = Boolean(options.silent);
+        unlocking = true;
         submit.disabled = true;
-        setMessage(message, "正在加载邀请码...", "");
+        input.disabled = true;
+        if (!silent) {
+            setMessage(message, "正在验证邀请码...", "");
+        }
+
         try {
-            codeSet = await loadCodes();
-            setMessage(message, "", "");
-            return codeSet;
-        } catch (_) {
-            setMessage(message, "邀请码列表加载失败，请稍后刷新重试", "error");
-            return null;
-        } finally {
-            loading = false;
-            if (!unlocking) {
-                submit.disabled = false;
+            await verifyInvite(code, deviceId, {
+                legacyCached: silent
+            });
+            localStorage.setItem(INVITE_OK_KEY, "true");
+            localStorage.setItem(INVITE_CODE_KEY, code);
+            showSuccessOverlay(gate, input, submit, message);
+        } catch (err) {
+            clearLocalVerify();
+            input.disabled = false;
+            submit.disabled = false;
+            unlocking = false;
+            const text = (err && err.message) ? err.message : "邀请码验证失败，请稍后重试";
+            setMessage(message, text, "error");
+            if (!silent) {
+                input.focus();
             }
         }
     };
 
-    ensureCodes();
+    try {
+        const cachedOk = localStorage.getItem(INVITE_OK_KEY) === "true";
+        const cachedCode = normalizeInviteCode(localStorage.getItem(INVITE_CODE_KEY));
+        if (cachedOk && isValidInviteCode(cachedCode)) {
+            input.value = cachedCode;
+            verifyAndUnlock(cachedCode, { silent: true });
+            return;
+        }
+        clearLocalVerify();
+    } catch (_) {
+        // ignore and continue with invite form
+    }
 
     form.addEventListener("submit", async (event) => {
         event.preventDefault();
@@ -150,36 +183,7 @@ function initInviteGate() {
             return;
         }
 
-        const set = await ensureCodes();
-        if (!set) return;
-
-        if (!set.has(code)) {
-            setMessage(message, "邀请码无效", "error");
-            return;
-        }
-
-        const deviceId = getOrCreateDeviceId();
-        if (!isValidDeviceId(deviceId)) {
-            try {
-                localStorage.removeItem(INVITE_OK_KEY);
-                localStorage.removeItem(INVITE_CODE_KEY);
-            } catch (_) {
-                // ignore storage cleanup errors
-            }
-            setMessage(message, "设备标识异常，请刷新后重试", "error");
-            return;
-        }
-
-        try {
-            localStorage.setItem(INVITE_OK_KEY, "true");
-            localStorage.setItem(INVITE_CODE_KEY, code);
-        } catch (_) {
-            setMessage(message, "本地存储不可用，无法保存验证状态", "error");
-            return;
-        }
-
-        unlocking = true;
-        showSuccessOverlay(gate, input, submit, message);
+        verifyAndUnlock(code);
     });
 }
 
