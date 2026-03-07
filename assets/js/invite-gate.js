@@ -6,6 +6,7 @@ const DEVICE_ID_KEYS = ["dd_device_id_v1", "dunes_device_id_v1", "dd_vote_device
 const SUCCESS_HOLD_MS = 2000;
 const FADE_OUT_MS = 700;
 const GATE_FIRST_SHOW_DELAY_MS = 900;
+const GATE_REVEAL_SETTLE_MS = 760;
 const ENTRY_READY_EVENT = "dunes:entry-ready";
 
 let entryReadyNotified = false;
@@ -184,6 +185,11 @@ function initInviteGate() {
         gate.classList.remove("is-waiting");
         input.disabled = false;
         submit.disabled = false;
+        if (!entryReadyNotified) {
+            window.setTimeout(() => {
+                notifyEntryReady("invite-required");
+            }, GATE_REVEAL_SETTLE_MS);
+        }
         if (!input.value) input.focus();
     };
 
