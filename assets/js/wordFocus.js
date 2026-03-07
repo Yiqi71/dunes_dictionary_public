@@ -490,6 +490,30 @@ function hasTextContent(value) {
     return String(value || "").trim().length > 0;
 }
 
+function normalizePlaceholderText(value) {
+    return String(value || "")
+        .trim()
+        .toLowerCase()
+        .replace(/[。.!?]/g, "")
+        .replace(/\s+/g, "");
+}
+
+function isCommentPlaceholder(value) {
+    const normalized = normalizePlaceholderText(value);
+    if (!normalized) return true;
+    return (
+        normalized === "暂无导读" ||
+        normalized === "暂无作者" ||
+        normalized === "暂无作者信息" ||
+        normalized === "暂无回声" ||
+        normalized === "noguideyet" ||
+        normalized === "nocommentaryyet" ||
+        normalized === "noauthoryet" ||
+        normalized === "noauthorinformationyet" ||
+        normalized === "noechoesyet"
+    );
+}
+
 function setDetailVisibility(sectionId, visible) {
     const section = document.getElementById(sectionId);
     if (!section) return;
@@ -720,8 +744,10 @@ export function updateWordDetails(options = {}) {
     }
     if (word.commentAbs) {
         const comment = word.commentAbs;
-        const content = applyHashItalics(comment.content?.[lang] || "");
-        const author = comment.author?.[lang] || "";
+        const rawContent = comment.content?.[lang] || "";
+        const rawAuthor = comment.author?.[lang] || "";
+        const content = isCommentPlaceholder(rawContent) ? "" : applyHashItalics(rawContent);
+        const author = isCommentPlaceholder(rawAuthor) ? "" : rawAuthor;
         const authorBlock = author ? ` <p>${author}</p>` : "";
         const hasCommentContent = hasTextContent(content) || hasTextContent(author);
         setDetailVisibility("comment", hasCommentContent);
