@@ -10,6 +10,11 @@
     transition: opacity 700ms ease;
 }
 
+#invite-gate.is-waiting {
+    opacity: 0;
+    pointer-events: none;
+}
+
 #invite-gate.is-hidden {
     display: none;
 }
