@@ -19,6 +19,12 @@ const API_BASE = (() => {
     return "https://api.dunes-dictionary.com";
 })();
 
+function shouldBypassInviteForLocalDev() {
+    if (typeof window === "undefined" || typeof location === "undefined") return false;
+    const host = String(location.hostname || "").toLowerCase();
+    return host === "localhost" || host === "127.0.0.1" || host === "::1" || host === "[::1]";
+}
+
 function normalizeInviteCode(value) {
     return String(value || "").trim().toUpperCase();
 }
@@ -155,6 +161,11 @@ function initInviteGate() {
 
     if (!gate || !form || !input || !submit || !message) {
         notifyEntryReady("gate-missing");
+        return;
+    }
+
+    if (shouldBypassInviteForLocalDev()) {
+        hideGate(gate, "invite-bypass-local-dev");
         return;
     }
 
