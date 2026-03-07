@@ -91,6 +91,7 @@ function hideGate(gate, source = "unknown") {
 }
 
 function showSuccessOverlay(gate, input, submit, message) {
+    gate.style.display = "";
     input.disabled = true;
     submit.disabled = true;
     setMessage(message, "", "");
@@ -122,6 +123,7 @@ function ensureGateDom() {
 
     gate = document.createElement("div");
     gate.id = "invite-gate";
+    gate.style.display = "none";
     gate.innerHTML = `
         <div class="invite-card">
             <h1 class="invite-title">输入邀请码</h1>
@@ -169,11 +171,13 @@ function initInviteGate() {
         return;
     }
 
+    gate.style.display = "";
     gate.classList.add("is-waiting");
     gate.classList.remove("is-success", "is-fading", "is-hidden");
     ensureSuccessTitle(gate);
 
     const showGate = () => {
+        gate.style.display = "";
         gate.classList.remove("is-hidden");
         gate.classList.remove("is-fading");
         gate.classList.remove("is-success");
