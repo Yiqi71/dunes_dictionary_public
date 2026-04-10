@@ -815,9 +815,8 @@ export function updateWordDetails(options = {}) {
         const proposerSection = document.getElementById("proposer");
         if (!proposerSection || proposerSection.style.display === "none") return;
         if (status === "error") {
-            proposerImg.src = '';
-            proposerImg.style.display = 'none';
-            setProposerTextColorIfCurrent(contrastToken, PROPOSER_TEXT_COLOR_DARK);
+            setDetailVisibility("proposer", false);
+            return;
         }
         queueDetailReveal("proposer", revealToken);
     });
