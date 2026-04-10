@@ -70,7 +70,6 @@ function fadeInDetailsAfterTransition() {
     if (!detailDiv) return;
     detailDiv.classList.remove("hidden");
     detailDiv.classList.remove("details-transition-out");
-    flushPendingDetailReveals();
 }
 
 function waitForDetailsFadeOut(timeoutMs = 420) {
@@ -124,19 +123,6 @@ function revealImageIfReady(img) {
     img.classList.remove("lazy-img", "lazy-img-error");
     img.classList.add("lazy-img-loaded");
     img.style.visibility = "visible";
-}
-
-function waitForImageSettle(img) {
-    if (!img || !img.getAttribute("src")) return Promise.resolve("empty");
-    if (img.complete) {
-        return Promise.resolve(img.naturalWidth > 0 ? "loaded" : "error");
-    }
-    return new Promise((resolve) => {
-        const handleLoad = () => resolve("loaded");
-        const handleError = () => resolve("error");
-        img.addEventListener("load", handleLoad, { once: true });
-        img.addEventListener("error", handleError, { once: true });
-    });
 }
 
 const PROPOSER_TEXT_COLOR_LIGHT = "#E6D9D0";
@@ -516,44 +502,7 @@ function isCommentPlaceholder(value) {
 function setDetailVisibility(sectionId, visible) {
     const section = document.getElementById(sectionId);
     if (!section) return;
-    section.dataset.detailReady = "0";
-    section.classList.remove("detail-visible");
-    section.classList.toggle("detail-pending", Boolean(visible));
     section.style.display = visible ? "" : "none";
-}
-
-function canRevealDetailsNow() {
-    const detailDiv = document.getElementById("word-details");
-    if (!detailDiv) return false;
-    return !detailDiv.classList.contains("hidden") && !detailDiv.classList.contains("details-transition-out");
-}
-
-function commitDetailReveal(section) {
-    if (!section || section.style.display === "none" || section.classList.contains("detail-visible")) return;
-    requestAnimationFrame(() => {
-        if (section.style.display === "none") return;
-        section.classList.remove("detail-pending");
-        section.classList.add("detail-visible");
-        section.dataset.detailReady = "0";
-    });
-}
-
-function queueDetailReveal(sectionId, token = detailsTransitionToken) {
-    if (token !== detailsTransitionToken) return;
-    const section = document.getElementById(sectionId);
-    if (!section || section.style.display === "none") return;
-    section.dataset.detailReady = "1";
-    if (canRevealDetailsNow()) {
-        commitDetailReveal(section);
-    }
-}
-
-function flushPendingDetailReveals(token = detailsTransitionToken) {
-    if (token !== detailsTransitionToken) return;
-    if (!canRevealDetailsNow()) return;
-    document.querySelectorAll('#word-details .detail[data-detail-ready="1"]').forEach((section) => {
-        commitDetailReveal(section);
-    });
 }
 
 export function updateWordFocus(targetNodeId = null) {
@@ -679,7 +628,6 @@ export function updateWordDetails(options = {}) {
 
     const lang = normalizeLang(state.currentLang || "zh");
     const contrastToken = ++proposerContrastToken;
-    const revealToken = detailsTransitionToken;
 
     // 显示details
     const detailDiv = document.getElementById("word-details");
@@ -793,34 +741,10 @@ export function updateWordDetails(options = {}) {
         commentContent.innerHTML = hasCommentContent
             ? `<div class="comment-abs-content">${content}</div>${authorBlock}`
             : "";
-        if (hasCommentContent) {
-            queueDetailReveal("comment", revealToken);
-        }
     } else {
         setDetailVisibility("comment", false);
         commentContent.innerHTML = "";
     }
-
-    waitForImageSettle(imageEl).then((status) => {
-        if (revealToken !== detailsTransitionToken) return;
-        if (status === "loaded") {
-            queueDetailReveal("image", revealToken);
-            return;
-        }
-        setDetailVisibility("image", false);
-    });
-
-    waitForImageSettle(proposerImg).then((status) => {
-        if (revealToken !== detailsTransitionToken) return;
-        const proposerSection = document.getElementById("proposer");
-        if (!proposerSection || proposerSection.style.display === "none") return;
-        if (status === "error") {
-            proposerImg.src = '';
-            proposerImg.style.display = 'none';
-            setProposerTextColorIfCurrent(contrastToken, PROPOSER_TEXT_COLOR_DARK);
-        }
-        queueDetailReveal("proposer", revealToken);
-    });
 
     return Promise.resolve();
 }

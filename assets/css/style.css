@@ -129,22 +129,18 @@ h1.English {
     pointer-events: none;
 }
 
-#word-details.hidden {
-    transition: none !important;
-}
-
 #word-details {
     position: absolute;
     inset: 0;
     opacity: 1;
     pointer-events: none;
+    transition: opacity 500ms ease-in-out;
     z-index: 50;
 }
 
 #word-details.details-transition-out {
     opacity: 0;
     pointer-events: none;
-    transition: opacity 500ms ease-in-out;
 }
 
 /* 主视图 */
@@ -319,16 +315,6 @@ html:lang(en) .word-node .terms .term-main {
 
     box-shadow: #403b2c58 0px 0px 2px 2px;
     cursor: pointer;
-    opacity: 1;
-    transition: opacity 320ms ease;
-}
-
-#word-details .detail.detail-pending {
-    opacity: 0;
-}
-
-#word-details .detail.detail-visible {
-    opacity: 1;
 }
 
 #word-details .detail:hover {
