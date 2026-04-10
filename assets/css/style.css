@@ -449,8 +449,7 @@ html:lang(en) .word-node .terms .term-main {
     opacity: 0.7;
     filter: saturate(0.1);
     mix-blend-mode: plus-darker;
-    padding: 0 12px 15px 12px;
-    margin: 16px auto 0;
+    margin: 8px 24px 24px 24px;
     display: block;
 }
 
@@ -484,8 +483,7 @@ html:lang(en) .word-node .terms .term-main {
     opacity: 0.7;
     filter: saturate(0.1);
     mix-blend-mode: darken;
-    padding: 0 12px 15px 12px;
-    margin: 16px 12px 15px;
+    margin: 8px 24px 24px 24px;
     position: relative;
     z-index: 1;
 }
