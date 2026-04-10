@@ -72,7 +72,7 @@ function fadeInDetailsAfterTransition() {
     detailDiv.classList.remove("details-transition-out");
 }
 
-function waitForDetailsFadeOut(timeoutMs = 560) {
+function waitForDetailsFadeOut(timeoutMs = 420) {
     const detailDiv = document.getElementById("word-details");
     if (!detailDiv) return Promise.resolve();
     if (detailDiv.classList.contains("hidden")) return Promise.resolve();
@@ -97,47 +97,32 @@ function waitForDetailsFadeOut(timeoutMs = 560) {
     });
 }
 
-function waitForImageSettle(img, timeoutMs = 4000) {
-    if (!img) return Promise.resolve();
-    if (img.style.display === "none") return Promise.resolve();
-    const src = img.getAttribute("src");
-    if (!src) return Promise.resolve();
-    if (img.complete) return Promise.resolve();
-
-    return new Promise((resolve) => {
-        let settled = false;
-        const done = () => {
-            if (settled) return;
-            settled = true;
-            img.removeEventListener("load", done);
-            img.removeEventListener("error", done);
-            resolve();
-        };
-        img.addEventListener("load", done, { once: true });
-        img.addEventListener("error", done, { once: true });
-        window.setTimeout(done, timeoutMs);
-    });
-}
-
 function prepareLazyImage(img) {
     if (!img) return;
     img.loading = "lazy";
     img.decoding = "async";
     img.classList.add("lazy-img");
+    img.classList.remove("lazy-img-loaded", "lazy-img-error");
     img.style.visibility = "hidden";
-    if (img.complete && img.naturalWidth > 0) {
-        img.classList.remove("lazy-img");
-        img.style.visibility = "visible";
-        return;
-    }
     img.addEventListener("load", () => {
         img.classList.remove("lazy-img");
+        img.classList.remove("lazy-img-error");
+        img.classList.add("lazy-img-loaded");
         img.style.visibility = "visible";
     }, { once: true });
     img.addEventListener("error", () => {
+        img.classList.remove("lazy-img-loaded");
         img.classList.add("lazy-img-error");
         img.style.visibility = "hidden";
     }, { once: true });
+}
+
+function revealImageIfReady(img) {
+    if (!img) return;
+    if (!img.complete || img.naturalWidth <= 0) return;
+    img.classList.remove("lazy-img", "lazy-img-error");
+    img.classList.add("lazy-img-loaded");
+    img.style.visibility = "visible";
 }
 
 const PROPOSER_TEXT_COLOR_LIGHT = "#E6D9D0";
@@ -600,13 +585,13 @@ export function updateWordFocus(targetNodeId = null) {
             hideNearbyNodes(closestWord);
 
             // 自动吸附到屏幕中心
-            const detailsReady = Promise.resolve(waitForDetailsFadeOut()).then(() => {
+            const detailsReady = Promise.resolve().then(() => {
                 if (transitionToken !== detailsTransitionToken) return;
                 hideDetailsImmediatelyForTransition();
                 return updateWordDetails({ wordId: closestWord.id, reveal: false });
             });
             const focusReady = Promise.resolve(zoomToWord(focusedWord.id, state.scaleThreshold));
-            Promise.all([focusReady, detailsReady]).then(() => {
+            focusReady.then(() => {
                 if (transitionToken !== detailsTransitionToken) return;
                 if (!state.focusedNodeId || String(state.focusedNodeId) !== String(closestWord.id)) return;
                 requestAnimationFrame(() => {
@@ -680,6 +665,7 @@ export function updateWordDetails(options = {}) {
         imageEl.src = resolveImagePath(word.source_image);
         imageEl.alt = word.term?.[lang] || '';
         imageEl.style.display = 'block';
+        revealImageIfReady(imageEl);
     } else {
         imageEl.src = '';
         imageEl.style.display = 'none';
@@ -718,6 +704,7 @@ export function updateWordDetails(options = {}) {
             proposerImg.src = proposerImagePath;
             proposerImg.alt = localizedName || sourceName || '';
             proposerImg.style.display = 'block';
+            revealImageIfReady(proposerImg);
             attachProposerContrastWatcher(proposerImg, contrastToken);
         } else {
             proposerImg.src = '';
@@ -759,10 +746,7 @@ export function updateWordDetails(options = {}) {
         commentContent.innerHTML = "";
     }
 
-    return Promise.all([
-        waitForImageSettle(imageEl),
-        waitForImageSettle(proposerImg)
-    ]);
+    return Promise.resolve();
 }
 
 function hideNearbyNodes(focusedNode) {

@@ -130,8 +130,12 @@ h1.English {
 }
 
 #word-details {
+    position: absolute;
+    inset: 0;
     opacity: 1;
+    pointer-events: none;
     transition: opacity 500ms ease-in-out;
+    z-index: 50;
 }
 
 #word-details.details-transition-out {
@@ -301,6 +305,7 @@ html:lang(en) .word-node .terms .term-main {
     transform: translate(-50%, -50%);
     border-radius: 5px;
     overflow: hidden;
+    pointer-events: auto;
 
     display: flex;
     flex-direction: column;
@@ -451,15 +456,23 @@ html:lang(en) .word-node .terms .term-main {
     mix-blend-mode: plus-darker;
     margin: 8px 24px 24px 24px;
     display: block;
+    background-color: #d9d0c3;
+    transition: opacity 0.28s ease, filter 0.28s ease, background-color 0.28s ease;
 }
 
 .lazy-img {
     background-color: #d9d0c3;
-    transition: background-color 0.3s ease;
+    opacity: 0;
+}
+
+.lazy-img-loaded {
+    opacity: 0.7;
+    background-color: transparent;
 }
 
 .lazy-img-error {
     background-color: #c3b3a0;
+    opacity: 0;
 }
 
 
@@ -486,6 +499,8 @@ html:lang(en) .word-node .terms .term-main {
     margin: 8px 24px 24px 24px;
     position: relative;
     z-index: 1;
+    background-color: #d9d0c3;
+    transition: opacity 0.28s ease, filter 0.28s ease, background-color 0.28s ease;
 }
 
 #proposer .proposer-text {
