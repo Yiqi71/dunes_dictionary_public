@@ -17,7 +17,6 @@
     <link rel="stylesheet" href="assets/css/menu.css">
     <link rel="stylesheet" href="assets/css/zoom.css">
     <link rel="stylesheet" href="assets/css/mobile.css">
-    <link rel="stylesheet" href="assets/css/invite-gate.css">
 
     <!-- <script src="assets/js/boot-startup-debug.js"></script> -->
     <script type="module" src="assets/js/uni-canvas.js" defer></script>
@@ -27,7 +26,6 @@
     <script type="module" src="assets/js/countryBoundingBoxes.js" defer></script>
     <script type="module" src="assets/js/boot-progress.js" defer></script>
     <script type="module" src="assets/js/main.preview.js"></script>
-    <script type="module" src="assets/js/invite-gate.js" defer></script>
     <script type="module" src="assets/js/mobile-panel.js" defer></script>
     <script type="module" src="assets/js/mobile-interactions.js" defer></script>
     <script type="module" src="assets/js/wordFocus.hotkey.rs.js" defer></script>
@@ -52,18 +50,6 @@
         <span class="flythrough-dot"></span>
         Flythrough
     </button>
-    <div id="invite-gate" style="display:none;">
-        <main class="invite-card">
-            <h1 class="invite-title">请输入邀请码</h1>
-            <p class="invite-sub">验证通过后可访问当前页面。</p>
-            <form id="invite-form" novalidate>
-                <label class="invite-label" for="invite-input">邀请码</label>
-                <input id="invite-input" name="invite" type="text" maxlength="10" placeholder="DUNES-XXXX" autocomplete="off" required>
-                <button id="invite-submit" type="submit">验证</button>
-                <p id="invite-message" aria-live="polite"></p>
-            </form>
-        </main>
-    </div>
 
     <div id="floating-panel" class="hidden">
         <!-- Entry Panel -->
