@@ -33,6 +33,7 @@
     <script type="module" src="assets/js/wordFocus.hotkey.rs.js" defer></script>
     
     <script type="module" src="assets/js/particles.js" defer></script>
+    <script type="module" src="assets/js/flythrough.js" defer></script>
 
     <!-- <script type="module" src="sandtest.js" defer></script> -->
 </head>
@@ -47,6 +48,10 @@
 
     <div id="app-root">
     <!-- <div id="center-dot"></div> -->
+    <button id="flythrough-button" aria-label="Toggle flythrough mode">
+        <span class="flythrough-dot"></span>
+        Flythrough
+    </button>
     <div id="invite-gate" style="display:none;">
         <main class="invite-card">
             <h1 class="invite-title">请输入邀请码</h1>
