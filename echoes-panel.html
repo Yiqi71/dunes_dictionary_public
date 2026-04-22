@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <base href="/">
+    <title>Echoes — 沙丘词典</title>
+
+    <link rel="stylesheet" href="assets/css/resetCSS.css">
+    <link rel="stylesheet" href="assets/css/fonts.css">
+    <link rel="stylesheet" href="assets/css/floatingPanel.css">
+
+    <style>
+        /* Panel-page layout overrides */
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #EEE9DB;
+        }
+
+        /* Make the panel fill the full viewport instead of 37vw fixed-right */
+        #floating-panel {
+            position: fixed !important;
+            top: 0 !important;
+            right: 0 !important;
+            width: 100% !important;
+            transform: none !important;
+            opacity: 1 !important;
+            pointer-events: auto !important;
+            border-radius: 0 !important;
+        }
+
+        /* Always show — never hidden on panel pages */
+        #floating-panel.hidden {
+            transform: none !important;
+            opacity: 1 !important;
+            pointer-events: auto !important;
+        }
+
+        /* Tab buttons always visible */
+        .panel-tabs button {
+            opacity: 1 !important;
+            pointer-events: auto !important;
+        }
+
+        /* Prevent horizontal scrollbar when inactive panel slides */
+        body { overflow: hidden; }
+    </style>
+
+    <script>
+        // Set --app-vh before stylesheets apply so panels size correctly.
+        (function () {
+            function setVh() {
+                document.documentElement.style.setProperty("--app-vh", window.innerHeight + "px");
+                document.documentElement.style.setProperty("--app-bottom-inset", "0px");
+            }
+            setVh();
+            window.addEventListener("resize", setVh);
+        })();
+    </script>
+</head>
+
+<body data-panel="echoes">
+    <div id="floating-panel">
+
+        <!-- Entry Panel -->
+        <div class="panel-entry">
+            <div class="panel-main">
+                <div class="panel-top"></div>
+                <div class="panel-bottom"></div>
+            </div>
+            <div class="panel-slide">
+                <div class="scroll-track"></div>
+                <div class="scroll-thumb"></div>
+            </div>
+            <div class="panel-tabs">
+                <button data-tab="entry" class="active">词条</button>
+                <button data-tab="comment">回声</button>
+            </div>
+        </div>
+
+        <!-- Echoes Panel -->
+        <div class="panel-comment active">
+            <div class="panel-main">
+                <div class="panel-top"></div>
+                <div class="panel-bottom"></div>
+            </div>
+            <div class="panel-slide">
+                <div class="scroll-track"></div>
+                <div class="scroll-thumb"></div>
+            </div>
+            <div class="panel-tabs">
+                <button data-tab="entry">词条</button>
+                <button data-tab="comment" class="active">回声</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script type="module" src="assets/js/panel-page.js"></script>
+</body>
+</html>

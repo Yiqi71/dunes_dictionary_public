@@ -16,6 +16,25 @@ const MENU_COMPACT_CLASS = "menu-compact";
 const PENDING_FOCUS_CLASS = "pending-focus";
 const FOCUSED_NODE_LAYER_ID = "focused-node-layer";
 
+const PANEL_SYNC_CHANNEL = 'dunes-focus';
+const PANEL_SYNC_STORAGE_KEY = 'dd_panel_sync';
+let _panelChannel = null;
+
+function getPanelChannel() {
+    if (!_panelChannel) {
+        try { _panelChannel = new BroadcastChannel(PANEL_SYNC_CHANNEL); } catch (_) {}
+    }
+    return _panelChannel;
+}
+
+function broadcastFocusState(focusedNodeId, lang) {
+    try {
+        const payload = { focusedNodeId: String(focusedNodeId), lang };
+        localStorage.setItem(PANEL_SYNC_STORAGE_KEY, JSON.stringify(payload));
+        getPanelChannel()?.postMessage({ type: 'focus-change', ...payload });
+    } catch (_) {}
+}
+
 function emitWordFocusChange(focusedNodeId) {
     document.dispatchEvent(new CustomEvent("word-focus-change", {
         detail: { focusedNodeId: focusedNodeId ?? null }
@@ -590,6 +609,7 @@ export function updateWordFocus(targetNodeId = null) {
             focusedWord = closestWord;
             state.focusedNodeId = closestWord.id;
             emitWordFocusChange(closestWord.id);
+            broadcastFocusState(closestWord.id, state.currentLang);
             setMenuCompact(true);
             if (lastFocusedNodeId !== closestWord.id) {
                 resetFloatingPanelState();
