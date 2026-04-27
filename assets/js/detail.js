@@ -2132,24 +2132,19 @@ const imageDiv = document.getElementById("image");
 // Click "Comment".
 commentDiv.addEventListener("click", (e) => {
     e.stopPropagation();
-    showFloatingPanel();
     renderCommentSection();
-    switchTab("comment");
     scrollToTop("comment");
 });
 
 // Click "Related works / Proposers".
 proposerDiv.addEventListener("click", (e) => {
     e.stopPropagation();
-    showFloatingPanel();
     updateTabContent("proposers");
 });
 
 // Click "Image".
 imageDiv.addEventListener("click", (e) => {
     e.stopPropagation();
-    showFloatingPanel();
-    switchTab("entry");
     updateTabContent("source");
 });
 

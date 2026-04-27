@@ -40,12 +40,6 @@
             pointer-events: auto !important;
         }
 
-        /* Tab buttons always visible */
-        .panel-tabs button {
-            opacity: 1 !important;
-            pointer-events: auto !important;
-        }
-
         /* Prevent horizontal scrollbar when inactive panel slides */
         body { overflow: hidden; }
     </style>
@@ -76,28 +70,7 @@
                 <div class="scroll-track"></div>
                 <div class="scroll-thumb"></div>
             </div>
-            <div class="panel-tabs">
-                <button data-tab="entry" class="active">词条</button>
-                <button data-tab="comment">回声</button>
-            </div>
         </div>
-
-        <!-- Echoes Panel -->
-        <div class="panel-comment">
-            <div class="panel-main">
-                <div class="panel-top"></div>
-                <div class="panel-bottom"></div>
-            </div>
-            <div class="panel-slide">
-                <div class="scroll-track"></div>
-                <div class="scroll-thumb"></div>
-            </div>
-            <div class="panel-tabs">
-                <button data-tab="entry">词条</button>
-                <button data-tab="comment" class="active">回声</button>
-            </div>
-        </div>
-
     </div>
 
     <script type="module" src="assets/js/panel-page.js"></script>

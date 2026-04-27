@@ -1,4 +1,4 @@
-// panel-page.js
+﻿// panel-page.js
 // Self-contained rendering + sync for entry-panel.html and echoes-panel.html.
 // No canvas dependencies. Syncs with main site via BroadcastChannel + localStorage.
 
@@ -898,7 +898,7 @@ function renderEchoesPanel() {
                 const rawContent  = c?.content?.[lang];
                 const contentParts = Array.isArray(rawContent)
                     ? rawContent
-                    : (typeof rawContent === "string" ? rawContent.split(/\r?\n| /) : []);
+                    : (typeof rawContent === "string" ? rawContent.split(/\r?\n|\u2028/) : []);
                 const content = contentParts.length
                     ? contentParts.map(p => `<p>${applyHashItalics(p)}</p>`).join("") : "";
                 const images   = Array.isArray(c?.images) ? c.images : [];
