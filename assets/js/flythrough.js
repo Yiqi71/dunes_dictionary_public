@@ -3,7 +3,7 @@ import { draw, updateWordNodeTransforms, getMobileFocusedNodeAnchor } from "./un
 import { updateRelations } from "./relationManager.js";
 import { updateScaleForNodes } from "./zoom.js";
 import { moveIndicator } from "./menu.js";
-import { updateWordFocus } from "./wordFocus.js";
+import { updateWordFocus, restoreNodeToContainer } from "./wordFocus.js";
 
 let isActive = false;
 let restTimer = null;
@@ -81,6 +81,14 @@ function slowPanTo(targetId, onDone) {
 
     cancelFly();
 
+    // Release old focused node from pinned layer so it follows world coords.
+    const oldFocused = state.focusedNodeId ? document.getElementById(String(state.focusedNodeId)) : null;
+    if (oldFocused && isMobileLayout()) {
+        restoreNodeToContainer(oldFocused);
+    }
+    const oldStartOpacity = oldFocused ? (Number(window.getComputedStyle(oldFocused).opacity) || 1) : 1;
+    const newStartOpacity = Number(window.getComputedStyle(node).opacity) || 1;
+
     const s0 = state.currentScale;
     const px0 = state.panX;
     const py0 = state.panY;
@@ -107,9 +115,16 @@ function slowPanTo(targetId, onDone) {
         updateRelations();
         updateScaleForNodes(state.currentScale);
         moveIndicator(state.currentScale);
+
+        // Opacity: linear (matching zoomToWord), position: eased.
+        if (oldFocused) oldFocused.style.opacity = String(oldStartOpacity + (0.2 - oldStartOpacity) * p);
+        node.style.opacity = String(newStartOpacity + (1 - newStartOpacity) * p);
+
         if (p < 1) {
             flyRaf = requestAnimationFrame(step);
         } else {
+            if (oldFocused) oldFocused.style.opacity = "0.2";
+            node.style.opacity = "1";
             flyRaf = null;
             flyAnimToken = null;
             onDone?.();

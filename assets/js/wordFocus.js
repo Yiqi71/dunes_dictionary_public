@@ -64,7 +64,7 @@ function moveFocusedNodeToLayer(node) {
     layer.appendChild(node);
 }
 
-function restoreNodeToContainer(node) {
+export function restoreNodeToContainer(node) {
     if (!node) return;
     const container = document.getElementById("word-nodes-container");
     if (!container || node.parentElement === container) return;
