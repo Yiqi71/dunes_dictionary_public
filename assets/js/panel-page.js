@@ -11,6 +11,9 @@ import { getOrCreateDeviceId } from "./device-id.js";
 
 const CHANNEL_NAME = "dunes-focus";
 const SYNC_KEY = "dd_panel_sync";
+const FLYTHROUGH_READ_SYNC_KEY = "dd_panel_flythrough_read";
+const DEFAULT_FLYTHROUGH_SCROLL_PX_PER_SECOND = 32;
+const DEFAULT_FLYTHROUGH_MIN_DURATION = 2500;
 
 const API_BASE = (() => {
     const injected = (typeof window !== "undefined" && window.DD_API_BASE)
@@ -989,42 +992,14 @@ function renderEchoesPanel() {
     });
     refreshCommentLikeBadges(contentScroll, word.id);
 
-    // Note expand/collapse
+    // Echoes panel pages keep all notes in normal document flow.
     const noteSections = Array.from(
         contentScroll.querySelectorAll("section:not(#section-contributors):not(#section-contact):not(#section-editors)")
     );
-
-    const clearNoteLayout = ({ scrollToTop: doScroll = false } = {}) => {
-        contentScroll.classList.remove("notes-mode");
-        if (panelMain) panelMain.classList.remove("notes-fixed");
-        noteSections.forEach(sec => {
-            sec.classList.remove("note-expanded", "note-above", "note-below", "note-below-first");
-            sec.scrollTop = 0;
-        });
-        if (doScroll && panelMain) panelMain.scrollTo({ top: 0, behavior: "smooth" });
-    };
-
-    const applyNoteLayout = (activeSection) => {
-        clearNoteLayout();
-        if (!activeSection) return;
-        contentScroll.classList.add("notes-mode");
-        if (panelMain) panelMain.classList.add("notes-fixed");
-        const activeIndex = noteSections.indexOf(activeSection);
-        noteSections.forEach((sec, idx) => {
-            if (idx < activeIndex) sec.classList.add("note-above");
-            if (idx > activeIndex) sec.classList.add("note-below");
-        });
-        activeSection.classList.add("note-expanded");
-        const firstBelow = noteSections[activeIndex + 1];
-        if (firstBelow) firstBelow.classList.add("note-below-first");
-    };
-
+    contentScroll.classList.remove("notes-mode");
+    if (panelMain) panelMain.classList.remove("notes-fixed");
     noteSections.forEach(section => {
-        section.addEventListener("click", (e) => {
-            e.stopPropagation();
-            if (section.classList.contains("note-expanded")) { clearNoteLayout({ scrollToTop: true }); return; }
-            applyNoteLayout(section);
-        });
+        section.classList.remove("note-expanded", "note-above", "note-below", "note-below-first");
     });
 
     setupLazyImages(commentPanel);
@@ -1076,6 +1051,9 @@ let dragStartY = 0;
 let dragStartTop = 0;
 let currentScrollThumb = null;
 let currentPanelMain   = null;
+let syncChannel = null;
+let flythroughReadRaf = null;
+let flythroughReadToken = null;
 
 function getActivePanelMain() {
     const active = document.querySelector(".panel-entry.active, .panel-comment.active");
@@ -1101,6 +1079,122 @@ function handleScroll() {
     const thumbTop    = SCROLL_CONFIG.thumbMargin + scrollRatio * thumbActiveRange;
     scrollThumb.style.display = "block";
     scrollThumb.style.top     = `${thumbTop}px`;
+}
+
+function getPanelKind() {
+    return document.body.dataset.panel === "echoes" ? "echoes" : "entry";
+}
+
+function getSyncChannel() {
+    if (!syncChannel) {
+        try {
+            syncChannel = new BroadcastChannel(CHANNEL_NAME);
+        } catch (_) {
+            syncChannel = null;
+        }
+    }
+    return syncChannel;
+}
+
+function postSyncMessage(payload) {
+    getSyncChannel()?.postMessage(payload);
+}
+
+function cancelFlythroughRead({ resetScroll = false } = {}) {
+    if (flythroughReadRaf !== null) {
+        cancelAnimationFrame(flythroughReadRaf);
+        flythroughReadRaf = null;
+    }
+    flythroughReadToken = null;
+    if (resetScroll) {
+        const panelMain = getActivePanelMain();
+        if (panelMain) panelMain.scrollTo({ top: 0, behavior: "auto" });
+        handleScroll();
+    }
+}
+
+function startFlythroughRead(command = {}) {
+    const readId = command.readId;
+    if (!readId) return;
+    if (flythroughReadToken?.readId === readId) return;
+
+    cancelFlythroughRead({ resetScroll: true });
+
+    if (command.wordId && String(panelState.focusedNodeId) !== String(command.wordId)) {
+        panelState.focusedNodeId = String(command.wordId);
+        render();
+    }
+
+    const panelMain = getActivePanelMain();
+    const speed = Number(command.speedPxPerSecond) || DEFAULT_FLYTHROUGH_SCROLL_PX_PER_SECOND;
+    const minDuration = Number(command.minDuration) || DEFAULT_FLYTHROUGH_MIN_DURATION;
+    const token = {
+        readId,
+        reachedEnd: false,
+        completionSent: false
+    };
+    flythroughReadToken = token;
+
+    if (!panelMain) {
+        postSyncMessage({ type: "flythrough-read-complete", readId, panel: getPanelKind() });
+        return;
+    }
+
+    panelMain.scrollTo({ top: 0, behavior: "auto" });
+    handleScroll();
+
+    let lastTime = performance.now();
+    const startTime = lastTime;
+
+    const step = now => {
+        if (flythroughReadToken !== token) return;
+
+        const dt = Math.max(0, (now - lastTime) / 1000);
+        lastTime = now;
+
+        const maxScroll = Math.max(0, panelMain.scrollHeight - panelMain.clientHeight);
+        if (maxScroll <= 1) {
+            token.reachedEnd = true;
+            panelMain.scrollTop = 0;
+        } else {
+            const nextTop = panelMain.scrollTop + speed * dt;
+            if (nextTop >= maxScroll - 0.5) {
+                token.reachedEnd = true;
+                panelMain.scrollTop = 0;
+            } else {
+                panelMain.scrollTop = nextTop;
+            }
+        }
+
+        handleScroll();
+
+        if (!token.completionSent && token.reachedEnd && now - startTime >= minDuration) {
+            token.completionSent = true;
+            postSyncMessage({ type: "flythrough-read-complete", readId, panel: getPanelKind() });
+        }
+
+        flythroughReadRaf = requestAnimationFrame(step);
+    };
+
+    flythroughReadRaf = requestAnimationFrame(step);
+}
+
+function handleSyncMessage(data = {}) {
+    const { type, focusedNodeId, lang } = data;
+    if (type === "focus-change") {
+        cancelFlythroughRead({ resetScroll: true });
+        panelState.focusedNodeId = focusedNodeId;
+        panelState.currentLang   = normalizeLang(lang);
+        render();
+        return;
+    }
+    if (type === "flythrough-read-start") {
+        startFlythroughRead(data);
+        return;
+    }
+    if (type === "flythrough-read-stop") {
+        cancelFlythroughRead({ resetScroll: true });
+    }
 }
 
 function setupScrollDrag(scrollThumb, panelMain) {
@@ -1155,15 +1249,19 @@ function updateScrollHandlers() {
 
 function setupSync() {
     try {
-        const channel = new BroadcastChannel(CHANNEL_NAME);
+        const channel = getSyncChannel();
+        if (!channel) return;
         channel.onmessage = (event) => {
-            const { type, focusedNodeId, lang } = event.data || {};
-            if (type !== "focus-change") return;
-            panelState.focusedNodeId = focusedNodeId;
-            panelState.currentLang   = normalizeLang(lang);
-            render();
+            handleSyncMessage(event.data || {});
         };
     } catch (_) {}
+
+    window.addEventListener("storage", (event) => {
+        if (event.key !== FLYTHROUGH_READ_SYNC_KEY || !event.newValue) return;
+        try {
+            handleSyncMessage(JSON.parse(event.newValue));
+        } catch (_) {}
+    });
 }
 
 // ---------------------------------------------------------------------------

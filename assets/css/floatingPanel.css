@@ -41,6 +41,12 @@
     transform: translateX(100%);
 }
 
+body.flythrough-active #floating-panel {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(100%);
+}
+
 #floating-panel:not(.hidden),
 #about-panel:not(.hidden) {
     transform: translateX(0);
@@ -534,6 +540,17 @@
 #floating-panel .panel-comment .panel-bottom #section-contact,
 #floating-panel .panel-comment .panel-bottom #section-editors {
     display: block;
+}
+
+body[data-panel="echoes"] #floating-panel .panel-comment .panel-bottom section {
+    max-height: none;
+    overflow: visible;
+    cursor: default;
+    transform: none;
+}
+
+body[data-panel="echoes"] #floating-panel .panel-comment .panel-bottom section:hover {
+    transform: none;
 }
 
 /* Collapsed notes stick to top/bottom and only show left title height */

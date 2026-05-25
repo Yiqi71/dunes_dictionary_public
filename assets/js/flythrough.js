@@ -9,11 +9,21 @@ let isActive = false;
 let restTimer = null;
 let flyRaf = null;
 let flyAnimToken = null;
+let panelReadToken = null;
+let panelReadChannel = null;
+let panelReadId = 0;
+let panelReadResolve = null;
+let panelReadCompletedPanels = new Set();
 
 const FLY_DURATION = 3800;
 const INITIAL_DELAY = 1500;
-const REST_DURATION = 5000;
 const NEARBY_POOL = 8;
+const PANEL_SCROLL_PX_PER_SECOND = 32;
+const PANEL_READ_MIN_DURATION = 2500;
+const PANEL_READ_START_DELAY = 350;
+const PANEL_SYNC_CHANNEL = "dunes-focus";
+const PANEL_READ_SYNC_KEY = "dd_panel_flythrough_read";
+const PANEL_READ_TARGETS = ["entry", "echoes"];
 
 function isMobileLayout() {
     return window.matchMedia("(max-width: 768px)").matches;
@@ -60,6 +70,24 @@ function fadeOutDetails() {
     setTimeout(() => d.classList.add("hidden"), 500);
 }
 
+function hideIndexFloatingPanel() {
+    const panel = document.getElementById("floating-panel");
+    if (panel) {
+        panel.classList.add("hidden");
+        panel.classList.remove("expanded");
+    }
+    document.getElementById("expand-btn")?.remove();
+    document.getElementById("overlay")?.classList.add("hidden");
+
+    const view = document.getElementById("universe-view");
+    if (view) view.style.left = "0";
+
+    const relationLines = document.getElementById("connection-lines");
+    if (relationLines) relationLines.style.left = "0";
+
+    updateRelations();
+}
+
 function restoreDetails() {
     const d = document.getElementById("word-details");
     if (!d) return;
@@ -70,6 +98,76 @@ function restoreDetails() {
 function cancelFly() {
     if (flyRaf !== null) { cancelAnimationFrame(flyRaf); flyRaf = null; }
     flyAnimToken = null;
+}
+
+function getPanelReadChannel() {
+    if (!panelReadChannel) {
+        try {
+            panelReadChannel = new BroadcastChannel(PANEL_SYNC_CHANNEL);
+            panelReadChannel.onmessage = handlePanelReadMessage;
+        } catch (_) {
+            panelReadChannel = null;
+        }
+    }
+    return panelReadChannel;
+}
+
+function broadcastPanelReadMessage(payload) {
+    try {
+        localStorage.setItem(PANEL_READ_SYNC_KEY, JSON.stringify(payload));
+    } catch (_) {}
+    getPanelReadChannel()?.postMessage(payload);
+}
+
+function handlePanelReadMessage(event) {
+    const data = event.data || {};
+    if (data.type !== "flythrough-read-complete") return;
+    if (!panelReadToken || data.readId !== panelReadToken.readId) return;
+    if (!PANEL_READ_TARGETS.includes(data.panel)) return;
+
+    panelReadCompletedPanels.add(data.panel);
+    const complete = PANEL_READ_TARGETS.every(panel => panelReadCompletedPanels.has(panel));
+    if (!complete) return;
+
+    const resolve = panelReadResolve;
+    panelReadToken = null;
+    panelReadResolve = null;
+    panelReadCompletedPanels = new Set();
+    resolve?.();
+}
+
+function cancelPanelRead() {
+    const readId = panelReadToken?.readId ?? panelReadId;
+    panelReadToken = null;
+    panelReadResolve = null;
+    panelReadCompletedPanels = new Set();
+    broadcastPanelReadMessage({
+        type: "flythrough-read-stop",
+        readId
+    });
+}
+
+function startPanelRead() {
+    cancelPanelRead();
+
+    const readId = ++panelReadId;
+    const token = { readId };
+    panelReadToken = token;
+    panelReadCompletedPanels = new Set();
+
+    return new Promise(resolve => {
+        panelReadResolve = resolve;
+        window.setTimeout(() => {
+            if (!isActive || panelReadToken !== token) return;
+            broadcastPanelReadMessage({
+                type: "flythrough-read-start",
+                readId,
+                wordId: String(state.focusedNodeId),
+                speedPxPerSecond: PANEL_SCROLL_PX_PER_SECOND,
+                minDuration: PANEL_READ_MIN_DURATION
+            });
+        }, PANEL_READ_START_DELAY);
+    });
 }
 
 function slowPanTo(targetId, onDone) {
@@ -137,14 +235,18 @@ function tick() {
     if (!isActive) return;
     const nextId = pickNearbyId(state.focusedNodeId);
     if (!nextId) {
-        restTimer = setTimeout(tick, REST_DURATION);
+        restTimer = setTimeout(tick, PANEL_READ_MIN_DURATION);
         return;
     }
+    cancelPanelRead();
     fadeOutDetails();
     slowPanTo(nextId, () => {
         if (!isActive) return;
         updateWordFocus(nextId);
-        restTimer = setTimeout(tick, REST_DURATION);
+        startPanelRead().then(() => {
+            if (!isActive) return;
+            tick();
+        });
     });
 }
 
@@ -155,6 +257,8 @@ function setButtonActive(active) {
 export function startFlythrough() {
     if (isActive) return;
     isActive = true;
+    document.body.classList.add("flythrough-active");
+    hideIndexFloatingPanel();
     setButtonActive(true);
     restTimer = setTimeout(tick, INITIAL_DELAY);
 }
@@ -162,8 +266,10 @@ export function startFlythrough() {
 export function stopFlythrough() {
     if (!isActive) return;
     isActive = false;
+    document.body.classList.remove("flythrough-active");
     setButtonActive(false);
     cancelFly();
+    cancelPanelRead();
     if (restTimer) { clearTimeout(restTimer); restTimer = null; }
     restoreDetails();
 }
