@@ -1071,11 +1071,11 @@ line-height: 40px;
 /* Entry panel: brief definition subheadings (zh) */
 .panel-entry #section-brief h3 {
     color: #FAF4E5;
-    font-family: "ChillDINGothic Condensed";
-    font-size: 36px;
+    font-family: "ChillDINGothic";
+    font-size: 40px;
     font-style: normal;
     font-weight: 600;
-    line-height: 42px;
+    line-height: 40px;
     letter-spacing: 2px;
     
 }

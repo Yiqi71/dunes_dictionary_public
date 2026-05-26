@@ -56,6 +56,10 @@ function normalizeLang(code) {
     return v.startsWith("en") ? "en" : "zh";
 }
 
+function syncDocumentLang() {
+    document.documentElement.lang = normalizeLang(panelState.currentLang);
+}
+
 function applyHashItalics(text) {
     if (text === null || text === undefined) return "";
     return String(text).replace(/#([^#]+)#/g, "<i>$1</i>");
@@ -1185,6 +1189,7 @@ function handleSyncMessage(data = {}) {
         cancelFlythroughRead({ resetScroll: true });
         panelState.focusedNodeId = focusedNodeId;
         panelState.currentLang   = normalizeLang(lang);
+        syncDocumentLang();
         render();
         return;
     }
@@ -1291,6 +1296,7 @@ async function init() {
     const params = new URLSearchParams(window.location.search);
     if (params.get("id"))   panelState.focusedNodeId = params.get("id");
     if (params.get("lang")) panelState.currentLang   = normalizeLang(params.get("lang") === "cn" ? "zh" : params.get("lang"));
+    syncDocumentLang();
 
     // Load data
     let data;
