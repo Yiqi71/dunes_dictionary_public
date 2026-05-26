@@ -222,14 +222,17 @@ function handlePanelReadMessage(event) {
     resolve?.();
 }
 
-function cancelPanelRead() {
+function cancelPanelRead({ force = false, resetScroll = true, preserveScroll = false } = {}) {
+    if (!force && !panelReadToken && !panelReadResolve) return;
     const readId = panelReadToken?.readId ?? panelReadId;
     panelReadToken = null;
     panelReadResolve = null;
     panelReadCompletedPanels = new Set();
     broadcastPanelReadMessage({
         type: "flythrough-read-stop",
-        readId
+        readId,
+        resetScroll,
+        preserveScroll
     });
 }
 
@@ -324,7 +327,7 @@ function tick() {
         restTimer = setTimeout(tick, PANEL_READ_MIN_DURATION);
         return;
     }
-    cancelPanelRead();
+    cancelPanelRead({ force: true, resetScroll: false, preserveScroll: true });
     fadeOutDetails();
     slowPanTo(nextId, () => {
         if (!isActive) return;
@@ -358,7 +361,7 @@ export function stopFlythrough() {
     document.body.classList.remove("flythrough-active");
     setButtonActive(false);
     cancelFly();
-    cancelPanelRead();
+    cancelPanelRead({ force: true, resetScroll: true });
     flythroughVisitedIds = new Set();
     flythroughRelationHopIds = new Set();
     if (restTimer) { clearTimeout(restTimer); restTimer = null; }

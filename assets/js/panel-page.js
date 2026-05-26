@@ -1048,6 +1048,7 @@ const SCROLL_CONFIG = { thumbMargin: 0 };
 const FLYTHROUGH_LOOP_COPY_CLASS = "flythrough-loop-copy";
 const FLYTHROUGH_LOOP_GAP_CLASS = "flythrough-loop-gap";
 const FLYTHROUGH_LOOP_GAP_HEIGHT = "20vh";
+const FLYTHROUGH_PANEL_SWITCH_FADE_MS = 420;
 let isDragging = false;
 let dragStartY = 0;
 let dragStartTop = 0;
@@ -1056,6 +1057,9 @@ let currentPanelMain   = null;
 let syncChannel = null;
 let flythroughReadRaf = null;
 let flythroughReadToken = null;
+let flythroughSwitchShouldFade = false;
+let panelSwitchTransition = Promise.resolve();
+let panelSwitchTransitionToken = 0;
 
 function getActivePanelMain() {
     const active = document.querySelector(".panel-entry.active, .panel-comment.active");
@@ -1102,6 +1106,22 @@ function postSyncMessage(payload) {
     getSyncChannel()?.postMessage(payload);
 }
 
+function wait(ms) {
+    return new Promise(resolve => window.setTimeout(resolve, ms));
+}
+
+function applyPanelContentOpacity(panelMain, opacity) {
+    if (!panelMain) return;
+    panelMain.style.transition = `opacity ${FLYTHROUGH_PANEL_SWITCH_FADE_MS}ms ease`;
+    panelMain.style.opacity = String(opacity);
+}
+
+function clearPanelContentOpacity(panelMain = getActivePanelMain()) {
+    if (!panelMain) return;
+    panelMain.style.transition = "";
+    panelMain.style.opacity = "";
+}
+
 function removeFlythroughLoopCopies(panelMain = null) {
     const roots = panelMain
         ? [panelMain]
@@ -1114,6 +1134,7 @@ function removeFlythroughLoopCopies(panelMain = null) {
             ) child.remove();
         });
         delete root.dataset.flythroughLoopHeight;
+        delete root.dataset.flythroughLoopCompleteAt;
     });
 }
 
@@ -1135,6 +1156,7 @@ function prepareFlythroughLoop(panelMain) {
     const loopHeight = panelMain.scrollHeight;
     if (loopHeight <= panelMain.clientHeight + 1) {
         panelMain.dataset.flythroughLoopHeight = String(loopHeight);
+        panelMain.dataset.flythroughLoopCompleteAt = "0";
         return loopHeight;
     }
 
@@ -1148,16 +1170,17 @@ function prepareFlythroughLoop(panelMain) {
     originalChildren.forEach(child => panelMain.appendChild(makeFlythroughLoopCopy(child)));
     const loopDistance = loopHeight + gap.getBoundingClientRect().height;
     panelMain.dataset.flythroughLoopHeight = String(loopDistance);
+    panelMain.dataset.flythroughLoopCompleteAt = String(Math.max(0, loopDistance - panelMain.clientHeight));
     return loopDistance;
 }
 
-function cancelFlythroughRead({ resetScroll = false } = {}) {
+function cancelFlythroughRead({ resetScroll = false, preserveLoopCopies = false } = {}) {
     if (flythroughReadRaf !== null) {
         cancelAnimationFrame(flythroughReadRaf);
         flythroughReadRaf = null;
     }
     flythroughReadToken = null;
-    removeFlythroughLoopCopies();
+    if (!preserveLoopCopies) removeFlythroughLoopCopies();
     if (resetScroll) {
         const panelMain = getActivePanelMain();
         if (panelMain) panelMain.scrollTo({ top: 0, behavior: "auto" });
@@ -1165,9 +1188,40 @@ function cancelFlythroughRead({ resetScroll = false } = {}) {
     }
 }
 
-function startFlythroughRead(command = {}) {
+async function transitionPanelContentForFlythrough(focusedNodeId, lang) {
+    const token = ++panelSwitchTransitionToken;
+    const oldPanelMain = getActivePanelMain();
+
+    if (oldPanelMain) {
+        applyPanelContentOpacity(oldPanelMain, 1);
+        oldPanelMain.getBoundingClientRect();
+        applyPanelContentOpacity(oldPanelMain, 0);
+        await wait(FLYTHROUGH_PANEL_SWITCH_FADE_MS);
+    }
+    if (token !== panelSwitchTransitionToken) return;
+
+    panelState.focusedNodeId = focusedNodeId;
+    panelState.currentLang   = normalizeLang(lang);
+    syncDocumentLang();
+    render();
+
+    const newPanelMain = getActivePanelMain();
+    if (!newPanelMain) return;
+    newPanelMain.scrollTo({ top: 0, behavior: "auto" });
+    handleScroll();
+    applyPanelContentOpacity(newPanelMain, 0);
+    newPanelMain.getBoundingClientRect();
+    applyPanelContentOpacity(newPanelMain, 1);
+    await wait(FLYTHROUGH_PANEL_SWITCH_FADE_MS);
+    if (token === panelSwitchTransitionToken) clearPanelContentOpacity(newPanelMain);
+}
+
+async function startFlythroughRead(command = {}) {
     const readId = command.readId;
     if (!readId) return;
+    if (flythroughReadToken?.readId === readId) return;
+
+    await panelSwitchTransition;
     if (flythroughReadToken?.readId === readId) return;
 
     cancelFlythroughRead({ resetScroll: true });
@@ -1207,15 +1261,18 @@ function startFlythroughRead(command = {}) {
         let completedLoop = false;
 
         loopHeight = Number(panelMain.dataset.flythroughLoopHeight) || loopHeight;
+        const completeAt = Number(panelMain.dataset.flythroughLoopCompleteAt) || 0;
         if (loopHeight <= panelMain.clientHeight + 1) {
             token.reachedEnd = true;
             panelMain.scrollTop = 0;
             completedLoop = true;
         } else {
             const nextTop = panelMain.scrollTop + speed * dt;
-            if (nextTop >= loopHeight) {
+            if (!token.reachedEnd && nextTop >= completeAt) {
                 token.reachedEnd = true;
                 completedLoop = true;
+            }
+            if (nextTop >= loopHeight) {
                 panelMain.scrollTop = nextTop - loopHeight;
             } else {
                 panelMain.scrollTop = nextTop;
@@ -1238,11 +1295,20 @@ function startFlythroughRead(command = {}) {
 function handleSyncMessage(data = {}) {
     const { type, focusedNodeId, lang } = data;
     if (type === "focus-change") {
-        cancelFlythroughRead({ resetScroll: true });
-        panelState.focusedNodeId = focusedNodeId;
-        panelState.currentLang   = normalizeLang(lang);
-        syncDocumentLang();
-        render();
+        if (flythroughSwitchShouldFade) {
+            flythroughSwitchShouldFade = false;
+            cancelFlythroughRead({ resetScroll: false, preserveLoopCopies: true });
+            panelSwitchTransition = transitionPanelContentForFlythrough(focusedNodeId, lang);
+            panelSwitchTransition.catch(() => {});
+        } else {
+            panelSwitchTransitionToken += 1;
+            cancelFlythroughRead({ resetScroll: true });
+            clearPanelContentOpacity();
+            panelState.focusedNodeId = focusedNodeId;
+            panelState.currentLang   = normalizeLang(lang);
+            syncDocumentLang();
+            render();
+        }
         return;
     }
     if (type === "flythrough-read-start") {
@@ -1250,7 +1316,15 @@ function handleSyncMessage(data = {}) {
         return;
     }
     if (type === "flythrough-read-stop") {
-        cancelFlythroughRead({ resetScroll: true });
+        flythroughSwitchShouldFade = Boolean(data.preserveScroll);
+        if (!flythroughSwitchShouldFade) {
+            panelSwitchTransitionToken += 1;
+            clearPanelContentOpacity();
+        }
+        cancelFlythroughRead({
+            resetScroll: data.resetScroll !== false,
+            preserveLoopCopies: Boolean(data.preserveScroll)
+        });
     }
 }
 
