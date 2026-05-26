@@ -1050,6 +1050,9 @@ function initTabs() {
 // ---------------------------------------------------------------------------
 
 const SCROLL_CONFIG = { thumbMargin: 0 };
+const FLYTHROUGH_LOOP_COPY_CLASS = "flythrough-loop-copy";
+const FLYTHROUGH_LOOP_GAP_CLASS = "flythrough-loop-gap";
+const FLYTHROUGH_LOOP_GAP_HEIGHT = "20vh";
 let isDragging = false;
 let dragStartY = 0;
 let dragStartTop = 0;
@@ -1104,12 +1107,62 @@ function postSyncMessage(payload) {
     getSyncChannel()?.postMessage(payload);
 }
 
+function removeFlythroughLoopCopies(panelMain = null) {
+    const roots = panelMain
+        ? [panelMain]
+        : Array.from(document.querySelectorAll(".panel-main"));
+    roots.forEach(root => {
+        Array.from(root.children).forEach(child => {
+            if (
+                child.classList.contains(FLYTHROUGH_LOOP_COPY_CLASS) ||
+                child.classList.contains(FLYTHROUGH_LOOP_GAP_CLASS)
+            ) child.remove();
+        });
+        delete root.dataset.flythroughLoopHeight;
+    });
+}
+
+function makeFlythroughLoopCopy(node) {
+    const copy = node.cloneNode(true);
+    copy.classList.add(FLYTHROUGH_LOOP_COPY_CLASS);
+    copy.setAttribute("aria-hidden", "true");
+    copy.style.pointerEvents = "none";
+    try { copy.inert = true; } catch (_) {}
+    copy.querySelectorAll("button, input, select, textarea, a, [tabindex]").forEach(el => {
+        el.setAttribute("tabindex", "-1");
+        if ("disabled" in el) el.disabled = true;
+    });
+    return copy;
+}
+
+function prepareFlythroughLoop(panelMain) {
+    removeFlythroughLoopCopies(panelMain);
+    const loopHeight = panelMain.scrollHeight;
+    if (loopHeight <= panelMain.clientHeight + 1) {
+        panelMain.dataset.flythroughLoopHeight = String(loopHeight);
+        return loopHeight;
+    }
+
+    const originalChildren = Array.from(panelMain.children);
+    const gap = document.createElement("div");
+    gap.className = FLYTHROUGH_LOOP_GAP_CLASS;
+    gap.setAttribute("aria-hidden", "true");
+    gap.style.height = FLYTHROUGH_LOOP_GAP_HEIGHT;
+    gap.style.flex = "0 0 auto";
+    panelMain.appendChild(gap);
+    originalChildren.forEach(child => panelMain.appendChild(makeFlythroughLoopCopy(child)));
+    const loopDistance = loopHeight + gap.getBoundingClientRect().height;
+    panelMain.dataset.flythroughLoopHeight = String(loopDistance);
+    return loopDistance;
+}
+
 function cancelFlythroughRead({ resetScroll = false } = {}) {
     if (flythroughReadRaf !== null) {
         cancelAnimationFrame(flythroughReadRaf);
         flythroughReadRaf = null;
     }
     flythroughReadToken = null;
+    removeFlythroughLoopCopies();
     if (resetScroll) {
         const panelMain = getActivePanelMain();
         if (panelMain) panelMain.scrollTo({ top: 0, behavior: "auto" });
@@ -1145,6 +1198,7 @@ function startFlythroughRead(command = {}) {
     }
 
     panelMain.scrollTo({ top: 0, behavior: "auto" });
+    let loopHeight = prepareFlythroughLoop(panelMain);
     handleScroll();
 
     let lastTime = performance.now();
@@ -1155,16 +1209,19 @@ function startFlythroughRead(command = {}) {
 
         const dt = Math.max(0, (now - lastTime) / 1000);
         lastTime = now;
+        let completedLoop = false;
 
-        const maxScroll = Math.max(0, panelMain.scrollHeight - panelMain.clientHeight);
-        if (maxScroll <= 1) {
+        loopHeight = Number(panelMain.dataset.flythroughLoopHeight) || loopHeight;
+        if (loopHeight <= panelMain.clientHeight + 1) {
             token.reachedEnd = true;
             panelMain.scrollTop = 0;
+            completedLoop = true;
         } else {
             const nextTop = panelMain.scrollTop + speed * dt;
-            if (nextTop >= maxScroll - 0.5) {
+            if (nextTop >= loopHeight) {
                 token.reachedEnd = true;
-                panelMain.scrollTop = 0;
+                completedLoop = true;
+                panelMain.scrollTop = nextTop - loopHeight;
             } else {
                 panelMain.scrollTop = nextTop;
             }
@@ -1172,7 +1229,7 @@ function startFlythroughRead(command = {}) {
 
         handleScroll();
 
-        if (!token.completionSent && token.reachedEnd && now - startTime >= minDuration) {
+        if (!token.completionSent && completedLoop && now - startTime >= minDuration) {
             token.completionSent = true;
             postSyncMessage({ type: "flythrough-read-complete", readId, panel: getPanelKind() });
         }
@@ -1274,6 +1331,7 @@ function setupSync() {
 // ---------------------------------------------------------------------------
 
 function render() {
+    removeFlythroughLoopCopies();
     renderEntryPanel();
     renderEchoesPanel();
 }
