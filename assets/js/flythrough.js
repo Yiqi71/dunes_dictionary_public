@@ -14,8 +14,7 @@ let panelReadChannel = null;
 let panelReadId = 0;
 let panelReadResolve = null;
 let panelReadCompletedPanels = new Set();
-let flythroughVisitedIds = new Set();
-let flythroughRelationHopIds = new Set();
+let flythroughRouteIndex = -1;
 
 const FLY_DURATION = 3800;
 const INITIAL_DELAY = 1500;
@@ -26,7 +25,16 @@ const PANEL_READ_START_DELAY = 350;
 const PANEL_SYNC_CHANNEL = "dunes-focus";
 const PANEL_READ_SYNC_KEY = "dd_panel_flythrough_read";
 const PANEL_READ_TARGETS = ["entry", "echoes"];
-const FLYTHROUGH_ORDER = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
+const FLYTHROUGH_ROUTE = [
+    "2",
+    "4",
+    "9",
+    "11",
+    "12",
+    "1", "7",
+    "3", "5", "6",
+    "8", "10"
+];
 
 function isMobileLayout() {
     return window.matchMedia("(max-width: 768px)").matches;
@@ -71,82 +79,31 @@ function toWordId(value) {
     return String(value);
 }
 
-function getOrderedFlythroughIds() {
-    if (FLYTHROUGH_ORDER.length > 0) {
-        return FLYTHROUGH_ORDER.filter(id => document.getElementById(id));
-    }
-    if (Array.isArray(window.allWords) && window.allWords.length > 0) {
-        return window.allWords
-            .map(word => toWordId(word?.id))
-            .filter(id => id && document.getElementById(id));
-    }
-    return Array.from(document.querySelectorAll(".word-node"))
-        .map(node => toWordId(node.id))
-        .filter(Boolean);
+function getAvailableFlythroughRoute() {
+    return FLYTHROUGH_ROUTE.filter(id => document.getElementById(id));
 }
 
-function getWordById(wordId) {
-    const id = toWordId(wordId);
-    if (!id || !Array.isArray(window.allWords)) return null;
-    return window.allWords.find(word => toWordId(word?.id) === id) || null;
-}
-
-function dedupeIds(ids) {
-    return Array.from(new Set((ids || []).map(id => toWordId(id)).filter(Boolean)));
-}
-
-function getRelatedFlythroughIds(currentId) {
-    const id = toWordId(currentId);
-    if (!id || !Array.isArray(window.allWords)) return [];
-
-    const currentWord = getWordById(id);
-    const direct = Array.isArray(currentWord?.related_terms)
-        ? currentWord.related_terms.map(relation => toWordId(relation?.id))
-        : [];
-
-    const reverse = window.allWords
-        .filter(word => toWordId(word?.id) !== id)
-        .filter(word => Array.isArray(word?.related_terms)
-            && word.related_terms.some(relation => toWordId(relation?.id) === id))
-        .map(word => toWordId(word?.id));
-
-    return dedupeIds([...direct, ...reverse])
-        .filter(relatedId => relatedId !== id)
-        .filter(relatedId => document.getElementById(relatedId));
-}
-
-function pickNextOrderedId(currentId) {
-    const orderedIds = dedupeIds(getOrderedFlythroughIds());
-    if (orderedIds.length < 2) return null;
-
-    if (flythroughVisitedIds.size >= orderedIds.length) {
-        flythroughVisitedIds = new Set([toWordId(currentId)].filter(Boolean));
-        flythroughRelationHopIds = new Set();
-    }
-
+function syncRouteIndexToCurrent(currentId, route) {
     const currentKey = toWordId(currentId);
-    if (currentKey) flythroughVisitedIds.add(currentKey);
+    if (!currentKey || route.length === 0) return -1;
+    if (route[flythroughRouteIndex] === currentKey) return flythroughRouteIndex;
+    const nextIndex = route.indexOf(currentKey);
+    return nextIndex >= 0 ? nextIndex : -1;
+}
 
-    const relatedIds = getRelatedFlythroughIds(currentKey);
-    const unvisitedRelated = relatedIds.filter(id => !flythroughVisitedIds.has(id));
-    if (unvisitedRelated.length > 0) {
-        flythroughRelationHopIds.add(currentKey);
-        return unvisitedRelated[0];
-    }
-    if (relatedIds.length > 0 && !flythroughRelationHopIds.has(currentKey)) {
-        flythroughRelationHopIds.add(currentKey);
-        return relatedIds[0];
-    }
+function pickNextRouteId(currentId) {
+    const route = getAvailableFlythroughRoute();
+    if (route.length < 2) return pickNearbyId(currentId);
 
-    const currentIndex = Math.max(0, orderedIds.indexOf(currentKey));
-    for (let offset = 1; offset <= orderedIds.length; offset += 1) {
-        const candidate = orderedIds[(currentIndex + offset) % orderedIds.length];
-        if (candidate !== currentKey && !flythroughVisitedIds.has(candidate)) {
-            return candidate;
-        }
+    flythroughRouteIndex = syncRouteIndexToCurrent(currentId, route);
+    if (flythroughRouteIndex < 0) {
+        const fallbackId = pickNearbyId(currentId);
+        if (fallbackId) return fallbackId;
+        flythroughRouteIndex = 0;
     }
 
-    return pickNearbyId(currentKey);
+    flythroughRouteIndex = (flythroughRouteIndex + 1) % route.length;
+    return route[flythroughRouteIndex];
 }
 
 function fadeOutDetails() {
@@ -322,7 +279,7 @@ function slowPanTo(targetId, onDone) {
 
 function tick() {
     if (!isActive) return;
-    const nextId = pickNextOrderedId(state.focusedNodeId);
+    const nextId = pickNextRouteId(state.focusedNodeId);
     if (!nextId) {
         restTimer = setTimeout(tick, PANEL_READ_MIN_DURATION);
         return;
@@ -331,7 +288,6 @@ function tick() {
     fadeOutDetails();
     slowPanTo(nextId, () => {
         if (!isActive) return;
-        flythroughVisitedIds.add(String(nextId));
         updateWordFocus(nextId);
         startPanelRead().then(() => {
             if (!isActive) return;
@@ -347,8 +303,7 @@ function setButtonActive(active) {
 export function startFlythrough() {
     if (isActive) return;
     isActive = true;
-    flythroughVisitedIds = new Set([toWordId(state.focusedNodeId)].filter(Boolean));
-    flythroughRelationHopIds = new Set();
+    flythroughRouteIndex = syncRouteIndexToCurrent(state.focusedNodeId, getAvailableFlythroughRoute());
     document.body.classList.add("flythrough-active");
     hideIndexFloatingPanel();
     setButtonActive(true);
@@ -362,8 +317,7 @@ export function stopFlythrough() {
     setButtonActive(false);
     cancelFly();
     cancelPanelRead({ force: true, resetScroll: true });
-    flythroughVisitedIds = new Set();
-    flythroughRelationHopIds = new Set();
+    flythroughRouteIndex = -1;
     if (restTimer) { clearTimeout(restTimer); restTimer = null; }
     restoreDetails();
 }
