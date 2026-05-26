@@ -751,7 +751,6 @@ function renderEntryPanel() {
         <section id="section-proposers"></section>
         <section id="section-source"></section>
         <section id="section-related-works"></section>
-        <section id="section-understanding-vote"></section>
         <section id="section-contributors"></section>
         <section id="section-contact"></section>
         <section id="section-editors"></section>`;
@@ -762,7 +761,6 @@ function renderEntryPanel() {
     const proposerSec     = bottomDiv.querySelector("#section-proposers");
     const sourceSec       = bottomDiv.querySelector("#section-source");
     const relatedSec      = bottomDiv.querySelector("#section-related-works");
-    const voteSec         = bottomDiv.querySelector("#section-understanding-vote");
     const contributorsSec = bottomDiv.querySelector("#section-contributors");
     const contactSec      = bottomDiv.querySelector("#section-contact");
     const editorsSec      = bottomDiv.querySelector("#section-editors");
@@ -823,9 +821,6 @@ function renderEntryPanel() {
         : `<p>${lang === "en" ? "No related works yet." : "暂无相关著作"}</p>`;
     relatedSec.innerHTML = `<p class="left-title">${sectionTitles.relatedWorks[lang]}</p>
         <div id="related-works-container">${relatedHtml}</div>`;
-
-    // Vote
-    renderUnderstandingVoteSection(voteSec, word, lang);
 
     // Contributors
     const contributors     = Array.isArray(word.contributors) ? word.contributors : [];

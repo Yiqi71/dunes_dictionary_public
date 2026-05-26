@@ -1257,7 +1257,6 @@ export function renderPanelSections() {
         <section id="section-proposers"> </section>
         <section id="section-source"> </section>
         <section id="section-related-works"> </section>
-        <section id="section-understanding-vote"> </section>
         <section id="section-contributors"> </section>
         <section id="section-contact"> </section>
         <section id="section-editors"> </section>
@@ -1269,7 +1268,6 @@ export function renderPanelSections() {
     const proposerSec = document.getElementById("section-proposers");
     const sourceSec = document.getElementById("section-source");
     const relatedSec = document.getElementById("section-related-works");
-    const voteSec = entryPanel.querySelector("#section-understanding-vote");
     const contributorsSec = entryPanel.querySelector("#section-contributors");
     const contactSec = entryPanel.querySelector("#section-contact");
     const editorsSec = entryPanel.querySelector("#section-editors");
@@ -1341,8 +1339,6 @@ export function renderPanelSections() {
                         <div id="related-works-container">
                         ${relatedHtml}
                         </div>`;
-    renderUnderstandingVoteSection(voteSec, currentWord, lang);
-
     const contributors = Array.isArray(currentWord.contributors) ? currentWord.contributors : [];
     const contributorNames = contributors.map(c => {
         const name = c?.name?.[lang] || "";
@@ -1951,10 +1947,6 @@ function renderScrollMarkers(panelType = 'entry') {
         {
             id: "section-related-works",
             label: sectionTitles.relatedWorks
-        },
-        {
-            id: "section-understanding-vote",
-            label: { zh: "理解投票", en: "Vote" }
         },
         {
             id: "section-contributors",
