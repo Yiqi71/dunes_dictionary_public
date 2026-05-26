@@ -65,8 +65,8 @@
   }
 
   #proposer img {
-    width: 34vw !important;
-    max-width: 34vw !important;
+    width: calc(100% - (28px * var(--word-node-scale-factor))) !important;
+    max-width: calc(100% - (28px * var(--word-node-scale-factor))) !important;
     max-height: none !important;
     height: auto !important;
     margin: calc(14px * var(--word-node-scale-factor)) !important;
@@ -420,6 +420,12 @@
   #about-panel .panel-bottom .diagram-caption {
     margin-top: 0 !important;
     padding-top: 0 !important;
+  }
+
+  #floating-panel .panel-comment .panel-bottom .diagram-caption,
+  #about-panel .panel-comment .panel-bottom .diagram-caption {
+    color: #43403B !important;
+    margin-top: 8px !important;
   }
 
   #floating-panel .panel-bottom section,

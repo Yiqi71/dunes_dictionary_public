@@ -475,6 +475,7 @@ html:lang(en) .word-node .terms .term-main {
 }
 
 #proposer img {
+    width: calc(100% - 48px);
     max-width: 20vw;
     max-height: 20vw;
     object-fit: contain;
@@ -484,6 +485,7 @@ html:lang(en) .word-node .terms .term-main {
     filter: saturate(0.1);
     mix-blend-mode: darken;
     margin: 8px 24px 24px 24px;
+    display: block;
     position: relative;
     z-index: 1;
 }
