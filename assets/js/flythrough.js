@@ -14,6 +14,8 @@ let panelReadChannel = null;
 let panelReadId = 0;
 let panelReadResolve = null;
 let panelReadCompletedPanels = new Set();
+let flythroughVisitedIds = new Set();
+let flythroughRelationHopIds = new Set();
 
 const FLY_DURATION = 3800;
 const INITIAL_DELAY = 1500;
@@ -24,6 +26,7 @@ const PANEL_READ_START_DELAY = 350;
 const PANEL_SYNC_CHANNEL = "dunes-focus";
 const PANEL_READ_SYNC_KEY = "dd_panel_flythrough_read";
 const PANEL_READ_TARGETS = ["entry", "echoes"];
+const FLYTHROUGH_ORDER = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
 
 function isMobileLayout() {
     return window.matchMedia("(max-width: 768px)").matches;
@@ -61,6 +64,89 @@ function pickNearbyId(currentId) {
         .sort((a, b) => a.dist - b.dist)
         .slice(0, NEARBY_POOL);
     return pool.length ? pool[Math.floor(Math.random() * pool.length)].id : null;
+}
+
+function toWordId(value) {
+    if (value === null || value === undefined) return null;
+    return String(value);
+}
+
+function getOrderedFlythroughIds() {
+    if (FLYTHROUGH_ORDER.length > 0) {
+        return FLYTHROUGH_ORDER.filter(id => document.getElementById(id));
+    }
+    if (Array.isArray(window.allWords) && window.allWords.length > 0) {
+        return window.allWords
+            .map(word => toWordId(word?.id))
+            .filter(id => id && document.getElementById(id));
+    }
+    return Array.from(document.querySelectorAll(".word-node"))
+        .map(node => toWordId(node.id))
+        .filter(Boolean);
+}
+
+function getWordById(wordId) {
+    const id = toWordId(wordId);
+    if (!id || !Array.isArray(window.allWords)) return null;
+    return window.allWords.find(word => toWordId(word?.id) === id) || null;
+}
+
+function dedupeIds(ids) {
+    return Array.from(new Set((ids || []).map(id => toWordId(id)).filter(Boolean)));
+}
+
+function getRelatedFlythroughIds(currentId) {
+    const id = toWordId(currentId);
+    if (!id || !Array.isArray(window.allWords)) return [];
+
+    const currentWord = getWordById(id);
+    const direct = Array.isArray(currentWord?.related_terms)
+        ? currentWord.related_terms.map(relation => toWordId(relation?.id))
+        : [];
+
+    const reverse = window.allWords
+        .filter(word => toWordId(word?.id) !== id)
+        .filter(word => Array.isArray(word?.related_terms)
+            && word.related_terms.some(relation => toWordId(relation?.id) === id))
+        .map(word => toWordId(word?.id));
+
+    return dedupeIds([...direct, ...reverse])
+        .filter(relatedId => relatedId !== id)
+        .filter(relatedId => document.getElementById(relatedId));
+}
+
+function pickNextOrderedId(currentId) {
+    const orderedIds = dedupeIds(getOrderedFlythroughIds());
+    if (orderedIds.length < 2) return null;
+
+    if (flythroughVisitedIds.size >= orderedIds.length) {
+        flythroughVisitedIds = new Set([toWordId(currentId)].filter(Boolean));
+        flythroughRelationHopIds = new Set();
+    }
+
+    const currentKey = toWordId(currentId);
+    if (currentKey) flythroughVisitedIds.add(currentKey);
+
+    const relatedIds = getRelatedFlythroughIds(currentKey);
+    const unvisitedRelated = relatedIds.filter(id => !flythroughVisitedIds.has(id));
+    if (unvisitedRelated.length > 0) {
+        flythroughRelationHopIds.add(currentKey);
+        return unvisitedRelated[0];
+    }
+    if (relatedIds.length > 0 && !flythroughRelationHopIds.has(currentKey)) {
+        flythroughRelationHopIds.add(currentKey);
+        return relatedIds[0];
+    }
+
+    const currentIndex = Math.max(0, orderedIds.indexOf(currentKey));
+    for (let offset = 1; offset <= orderedIds.length; offset += 1) {
+        const candidate = orderedIds[(currentIndex + offset) % orderedIds.length];
+        if (candidate !== currentKey && !flythroughVisitedIds.has(candidate)) {
+            return candidate;
+        }
+    }
+
+    return pickNearbyId(currentKey);
 }
 
 function fadeOutDetails() {
@@ -233,7 +319,7 @@ function slowPanTo(targetId, onDone) {
 
 function tick() {
     if (!isActive) return;
-    const nextId = pickNearbyId(state.focusedNodeId);
+    const nextId = pickNextOrderedId(state.focusedNodeId);
     if (!nextId) {
         restTimer = setTimeout(tick, PANEL_READ_MIN_DURATION);
         return;
@@ -242,6 +328,7 @@ function tick() {
     fadeOutDetails();
     slowPanTo(nextId, () => {
         if (!isActive) return;
+        flythroughVisitedIds.add(String(nextId));
         updateWordFocus(nextId);
         startPanelRead().then(() => {
             if (!isActive) return;
@@ -257,6 +344,8 @@ function setButtonActive(active) {
 export function startFlythrough() {
     if (isActive) return;
     isActive = true;
+    flythroughVisitedIds = new Set([toWordId(state.focusedNodeId)].filter(Boolean));
+    flythroughRelationHopIds = new Set();
     document.body.classList.add("flythrough-active");
     hideIndexFloatingPanel();
     setButtonActive(true);
@@ -270,6 +359,8 @@ export function stopFlythrough() {
     setButtonActive(false);
     cancelFly();
     cancelPanelRead();
+    flythroughVisitedIds = new Set();
+    flythroughRelationHopIds = new Set();
     if (restTimer) { clearTimeout(restTimer); restTimer = null; }
     restoreDetails();
 }
