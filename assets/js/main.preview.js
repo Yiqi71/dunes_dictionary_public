@@ -170,9 +170,7 @@ function parseRouteState(pathname = window.location.pathname) {
 
 function resolveInitialLang(routeLang = null) {
     if (routeLang) return normalizeLang(routeLang);
-    const browserLang = (navigator.languages && navigator.languages[0]) || navigator.language || "";
-    if (browserLang) return normalizeLang(browserLang);
-    return normalizeLang(document.documentElement.lang || state.currentLang || "en");
+    return normalizeLang(state.currentLang || document.documentElement.lang || "zh");
 }
 
 let lastSyncedPath = null;
