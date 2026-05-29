@@ -1,8 +1,8 @@
 {
   "meta": {
-    "generated_at": "2026-03-07T03:41:10.598Z",
-    "source": "692f567f52a2e5f799ea66aa89585d86",
-    "home_node_id": 46
+    "generated_at": "2026-05-29T07:46:48.851Z",
+    "source": "1f67a091d1692f7515a5bb8761c9bca6",
+    "home_node_id": 13
   },
   "words": [
     {
@@ -289,6 +289,10 @@
         },
         {
           "id": 24,
+          "relation": "概念相关"
+        },
+        {
+          "id": 51,
           "relation": "概念相关"
         }
       ],
@@ -800,6 +804,10 @@
         },
         {
           "id": 21,
+          "relation": "概念相关"
+        },
+        {
+          "id": 54,
           "relation": "概念相关"
         }
       ],
@@ -1407,6 +1415,14 @@
         },
         {
           "id": 40,
+          "relation": "概念相关"
+        },
+        {
+          "id": 52,
+          "relation": "概念相关"
+        },
+        {
+          "id": 53,
           "relation": "概念相关"
         }
       ],
@@ -2362,6 +2378,14 @@
         {
           "id": 18,
           "relation": "概念相关"
+        },
+        {
+          "id": 54,
+          "relation": "概念相关"
+        },
+        {
+          "id": 55,
+          "relation": "概念相关"
         }
       ],
       "commentAbs": {
@@ -2501,7 +2525,19 @@
           "relation": "概念相关"
         },
         {
-          "id": 45,
+          "id": 47,
+          "relation": "概念相关"
+        },
+        {
+          "id": 48,
+          "relation": "概念相关"
+        },
+        {
+          "id": 50,
+          "relation": "概念相关"
+        },
+        {
+          "id": 54,
           "relation": "概念相关"
         }
       ],
@@ -3138,6 +3174,10 @@
         {
           "id": 41,
           "relation": "概念相关"
+        },
+        {
+          "id": 53,
+          "relation": "概念相关"
         }
       ],
       "commentAbs": {
@@ -3484,6 +3524,10 @@
         {
           "id": 9,
           "relation": "概念相关"
+        },
+        {
+          "id": 52,
+          "relation": "概念相关"
         }
       ],
       "commentAbs": {
@@ -3635,6 +3679,14 @@
         },
         {
           "id": 29,
+          "relation": "概念相关"
+        },
+        {
+          "id": 54,
+          "relation": "概念相关"
+        },
+        {
+          "id": 55,
           "relation": "概念相关"
         }
       ],
@@ -4498,7 +4550,19 @@
           "relation": "概念相关"
         },
         {
-          "id": 45,
+          "id": 47,
+          "relation": "概念相关"
+        },
+        {
+          "id": 49,
+          "relation": "概念相关"
+        },
+        {
+          "id": 54,
+          "relation": "概念相关"
+        },
+        {
+          "id": 55,
           "relation": "概念相关"
         }
       ],
@@ -4642,6 +4706,14 @@
         },
         {
           "id": 44,
+          "relation": "概念相关"
+        },
+        {
+          "id": 45,
+          "relation": "概念相关"
+        },
+        {
+          "id": 49,
           "relation": "概念相关"
         }
       ],
@@ -4847,6 +4919,10 @@
       "related_terms": [
         {
           "id": 37,
+          "relation": "概念相关"
+        },
+        {
+          "id": 51,
           "relation": "概念相关"
         }
       ],
@@ -5582,6 +5658,10 @@
         {
           "id": 43,
           "relation": "概念相关"
+        },
+        {
+          "id": 48,
+          "relation": "概念相关"
         }
       ],
       "commentAbs": {
@@ -5648,7 +5728,7 @@
         }
       ],
       "source": {
-        "zh": "多米尼克·博耶，《做专家 (#Enactments of Expertise#)》，载《人类学年度评论 (#Annual Review of Anthropology#)》，2010。尚无中文翻译。",
+        "zh": "E.Summerson Carr《做专家 (#Enactments of Expertise#)》，载《人类学年度评论 (#Annual Review of Anthropology#)》，2010。尚无中文翻译。",
         "en": "Boyer, Dominic. \"Enactments of Expertise.\" #Annual Review of Anthropology# 39 (2010): 395–409."
       },
       "source_image": "images/做专家_source_cover.jpg",
@@ -6208,6 +6288,10 @@
         {
           "id": 9,
           "relation": "概念相关"
+        },
+        {
+          "id": 54,
+          "relation": "概念相关"
         }
       ],
       "commentAbs": {
@@ -6247,10 +6331,10 @@
       "id": 41,
       "term": {
         "zh": "活人感",
-        "en": "Huorengan (sense of life)"
+        "en": "huó rén gǎn (sense of life)"
       },
-      "termOri": "活人感",
-      "concept_image": "images/活人感_aigc.png",
+      "termOri": "huó rén gǎn",
+      "concept_image": "images/活人感_aigc.jpg",
       "sm_title": {
         "zh": "社媒标题",
         "en": "social title"
@@ -6554,6 +6638,14 @@
         {
           "id": 16,
           "relation": "概念相关"
+        },
+        {
+          "id": 48,
+          "relation": "概念相关"
+        },
+        {
+          "id": 55,
+          "relation": "概念相关"
         }
       ],
       "commentAbs": {
@@ -6758,7 +6850,7 @@
         "en": "Supermodernity"
       },
       "termOri": "Surmodernité",
-      "concept_image": "images/超现代性_aigc.png",
+      "concept_image": "images/超现代性_aigc.jpg",
       "sm_title": {
         "zh": "社媒标题",
         "en": "social title"
@@ -6855,6 +6947,14 @@
         {
           "id": 10,
           "relation": "概念相关"
+        },
+        {
+          "id": 48,
+          "relation": "概念相关"
+        },
+        {
+          "id": 50,
+          "relation": "概念相关"
         }
       ],
       "commentAbs": {
@@ -6871,13 +6971,13 @@
       "online_date": "2026/02/08"
     },
     {
-      "id": 45,
+      "id": 47,
       "term": {
         "zh": "萨普",
         "en": "La Sape"
       },
       "termOri": "La Sape",
-      "concept_image": "images/萨普_aigc.png",
+      "concept_image": "images/萨普_aigc.jpg",
       "sm_title": {
         "zh": "社媒标题",
         "en": "social title"
@@ -7034,13 +7134,156 @@
       "online_date": "2026/03/06"
     },
     {
-      "id": 46,
+      "id": 48,
+      "term": {
+        "zh": "城市欲望机器",
+        "en": "Urban Desiring Machine"
+      },
+      "termOri": "Urban Desiring Machine",
+      "concept_image": "images/城市欲望机器_aigc.jpg",
+      "sm_title": {
+        "zh": "社媒标题",
+        "en": "social title"
+      },
+      "proposers": [
+        {
+          "name": {
+            "zh": "乔纳森·巴赫",
+            "en": "Jonathan Bach",
+            "ori": "Jonathan Bach"
+          },
+          "year": {
+            "zh": "不详，约1970s-（在世）",
+            "en": "Unknown"
+          },
+          "role": {
+            "zh": "人类学家",
+            "en": "anthropologist"
+          },
+          "image": "images/城市欲望机器_proposer.jpg"
+        }
+      ],
+      "source": {
+        "zh": "乔纳森·巴赫，《深圳：悬置可能性之城 (#Shenzhen: City of Suspended Possibility#)》，新泽西州: 威利-布莱克威尔出版社 (Wiley-Blackwell), 2011。尚无中文翻译。",
+        "en": "Bach, Jonathan. \"Shenzhen: City of Suspended Possibility.\" #International Journal of Urban and Regional Research# 35, no. 2 (2011): 414-420."
+      },
+      "source_image": "images/城市欲望机器_source_cover.jpg",
+      "related_works": [
+        {
+          "zh": "乔纳森·巴赫等，《向深圳学习：中国后毛泽东时代的实验，从特区到模范城市 (#Learning from Shenzhen: China’s Post-Mao Experiment from Special Zone to Model City#)》，芝加哥: 芝加哥大学出版社 (University of Chicago Press), 2017。尚无中文翻译。",
+          "en": "Bach, Jonathan, Mary Ann O'Donnell, and Winnie Wong, eds. #Learning from Shenzhen: China’s Post-Mao Experiment from Special Zone to Model City#. Chicago: University of Chicago Press, 2017."
+        },
+        {
+          "zh": "吉尔·德勒兹与费利克斯·加塔利，《反俄狄浦斯：资本主义与精神分裂 (#Anti-Oedipus: Capitalism and Schizophrenia#)》，巴黎: 午夜出版社 (Les Éditions de Minuit), 1972。中国大陆已出版，上海译文出版社；港台有译本，麦田出版。",
+          "en": "Deleuze, Gilles, and Félix Guattari. #Anti-Oedipus: Capitalism and Schizophrenia#. Paris: Les Éditions de Minuit, 1972."
+        }
+      ],
+      "domain": {
+        "zh": "学科类型",
+        "en": "domain"
+      },
+      "proposing_country": "US",
+      "proposing_time": "2011",
+      "contributors": [
+        {
+          "name": {
+            "zh": "雅伦，飞樾",
+            "en": "Yalun, Feiyue"
+          },
+          "role": {
+            "zh": "沙丘研究所创始人",
+            "en": "Founder of Dunes Workshop"
+          }
+        }
+      ],
+      "contribute_date": "2025/04/18",
+      "editors": [
+        {
+          "zh": "沙丘研究所（Gemini 3.0 Pro辅助润色），网站中收录的内容可能基于社交媒体中的内容做了进一步编辑和润色。",
+          "en": "Dunes Workshop (Gemini 3.0 Pro–assisted editing), content featured on this website may have been further edited and refined based on material from social media."
+        }
+      ],
+      "edit_date": "No edit date yet.",
+      "brief_definition": {
+        "zh": "将无数个体的渴望转化为城市运转动力的空间生产系统",
+        "en": "An urban system that functions by producing and consuming the desires of its diverse migrants."
+      },
+      "extended_definition": {
+        "zh": [
+          "背着双肩包走出深圳的火车站，迎接你的是轰鸣的工地、密集的城中村和高耸的写字楼。这一刻，你不仅是踏入了一个地理坐标，更是将自己作为一个微小的零件，“插入”到了一个庞大无形的运转系统中。",
+          "“城市欲望机器”是人类学家乔纳森·巴赫用来解读新兴大都市的分析概念。要理解它，得先回到哲学家德勒兹的“欲望机器”理论。在传统的观念里，欲望通常意味着“匮乏”（因为缺少，所以想要）；但在德勒兹看来，欲望是一种积极的、生产性的能量，它不断地与外界建立连接，就像电路接通一样去创造现实。",
+          "当巴赫在这个词前加上“城市”作为限定时，他其实是在提醒我们：不要把城市仅仅看作钢筋水泥的静止容器。像深圳这样的新兴都市，本身就是一台靠能量连接来驱动的巨大引擎。无数进城者带着改变命运的渴望涌入，他们的劳动力、野心和精力在流水线或格子间里相互连接，成为了驱动城市疯狂生长的初级燃料。与此同时，这台“城市机器”也在反向运作：它通过打造繁华的商业街、诱人的消费品和阶层跃升的幻梦，批量生产出新的欲望，将人们更深地卷入其中。在这里，个体的渴望维持了城市的运转，而城市的扩张又不断制造着新的渴望，两者如同齿轮般紧密咬合，形成了一台永不停歇的巨型机器。"
+        ],
+        "en": [
+          "Stepping out of Shenzhen's railway station with a backpack over your shoulders, you are greeted by roaring construction sites, dense urban villages, and towering office buildings. At this very moment, you are not merely entering a geographical coordinate; you are \"plugging\" yourself, like a tiny component, into a massive, invisible operational system.",
+          "The #urban desire machine# is an analytical concept used by anthropologist Jonathan Bach to decipher emerging metropolises. To understand it, one must first return to the philosopher Gilles Deleuze's theory of the #desiring-machine#. In traditional philosophy, desire usually implies \"lack\" (we want something because we do not have it); but in Deleuze's view, desire is an active, productive energy that constantly establishes connections with the outside world, generating reality much like completing an electric circuit.",
+          "By qualifying this term with \"urban,\" Bach is reminding us not to see the city as a mere static container of steel and concrete. An emerging metropolis like Shenzhen is itself a colossal engine driven by energetic connectivity. Myriads of migrants pour in, fueled by a yearning to alter their destinies. Their labor, ambition, and vitality intertwine on assembly lines and inside office cubicles, becoming the raw fuel that powers the city's frenzied growth. At the same time, this \"urban machine\" operates in reverse: by fabricating bustling commercial districts, enticing consumer goods, and illusions of upward mobility, it mass-produces new desires, drawing people even deeper into its gears. Here, individual longings sustain the city's operations, while urban expansion relentlessly manufactures new cravings. The two interlock tightly like cogs, forming an unstoppable, gargantuan machine."
+        ]
+      },
+      "example_sentence": {
+        "zh": "在短视频和外卖算法的双重加持下，现代大都市已经演变成一台完美的城市欲望机器，它一边制造着容貌焦虑与消费冲动，一边吞噬着年轻人的青春与专注力。",
+        "en": "Empowered by the algorithms of short videos and food delivery apps, the modern metropolis has evolved into a perfect urban desiring machine, generating appearance anxiety and consumer impulses while simultaneously devouring the youth and attention spans of young people."
+      },
+      "diagrams": [],
+      "related_terms": [
+        {
+          "id": 44,
+          "relation": "概念相关"
+        },
+        {
+          "id": 42,
+          "relation": "概念相关"
+        },
+        {
+          "id": 36,
+          "relation": "概念相关"
+        },
+        {
+          "id": 16,
+          "relation": "概念相关"
+        }
+      ],
+      "commentAbs": {
+        "content": {
+          "zh": "机器把这些人的欲望作为燃料，把他们的劳动、冒险、乃至失败，都转化为城市自身的动能。",
+          "en": "The machine uses the desires of these people as fuel, transforming their labor, their risks, and even their failures into the kinetic energy of the city itself."
+        },
+        "author": {
+          "zh": "珊珊",
+          "en": "Shanshan"
+        }
+      },
+      "comments": [
+        {
+          "content": {
+            "zh": "\"He is one of them.\"\n\n我的教授 Bach 跟我说这句话的时候，我不知道为什么一下就呆住了。也许是因为我花了很久试图把我爸爸的故事理解为一个家庭的私人悲剧——一个男人的冲动、失败、和我们为此付出的代价。然后突然教授告诉我，不是的，他是一个更大的故事里的人物。他被一台机器卷进去了。\n\n机器这个词，在德勒兹和加塔利那里不是比喻，是字面意思：它接收输入，产生输出，没有情感，没有意图，只有运转。深圳这台机器接收的输入是人——是我爸爸这样的人，从北京\"下海\"南下，被那套叙事卷进来：机遇、自由、重新开始、致富光荣。机器把这些人的欲望作为燃料，把他们的劳动、冒险、乃至失败，都转化为城市自身的动能。在八十年代末九十年代初的深圳，我爸爸赚到了钱，然后破产负债——但这两件事对机器来说没有本质区别，它都照单全收，继续运转，继续向下一批人生产同样的欲望叙事。\n\n\"下海\"这个词本身就已经像是机器在发出的声音。跳进去，沉浮自负。这个词里有壮烈，也有一种预先写好的赌注结构。Bach的文章里说，失败的故事在深圳总是以\"个人责任\"收尾——赌博、挥霍、判断失误——然后被压低声音，在饭桌上变成一个道德训诫的附录。机器不承认自己制造了失败者，它只展示成功者，用成功者的故事继续招募下一批人进来。我爸爸的破产在这个结构里是沉默的那一部分，是机器运转所必需、但永远不会被放进宣传叙事的废料。\n\n\"城市欲望机器\"作为一个概念，它描述的不只是九十年代的深圳，而是任何一座将自身构建为欲望对象的城市的运作机制。今天的每一个漂在全球大城市的年轻人，每一个被算法推送不断刺激欲望的都市人，都在被不同形态的欲望机器处理着。机器换了外壳，逻辑没有变——它依然以悬置的可能性为燃料，依然把个体的失败悄悄归还给个体，然后继续运转。",
+            "en": "\"He is one of them.\"\nWhen my professor, Jonathan Bach, said this to me, I found myself momentarily stunned, though I couldn't quite say why. Perhaps it was because I had spent so long attempting to frame my father’s story as a private family tragedy—the impulses and failures of one man, and the price we paid for them. Then, suddenly, my professor told me that was not the case. He was a character in a much larger narrative; he had been pulled into a machine.\nIn the work of Deleuze and Guattari, the word \"machine\" is not a metaphor but a literal description: it takes inputs and generates outputs. It possesses no emotion and no intention; it only functions. The inputs accepted by the machine of Shenzhen were people—people like my father, who \"dived into the sea\" (#xiahai#) by heading south from Beijing, swept up by a specific narrative: opportunity, freedom, starting over, and the glory of getting rich. The machine uses the desires of these people as fuel, transforming their labor, their risks, and even their failures into the kinetic energy of the city itself. In the Shenzhen of the late 1980s and early 1990s, my father made money, then went bankrupt and fell into debt—but to the machine, there was no fundamental difference between these two outcomes. It consumed both greedily, kept running, and continued to produce the same narrative of desire for the next batch of arrivals.\nThe term #xiahai# itself sounds like the noise emitted by the machine. Leap in; sink or swim. The word carries a sense of the heroic, but also a pre-written gambling structure. As Bach noted in his article, stories of failure in Shenzhen always conclude with \"individual responsibility\"—gambling, profligacy, errors in judgment—and are then whispered at dinner tables as a mere appendix of moral admonition. The machine does not acknowledge its own role in manufacturing losers; it only showcases winners, using their stories to recruit the next wave of people. My father’s bankruptcy was the silent part of this structure—the waste material necessary for the machine’s operation, yet forever excluded from the promotional narrative.\nAs a concept, the \"Urban Desire Machine\" describes more than just Shenzhen in the nineties; it captures the operational mechanism of any city that constructs itself as an object of desire. Every young person today drifting through the world's global metropolises, every urbanite whose desires are relentlessly stimulated by algorithmic feeds, is being processed by different iterations of the desire machine. The machine has changed its casing, but the logic remains the same: it still runs on the fuel of suspended possibilities, and it still quietly hands individual failures back to the individuals before continuing its relentless operation."
+          },
+          "role": {
+            "zh": "贡献者",
+            "en": "Contributor"
+          },
+          "author": {
+            "zh": "珊珊",
+            "en": ""
+          },
+          "background": {
+            "zh": "设计",
+            "en": ""
+          },
+          "date": "2025/04/18"
+        }
+      ],
+      "online_date": "2026/05/29"
+    },
+    {
+      "id": 49,
       "term": {
         "zh": "上岸",
         "en": "shàng'àn"
       },
       "termOri": "shàng'àn",
-      "concept_image": "images/上岸_aigc.png",
+      "concept_image": "images/上岸_aigc.jpg",
       "sm_title": {
         "zh": "社媒标题",
         "en": "social title"
@@ -7053,8 +7296,8 @@
             "ori": "proposerOri"
           },
           "year": {
-            "zh": "2010-",
-            "en": "2010-"
+            "zh": "No year info yet.",
+            "en": "No year info yet."
           },
           "role": {
             "zh": "身份",
@@ -7127,7 +7370,28 @@
         "en": "On the Bilibili video platform, whenever a high-view-count video features lyrical, empty scenic shots, we invariably encounter a screen full of #shang’an# bullet chats."
       },
       "diagrams": [],
-      "related_terms": [],
+      "related_terms": [
+        {
+          "id": 54,
+          "relation": "概念相关"
+        },
+        {
+          "id": 51,
+          "relation": "概念相关"
+        },
+        {
+          "id": 29,
+          "relation": "概念相关"
+        },
+        {
+          "id": 30,
+          "relation": "概念相关"
+        },
+        {
+          "id": 45,
+          "relation": "概念相关"
+        }
+      ],
       "commentAbs": {
         "content": {
           "zh": "权力有时决定了谁必须上岸，有时决定了谁有资格上岸，有时决定了哪块土地被定义为可以提供庇护的“岸”，而哪块土地只是用来放逐的“岛”。",
@@ -7149,8 +7413,8 @@
             "en": "Contributor"
           },
           "author": {
-            "zh": "孟汀",
-            "en": "Mengting"
+            "zh": "",
+            "en": ""
           },
           "background": {
             "zh": "",
@@ -7169,6 +7433,141 @@
         }
       ],
       "online_date": "2026/03/06"
+    },
+    {
+      "id": 50,
+      "term": {
+        "zh": "草台班子",
+        "en": "cǎotái bānzi"
+      },
+      "termOri": "cǎotái bānzi",
+      "concept_image": "images/草台班子_aigc.jpg",
+      "sm_title": {
+        "zh": "社媒标题",
+        "en": "social title"
+      },
+      "proposers": [
+        {
+          "name": {
+            "zh": "中文互联网网民群体",
+            "en": "Chinese Internet Users",
+            "ori": "proposerOri"
+          },
+          "year": {
+            "zh": "No year info yet.",
+            "en": "No year info yet."
+          },
+          "role": {
+            "zh": "身份",
+            "en": "role"
+          },
+          "image": "No proponent image yet."
+        }
+      ],
+      "source": {
+        "zh": "出处",
+        "en": "source"
+      },
+      "source_image": "No source cover yet.",
+      "related_works": [
+        {
+          "zh": "大卫·格雷伯，《狗屁工作 (#Bullshit Jobs: A Theory#)》，上海：上海译文出版社 (Shanghai Translation Publishing House)，2022。",
+          "en": "Graeber, David. #Bullshit Jobs: A Theory#. New York: Simon & Schuster, 2018."
+        },
+        {
+          "zh": "欧文·戈夫曼，《日常生活中的自我呈现 (#The Presentation of Self in Everyday Life#)》，北京：北京大学出版社 (Peking University Press)，2008。",
+          "en": "Goffman, Erving. #The Presentation of Self in Everyday Life#. Garden City, NY: Doubleday, 1959."
+        }
+      ],
+      "domain": {
+        "zh": "学科类型",
+        "en": "domain"
+      },
+      "proposing_country": "CN",
+      "proposing_time": "2020",
+      "contributors": [
+        {
+          "name": {
+            "zh": "飞樾",
+            "en": "Feiyue"
+          },
+          "role": {
+            "zh": "沙丘研究所创始人",
+            "en": "Founder of Dunes Workshop"
+          }
+        }
+      ],
+      "contribute_date": "2026/04/16",
+      "editors": [
+        {
+          "zh": "沙丘研究所（Gemini 3.0 Pro辅助润色），网站中收录的内容可能基于社交媒体中的内容做了进一步编辑和润色。",
+          "en": "Dunes Workshop (Gemini 3.0 Pro–assisted editing), content featured on this website may have been further edited and refined based on material from social media."
+        }
+      ],
+      "edit_date": "No edit date yet.",
+      "brief_definition": {
+        "zh": "一种看似专业严谨，实则内部混乱、缺乏核心逻辑且高度依赖即兴补救的组织或运作模式。",
+        "en": "A makeshift organization or system that appears professional on the surface but is fundamentally disorganized and amateurish in its internal operations."
+      },
+      "extended_definition": {
+        "zh": [
+          "你终于通过了重重面试，入职了那家梦寐以求的顶级金融机构。第一天上班，你本以为会看到如精密钟表般运转的流程、西装革履且谈吐不凡的行业精英。然而现实是：部门最核心的数据库其实是一个漏洞百出的 Excel 表格；所谓的高端战略发布会，PPT 是实习生在开场前十分钟用模板拼凑的；而你的上司——那位在领英上光芒四射的副总裁，此刻正躲在洗手间里用手机看“一分钟了解 OpenClaw”短视频。那一刻，你脑海中浮现出一个词：草台班子。",
+          "“草台班子”原本是指在乡村流动作业、搭建临时舞台（草台）进行表演的小型戏曲班子。这类组织通常设备简陋、人员身兼多职、专业化程度低，且极度依赖临场发挥来应对各种突发状况。",
+          "过去，权威与领导者往往自带“神圣光环”；而“草台班子”一说的流行，则标志着这种社会滤镜正在大面积地碎裂。人们发现，那些原本被大众仰视的机构——无论是大型跨国公司、政府职能部门，还是著名学术机构——剥开其“专业化”的外壳后，内部往往充斥着推诿、盲目和漏洞。这种认知的普及，消解了年轻人对宏大叙事的畏惧感，也不再为“顶着头皮硬上，害怕自己迟早要穿帮”的心理：既然大家都在演戏，那么谁也不必再为自己不够专业而感到过分焦虑。"
+        ],
+        "en": [
+          "You finally made it through the grueling interviews and landed a job at that dream financial firm. On your first day, you expected a world of precision and elite professionals in sharp suits. Instead, you found that the company’s \"core database\" is just a messy Excel sheet full of errors. The \"high-end strategy launch\" is a PPT the intern slapped together ten minutes ago. Even your boss—the one with the glowing LinkedIn profile—is hiding in the bathroom watching \"OpenClaw in 60 Seconds\" videos. In that moment, one phrase hits you: caotaibanzi, or #a makeshift team#.",
+          "The term caotaibanzi originally described small, amateur opera troupes that traveled the countryside performing on \"straw stages.\" These groups had crude equipment, everyone had to do five jobs at once, and they survived mostly on pure improvisation whenever things went wrong.",
+          "In the past, we tended to see leaders and big institutions as if they had a \"sacred halo\" around them. The fact that the idea of #a makeshift team# has gone viral shows that this social filter is finally breaking. People are realizing that beneath the \"professional\" surface of big corporations, government offices, and famous universities, there is often just a lot of blame-shifting and chaos. Understanding this has taken the pressure off young people. They no longer feel so intimidated by \"grand narratives\" or the fear that they’ll be exposed as \"unprofessional.\" After all, if everyone is just winging it, there's no need to stress about not being \"expert\" enough."
+        ]
+      },
+      "example_sentence": {
+        "zh": "看透了这世界其实是个巨大的草台班子后，我终于不再为工作中的小差错感到精神内耗了。",
+        "en": "Once I realized that the world is essentially a giant makeshift team, I stopped letting minor work errors cause me mental exhaustion."
+      },
+      "diagrams": [],
+      "related_terms": [
+        {
+          "id": 16,
+          "relation": "概念相关"
+        },
+        {
+          "id": 44,
+          "relation": "概念相关"
+        }
+      ],
+      "commentAbs": {
+        "content": {
+          "zh": "技术越进步，企业规模的成长速率与其人员协同能力的不匹配就越显著。人们在变幻的湍流中划船，不得不感叹一句：都太草台了。",
+          "en": "The more technology advances, the more glaring the mismatch becomes between a company's growth rate and its capacity for human synergy. Rowing in these shifting rapids, people cannot help but lament: it’s all just so makeshift."
+        },
+        "author": {
+          "zh": "飞樾",
+          "en": "Feiyue"
+        }
+      },
+      "comments": [
+        {
+          "content": {
+            "zh": "很奇怪，说起“草台班子”这个词，我脑子里浮现出北岛的诗《回答》——“告诉你吧，世界/我—不—相—信！/……”\n我常常觉得，对于父辈及以上的人来说，好像领导、权力、层级系统自带正当性光环。“领导的能力就是有能力当领导”。但对90后及更年轻的一代，这个系统似乎正加速失去其可信度。\n“我不相信”四个字可以被当做一种时代精神的概括，至少对于年轻人是如此——还有什么值得相信呢？权威、正典、传统的道德观念，婚姻、两性、育儿、求职的规则……“一切坚固的东西都烟消云散了”。从前那些煌煌大殿，大台阶前曾全是匍匐跪倒的人，现在已在质疑和解构的声音里倒塌了。\n“草台班子”这个词的流行，离不开2023年的一个知乎帖子《如何评价「世界是一个草台班子」？》。这条问答里出现了很多高赞回答，整个帖子的浏览量截至目前已经突破了4000万。帖子中的一些内容也被截取转发到其他社交媒体平台，获得了进一步的裂变传播。\n一种隐隐被许多人观察到的现象，因为被冠以了专属的名字，而变得更为可见。也因为有了专属的名字，人们更愿意相信它是客观的实体，是确实存在的。也就是说，“草台班子”是一个概念，而“世界就是一个草台班子”是一个观点。因为“草台班子”这个词走红，配套的观点也随之带上了真理的色彩。\n有意思的是，当我们回看这个知乎问题，其实它在措辞上有一个前置的状况描述：“我工作以后才发现……”这样的讲法指向的是一种“成年世界的假象”。它描绘了这样一副图景：小时候我们仰视着那些穿着大人衣服、说着听不懂的话的大人，觉得厉害极了。长大后就会发现，这些都是假的，不过是强撑着的表演。这个看起来唬人的世界，外层精密，内里潦草，从根源上看，大家都是一些不知道自己在做什么的小孩儿……\n真的如此吗？一直如此吗？我想这个说法的流行离不开最近几年的社会大背景。\n首先是世界政治的大失序。如果要给“草台班子”一词选代言人的话，川普会不会全票通过？像很多历史上的政治人物一样，川普既是时代的映射和结果，也是原因和动机。他因为美国选民对于两党传统叙事的“不再相信”而借势涌现，成为政治人物，又进一步以其自恋型人格障碍、惯性撒谎的言行模式造就了一场面向世界的教育：“你们什么也不用再相信。”原来胡闹到这种地步也是可能的，且不用承担后果。父亲不再像一名父亲那样说话，君王不再像一名君王那样行动。\n其次是技术突进时代的金融造星运动。我们又到了一轮技术革命的年代。投资圈乐于进行造星运动。几个人创业、起步，一年内三轮融资，两年五轮融资，三年就估值数十亿，员工规模数百乃至上千人——这种权力和影响力的膨胀速率，恐怕是数万年人类历史都鲜见的，即便我们今天对此有些见怪不怪了。\n不过，金融游戏进化快，技术迭代快，但智人的社交能力、合作能力并不会演化得这么快。换句话说，在19世纪，一个公司要演化到500人规模，可能要好几十年时间，但现在只需要两年甚至更短。这就导致即便技术和销售能力达到了很高的规模，组织和管理能力也跟不上。并且，当个体的明星技术人员就能为公司带来巨大的效能提升时，公司之间的抢人大战变成了常态。但同样，明星技术人员被空降到高位，不一定有匹配的管理能力。流动性的增加也让管理变得困难。技术越进步，企业规模的成长速率与其人员协同能力的不匹配就越显著。人们在变幻的湍流中划船，不得不感叹一句：都太草台了。\n我想，其三，社交媒体让很多从前隐藏在幕后的内部运作变得透明了。人们现在可以看到，一些影响千万人命运的决定，从前看起来正儿八经，是反复论证、深思熟虑后做出的，事实上可能不过来自于几个手握权力的大人物的一时兴起或酒后闲聊。除此之外，社交媒体不仅带来了信息的透明，还从根本上改变了公众和精英之间的关系。政治领袖、企业高管、明星制作人，都热衷于开通个人账号，并通过个人账号而不是官方途径来宣告决定、表达观点、揭露事件。如果说从前的权威具有某种不可触碰的、神秘的灵晕，那随着大人物们挨个“下场”，创造贴近网友的亲和形象，原先那种严密的等级关系、高高在上的威严也就随之消解了。\n我想我们正处在一个临界状态。旧的秩序毫无疑问正在瓦解，但存在一个正在形成的、有足够包容力的新秩序吗？我不知道。最后我想分享一下自己对这个词的主观感觉。\n一方面，平常生活中，我自己常常会吐槽某某是个草台班子，但另一方面，我又觉得这个词语可疑，甚而对它在中文互联网中的流行抱有某种轻蔑。就像之前所说的，“草台班子”作为一个概念的流行，似乎把“世界就是个草台班子”这一观点也包装成了真理。而后者带有某种迎合和开脱的意味。它似乎在说：年轻人，你别担心自己不够专业、不够好，大家都在胡闹呢。\n但我也并不是一个天天在感叹人心不古、礼崩乐坏的老右派。收录这个词的时候，我和雅伦的第一反应都是，它的反义词不就是 institution 吗？草台班子要是都变成了中央歌舞团，那不也很让人窒息吗？精密的官僚体系会构建一个更难逃逸的现代铁笼。一种多孔的状态倒是给人以自由。另外，很多人也把“世界就是个草台班子”当做励志语录来用：不再迷信专家权威和传统，倒更容易相信自己也能做出一番事业来。",
+            "en": "It's strange how, whenever the term \"makeshift team\" comes up, Bei Dao's poem \"The Answer\" flashes through my mind: \"Let me tell you, world, / I—do—not—believe! / ...\"\nI often feel that for our parents' generation and those before them, leaders, power, and hierarchical systems seemed to possess an inherent halo of legitimacy. To them, \"the capability of a leader is simply having the capability to be a leader.\" But for the post-90s and younger generations, this system seems to be losing its credibility at an accelerating pace.\n\"I do not believe\"—these four words can be seen as a summation of the zeitgeist, at least for the youth. After all, what is left to believe in? Authority, the canon, traditional morality, the rules governing marriage, gender relations, parenting, and job hunting... \"All that is solid melts into air.\" Those once-magnificent palaces, before whose grand steps crowds used to prostrate themselves, have now collapsed under the weight of skepticism and deconstruction.\nThe popularity of the term \"makeshift team\" is inseparable from a 2023 Zhihu thread titled \"How do you evaluate 'the world is just a makeshift team'?\". This Q&A post featured numerous highly upvoted answers, and the entire thread has accumulated over 40 million views to date. Snippets of the discussion were captured and shared across other social media platforms, triggering further viral propagation.\nA phenomenon dimly observed by many became far more visible once it was given a dedicated name. And because it acquired a specific name, people became more willing to believe it was an objective entity, something that genuinely exists. In other words, \"makeshift team\" is a concept, while \"the world is just a makeshift team\" is a perspective. As the term went viral, its accompanying viewpoint took on the veneer of absolute truth.\nInterestingly, when we look back at this Zhihu question, its phrasing actually includes a premise: \"It wasn't until I started working that I realized...\" This kind of framing points to the \"illusion of the adult world.\" It paints a picture: as children, we looked up to adults wearing adult clothes and speaking unintelligible words, thinking they were incredibly formidable. When we grow up, we discover it was all a facade, nothing more than a strained performance. This intimidating world is sophisticated on the outside but slapdash within; at its root, everyone is just a child who has no idea what they are doing...\nIs it truly so? Has it always been this way? I believe the popularity of this notion is inseparable from the broader social backdrop of recent years.\nFirst is the great disorder in global politics. If we were to elect a spokesperson for the term \"makeshift team,\" would Donald Trump win by a unanimous vote? Like many historical political figures, Trump is both a reflection and a consequence of his era, as well as its cause and catalyst. He rode the wave of American voters \"no longer believing\" in the traditional narratives of the two major parties to emerge as a political figure. He then used his narcissistic personality disorder and habitual lying to deliver a global masterclass: \"You don't have to believe in anything anymore.\" It turned out that fooling around to such an extreme was actually possible, and without consequences. Fathers no longer speak like fathers; kings no longer act like kings.\nSecond is the financial star-making machine in an era of rapid technological breakthroughs. We find ourselves in yet another wave of technological revolution. The investment circle delights in minting stars. A few founders launch a startup: three rounds of financing in one year, five rounds in two years, a multi-billion-dollar valuation by year three, with a headcount reaching hundreds or even thousands. This rate of expansion in power and influence is perhaps rarely seen in tens of thousands of years of human history, even if we have grown somewhat desensitized to it today.\nHowever, while financial games evolve rapidly and technology iterates overnight, the social and cooperative capacities of #Homo sapiens# do not evolve at such a breakneck pace. In other words, in the 19th century, it might have taken a company several decades to scale up to 500 employees, whereas today it takes two years or less. Consequently, even if technical and sales capabilities reach massive scales, organizational and managerial skills fail to keep up. Furthermore, when individual star engineers can single-handedly drive immense efficiency gains, talent wars between companies become the norm. Yet, when these star engineers are parachuted into executive positions, they do not necessarily possess matching management skills. Increased liquidity also complicates management. The more technology advances, the more glaring the mismatch becomes between a company's growth rate and its capacity for human synergy. Rowing in these shifting rapids, people cannot help but lament: it’s all just so makeshift.\nThird, I believe social media has pulled back the curtain on internal operations that were once hidden backstage. People can now see that certain decisions affecting the fates of millions—which once appeared solemn, thoroughly debated, and deeply considered—might in reality stem from nothing more than a whim or drunken banter among a few powerful figures. Beyond informational transparency, social media has fundamentally altered the relationship between the public and the elite. Political leaders, corporate executives, and star producers are all eager to launch personal accounts, using them instead of official channels to announce decisions, voice opinions, and expose events. If past authority possessed an untouchable, mystical aura, the moment these heavyweights \"entered the fray\" to cultivate a relatable, netizen-friendly image, that rigid hierarchy and lofty majesty dissolved entirely.\nI think we are currently in a liminal state. The old order is undoubtedly collapsing, but is there an inclusive new order emerging to take its place? I do not know. Finally, I would like to share my subjective feelings about this term.\nOn one hand, in daily life, I often complain that such-and-such is a makeshift team. On the other hand, I find the term suspicious, and even harbor a certain contempt for its virality on the Chinese internet. As mentioned earlier, the popularity of \"makeshift team\" as a concept seems to package the viewpoint \"the world is just a makeshift team\" as an absolute truth. Yet, the latter carries a whiff of pandering and rationalization. It seems to say: \"Hey young people, don't worry about not being professional or good enough—everyone is just winging it anyway.\"\nBut I am not some old right-winger spending my days lamenting the decay of public morals and the ruin of traditional rites. When we were documenting this term for Dunes Dictionary, the first reaction Yalun and I had was: isn't its antonym an \"institution\"? If every makeshift team turned into the Central Song and Dance Ensemble, wouldn't that be utterly suffocating? A precise bureaucratic system constructs a modern iron cage that is even harder to escape. A porous state, on the contrary, offers a sense of freedom. Moreover, many people use \"the world is just a makeshift team\" as an inspirational quote: by stripping away the blind faith in experts, authority, and tradition, it becomes easier to believe that you, too, can carve out your own success."
+          },
+          "role": {
+            "zh": "贡献者",
+            "en": "Contributor"
+          },
+          "author": {
+            "zh": "",
+            "en": ""
+          },
+          "background": {
+            "zh": "",
+            "en": ""
+          },
+          "date": "2026/04/16"
+        }
+      ],
+      "online_date": "2026/05/29"
     }
   ]
 }

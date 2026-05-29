@@ -14,19 +14,17 @@ const RELATION_TYPES = {
 const RELATION_WAVE = {
     samples: 72,
     amplitude: {
-        conceptMin: 3.5,
+        conceptMin: 2,
         conceptMax: 42,
         defaultMin: 3,
         defaultMax: 22,
+        baseTaper: 0.06,
         distanceStart: 120,
         distanceFactor: 0.00075,
         distancePower: 1.6
     },
     phasePerSlot: Math.PI * 0.7,
-    wavelength: {
-        concept: 30,
-        default: 56
-    }
+    wavelength: () => window.innerWidth * 0.1 + window.innerHeight * 0.1
 };
 
 function isConceptRelation(relation) {
@@ -243,9 +241,7 @@ function getRelationWaveConfig(relation) {
         amplitudeMax: isConcept
             ? RELATION_WAVE.amplitude.conceptMax
             : RELATION_WAVE.amplitude.defaultMax,
-        wavelength: isConcept
-            ? RELATION_WAVE.wavelength.concept
-            : RELATION_WAVE.wavelength.default
+        wavelength: RELATION_WAVE.wavelength()
     };
 }
 
@@ -254,7 +250,7 @@ function createWavedPath(geometry, relation, slotOffset) {
     const waveConfig = getRelationWaveConfig(relation);
     if (!points || points.length < 2) return geometry.path;
 
-    const sampleCount = waveConfig.samples;
+    const sampleCount = Math.max(waveConfig.samples, Math.ceil(distance / 4));
     const amplitude = Math.min(
         waveConfig.amplitudeMax,
         waveConfig.amplitudeMin + Math.pow(
@@ -283,7 +279,7 @@ function createWavedPath(geometry, relation, slotOffset) {
         const tangentLength = Math.hypot(tangent.x, tangent.y) || 1;
         const normalX = -tangent.y / tangentLength;
         const normalY = tangent.x / tangentLength;
-        const taper = Math.sin(Math.PI * t);
+        const taper = RELATION_WAVE.amplitude.baseTaper + Math.sin(Math.PI * t) / 5;
         const wave = Math.sin((distance * t / wavelength) * Math.PI * 2 + phase);
 
         wavedPoints.push({
