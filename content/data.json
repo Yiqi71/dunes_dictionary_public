@@ -1,7 +1,7 @@
 {
   "meta": {
-    "generated_at": "2026-05-29T07:46:48.851Z",
-    "source": "1f67a091d1692f7515a5bb8761c9bca6",
+    "generated_at": "2026-05-30T14:47:12.158Z",
+    "source": "572c5378a733172db298c7586c3d74de",
     "home_node_id": 13
   },
   "words": [
@@ -7567,6 +7567,266 @@
           "date": "2026/04/16"
         }
       ],
+      "online_date": "2026/05/29"
+    },
+    {
+      "id": 52,
+      "term": {
+        "zh": "过拟合",
+        "en": "Overfitting"
+      },
+      "termOri": "Overfitting",
+      "concept_image": "images/过拟合_aigc.jpg",
+      "sm_title": {
+        "zh": "社媒标题",
+        "en": "social title"
+      },
+      "proposers": [
+        {
+          "name": {
+            "zh": "弗拉基米尔·瓦普尼克",
+            "en": "Vladimir Vapnik",
+            "ori": "Владимир Наумович Вапник"
+          },
+          "year": {
+            "zh": "1936-",
+            "en": "1936-"
+          },
+          "role": {
+            "zh": "统计学家、计算机科学家",
+            "en": "statistician and computer scientist"
+          },
+          "image": "images/过拟合_proposer.jpg"
+        }
+      ],
+      "source": {
+        "zh": "弗拉基米尔·瓦普尼克，《统计学习理论的本质 (#The Nature of Statistical Learning Theory#)》，纽约: 施普林格出版社 (Springer), 1995。中国大陆已出版，清华大学出版社；港台尚无繁体译本。",
+        "en": "Vapnik, Vladimir. #The Nature of Statistical Learning Theory#. New York: Springer, 1995."
+      },
+      "source_image": "images/过拟合_source_cover.jpg",
+      "related_works": [
+        {
+          "zh": "汤姆·米切尔，《机器学习 (#Machine Learning#)》，纽约: 麦格劳-希尔教育出版公司 (McGraw-Hill Education), 1997。中国大陆已出版，机械工业出版社；港台尚无繁体译本。",
+          "en": "Mitchell, Tom M. #Machine Learning#. New York: McGraw-Hill, 1997."
+        },
+        {
+          "zh": "加雷斯·詹姆斯等，《统计学习导论：基于R应用 (#An Introduction to Statistical Learning: with Applications in R#)》，纽约: 施普林格出版社 (Springer), 2013。中国大陆已出版，机械工业出版社；港台尚无繁体译本。",
+          "en": "James, Gareth, Daniela Witten, Trevor Hastie, and Robert Tibshirani. #An Introduction to Statistical Learning: with Applications in R#. New York: Springer, 2013."
+        }
+      ],
+      "domain": {
+        "zh": "学科类型",
+        "en": "domain"
+      },
+      "proposing_country": "US",
+      "proposing_time": "1995",
+      "contributors": [
+        {
+          "name": {
+            "zh": "飞樾",
+            "en": "Feiyue"
+          },
+          "role": {
+            "zh": "沙丘研究所创始人",
+            "en": "Founder of Dunes Workshop"
+          }
+        }
+      ],
+      "contribute_date": "2026/05/27",
+      "editors": [
+        {
+          "zh": "沙丘研究所（Gemini 3.5 Thinking辅助润色），网站中收录的内容可能基于社交媒体中的内容做了进一步编辑和润色。",
+          "en": "Dunes Workshop (Gemini 3.5 Thinking–assisted editing), content featured on this website may have been further edited and refined based on material from social media."
+        }
+      ],
+      "edit_date": "No edit date yet.",
+      "brief_definition": {
+        "zh": "因过度迎合已知数据而丧失对未知情况预测能力的算法模型状态",
+        "en": "A modeling error in statistics and machine learning where a function fits the training data too closely, failing to generalize to new data."
+      },
+      "extended_definition": {
+        "zh": [
+          "马上要驾照考试了，紧张的你找到了一套“备考法典”：左后视镜对准路牌就打方向，看见灌木丛就踩刹车……死记硬背之后，你果然满分通过了训练场里的考试。然而，只要出了训练场，或是换了一辆车，你就会立刻不知所措，像是完全不会开车了一般。",
+          "这就是“过拟合”。在人工智能和统计学中，当一个模型为了在历史数据上取得完美表现，把数据中的“噪音”（偶然误差）当成普遍规律死记硬背时，就会发生这种现象。它就像一个只擅长做模拟题的“做题家”，在熟悉的环境里无懈可击，面对全新的现实时却一败涂地。为了对付 AI 的这种倾向，工程师们不得不像严厉的教练一样，在训练时故意把照片弄糊、或者随机蒙住它的一部分“眼睛”，逼着它放弃死记硬背，去真正学会如何举一反三。当然，在泛化能力与模型复杂度之间，本也存在着一种永恒的张力。如今，该词也常被借用于职场与心理学，形容因过度适应特定规则而失去灵活应变能力的个体。"
+        ],
+        "en": [
+          "With your driver's license exam just around the corner, you're understandably anxious—until you come across a \"test-prep bible\": steer the moment the left side mirror aligns with the road sign, hit the brakes as soon as you see the bushes... After committing these rules to heart through pure rote memorization, you indeed pass the test inside the training facility with a perfect score. However, the moment you leave the training grounds or switch to a different car, you are instantly at a loss, as if you've completely forgotten how to drive.",
+          "This is #overfitting#. In artificial intelligence and statistics, this phenomenon occurs when a model, in its obsession with achieving flawless performance on historical data, mindlessly memorizes the \"noise\" (random errors) within the dataset as if it were a universal law. It acts just like an \"exam-grinder\" who only excels at practice tests—utterly flawless in a familiar environment, yet completely helpless when confronted with a brand-new reality. To counter this tendency in AI, engineers must act like strict instructors. During training, they might intentionally blur the images or randomly blindfold part of the AI's \"eyes,\" forcing it to abandon rote memorization and truly learn how to generalize from examples. Of course, there is an inherent, eternal tension between generalization capability and model complexity. Today, the term is frequently borrowed in workplace and psychological contexts to describe individuals who have over-adapted to specific rules, thereby losing their capacity for flexible adaptation."
+        ]
+      },
+      "example_sentence": {
+        "zh": "这家公司在开发算法时过度追求训练集上的高准确率，结果遭遇了严重的过拟合，导致产品虽然跑分很高，在真实市场的测试中表现惨淡。",
+        "en": "This company became so hyper-focused on achieving high accuracy on their training sets during algorithm development that they fell into a severe trap of overfitting. As a result, while the product scored remarkably high in benchmarks, its performance in real-world market testing was dismal."
+      },
+      "diagrams": [
+        {
+          "src": "images/过拟合_diagram_1.jpg",
+          "caption": {
+            "zh": "欠拟合，最佳拟合，以及过拟合的示意图。",
+            "en": "diagram caption"
+          }
+        }
+      ],
+      "related_terms": [
+        {
+          "id": 22,
+          "relation": "概念相关"
+        },
+        {
+          "id": 9,
+          "relation": "概念相关"
+        }
+      ],
+      "commentAbs": {
+        "content": {
+          "zh": "暂无导读",
+          "en": "No abstract info yet."
+        },
+        "author": {
+          "zh": "暂无作者信息",
+          "en": "No author info yet."
+        }
+      },
+      "comments": [],
+      "online_date": "2026/05/29"
+    },
+    {
+      "id": 54,
+      "term": {
+        "zh": "向上流动性",
+        "en": "Upward Mobility"
+      },
+      "termOri": "Upward Mobility",
+      "concept_image": "images/向上流动性_aigc.jpg",
+      "sm_title": {
+        "zh": "社媒标题",
+        "en": "social title"
+      },
+      "proposers": [
+        {
+          "name": {
+            "zh": "皮特里姆·阿列克谢耶维奇·索罗金",
+            "en": "Pitirim Alexandrovich Sorokin",
+            "ori": "Питирим Александрович Сорокин"
+          },
+          "year": {
+            "zh": "1889-1968",
+            "en": "1889-1968"
+          },
+          "role": {
+            "zh": "社会学家、社会哲学家",
+            "en": "sociologist and social philosopher"
+          },
+          "image": "images/向上流动性_proposer.jpg"
+        }
+      ],
+      "source": {
+        "zh": "皮特里姆·索罗金，《社会流动 (#Social Mobility#)》，纽约: 哈珀兄弟出版社 (Harper & Brothers), 1927。中国大陆已出版，译林出版社；港台有译本，商务印书馆。",
+        "en": "Sorokin, Pitirim A. #Social Mobility#. New York: Harper & Brothers, 1927."
+      },
+      "source_image": "images/向上流动性_source_cover.jpg",
+      "related_works": [
+        {
+          "zh": "迈克尔·杨，《优才制的崛起 (#The Rise of the Meritocracy#)》，伦敦: 泰晤士与哈德逊出版社 (Thames & Hudson), 1958。中国大陆已出版，江西人民出版社。",
+          "en": "Young, Michael. #The Rise of the Meritocracy#. London: Thames & Hudson, 1958."
+        },
+        {
+          "zh": "罗伯特·普特南，《我们的孩子 (#Our Kids: The American Dream in Crisis#)》，纽约: 西蒙与舒斯特出版社 (Simon & Schuster), 2015。中国大陆已出版，中国政法大学出版社。",
+          "en": "Putnam, Robert D. #Our Kids: The American Dream in Crisis#. New York: Simon & Schuster, 2015."
+        },
+        {
+          "zh": "迈克尔·桑德尔，《精英的傲慢 (#The Tyranny of Merit#)》，纽约: 法拉、斯特劳斯和吉鲁出版社 (Farrar, Straus and Giroux), 2020。中国大陆已出版，中信出版集团；港台有译本，先觉出版社。",
+          "en": "Sandel, Michael J. #The Tyranny of Merit: What's Become of the Common Good?#. New York: Farrar, Straus and Giroux, 2020."
+        }
+      ],
+      "domain": {
+        "zh": "学科类型",
+        "en": "domain"
+      },
+      "proposing_country": "US",
+      "proposing_time": "1927",
+      "contributors": [
+        {
+          "name": {
+            "zh": "飞樾",
+            "en": "Feiyue"
+          },
+          "role": {
+            "zh": "沙丘研究所创始人",
+            "en": "Founder of Dunes Workshop"
+          }
+        }
+      ],
+      "contribute_date": "2026/05/27",
+      "editors": [
+        {
+          "zh": "沙丘研究所（Gemini 3.5 Thinking辅助润色），网站中收录的内容可能基于社交媒体中的内容做了进一步编辑和润色。",
+          "en": "Dunes Workshop (Gemini 3.5 Thinking–assisted editing), content featured on this website may have been further edited and refined based on material from social media."
+        }
+      ],
+      "edit_date": "No edit date yet.",
+      "brief_definition": {
+        "zh": "个人或群体在社会阶层中，从较低等级向较高等级提升的动态过程",
+        "en": "The dynamic process of an individual or group moving from a lower to a higher social status or class."
+      },
+      "extended_definition": {
+        "zh": [
+          "1998年版《新华字典》中有这样一个例句：“张华考上了北京大学；李萍进了中等技术学校；我在百货公司当售货员，我们都有光明的前途。”中文里的“前途”——前方的路途，若是光明的，那对于大多数人来说，也意味着是“向上流动的”。",
+          "如何向上流动？谁在向上流动？这些问题是全球性的。“向上流动性”在20世纪20年代被系统提出时，正值西方工业化和城市化的高峰期。社会学家索罗金试图用一种近乎物理学的方法，去测量社会阶层内部的机械运动。一战后的西方世界迫切想验证一个宏大命题：现代民主与资本主义社会，是否真的如宣称的那样，提供了一个人人可以靠奋斗改变命运的舞台？",
+          "围绕这一概念产生了许多讨论。譬如有人认为社会如一个高效的筛子，通过教育将最聪明、努力的人筛选到上层，实现“优才制”（Meritocracy）。但另一派学者则指出，向上流动往往是一种“结构性流动”的幻觉——技术进步导致白领岗位总量增加，才让更多人坐进了办公室，而并不意味着筛选机制的公平。相反，精英阶层还会通过垄断“文化资本”筑起无形的高墙，把优势悄悄传递给下一代，形成隐性的阶层固化。"
+        ],
+        "en": [
+          "The 1998 edition of the #Xinhua Dictionary# famously features this example sentence: \"Zhang Hua was admitted to Peking University; Li Ping entered a technical secondary school; I became a salesclerk at a department store—we all have a bright future.\" In Chinese, the term #qiantu#—literally \"the path ahead\"—carries an implicit promise of \"upward mobility\" for most people when it is described as \"bright.\"",
+          "How does one move upward? Who gets to move upward? These questions are global in scope. When \"upward mobility\" was first systematically proposed in the 1920s, the Western world was at the peak of industrialization and urbanization. Sociologist Pitirim Sorokin attempted to use a quasi-physical method to measure the mechanical movements within social strata. The post-World War I Western world was desperate to validate a grand proposition: Did modern democracy and capitalist society truly provide a stage where anyone, through sheer grit, could alter their destiny as advertised?",
+          "A wealth of debate has since crystallized around this concept. One camp views society as an efficient sieve that filters the brightest and most industrious individuals to the top through education, achieving a true meritocracy. Conversely, another school of scholars points out that upward mobility is often an illusion born of \"structural mobility\"—technological advancement simply increased the total pool of white-collar jobs, pulling more people into office desks without actually making the selection mechanism any fairer. Instead, the elite class erects invisible walls by monopolizing \"cultural capital,\" quietly passing their advantages down to the next generation and resulting in a covert form of entrenched class rigidity."
+        ]
+      },
+      "example_sentence": {
+        "zh": "很多教育者认为，“名师云课堂”的普及，能够改善底层家庭子女的向上流动性。",
+        "en": "Many educators believe that the widespread adoption of \"master-teacher cloud classrooms\" can enhance the upward mobility of children from underprivileged families."
+      },
+      "diagrams": [],
+      "related_terms": [
+        {
+          "id": 5,
+          "relation": "概念相关"
+        },
+        {
+          "id": 15,
+          "relation": "概念相关"
+        },
+        {
+          "id": 16,
+          "relation": "概念相关"
+        },
+        {
+          "id": 23,
+          "relation": "概念相关"
+        },
+        {
+          "id": 29,
+          "relation": "概念相关"
+        },
+        {
+          "id": 40,
+          "relation": "概念相关"
+        },
+        {
+          "id": 49,
+          "relation": "概念相关"
+        }
+      ],
+      "commentAbs": {
+        "content": {
+          "zh": "暂无导读",
+          "en": "No abstract info yet."
+        },
+        "author": {
+          "zh": "暂无作者信息",
+          "en": "No author info yet."
+        }
+      },
+      "comments": [],
       "online_date": "2026/05/29"
     }
   ]
