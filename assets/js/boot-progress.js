@@ -16,6 +16,13 @@ if (root && indicator && text) {
         body.classList.add("boot-pending");
     }
 
+    const withTimeout = (promise, ms) => {
+        return Promise.race([
+            promise,
+            new Promise((resolve) => window.setTimeout(resolve, ms))
+        ]);
+    };
+
     const waitForStylesAndFonts = async () => {
         const styleLinks = Array.from(document.querySelectorAll('link[rel="stylesheet"]'));
         const styleTasks = styleLinks.map((link) => new Promise((resolve) => {
@@ -29,12 +36,12 @@ if (root && indicator && text) {
         }));
 
         if (styleTasks.length > 0) {
-            await Promise.all(styleTasks);
+            await withTimeout(Promise.all(styleTasks), 3500);
         }
 
         if (document.fonts && document.fonts.ready) {
             try {
-                await document.fonts.ready;
+                await withTimeout(document.fonts.ready, 3500);
             } catch (_) {
                 // ignore
             }
