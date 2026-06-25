@@ -698,3 +698,9 @@ html:lang(en) #proposer .proposer-ori {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.25; }
 }
+
+/* combined.html embedded mode: hide floating panels */
+html.nopanel #floating-panel,
+html.nopanel #about-panel {
+    display: none !important;
+}
