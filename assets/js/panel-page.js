@@ -992,6 +992,10 @@ const FLYTHROUGH_LOOP_COPY_CLASS = "flythrough-loop-copy";
 const FLYTHROUGH_LOOP_GAP_CLASS = "flythrough-loop-gap";
 const FLYTHROUGH_LOOP_GAP_HEIGHT = "20vh";
 const FLYTHROUGH_PANEL_SWITCH_FADE_MS = 420;
+// setInterval instead of requestAnimationFrame: Safari throttles/pauses rAF in windows
+// that are visible but not OS-focused (e.g. a projected/mirrored panel window), which
+// silently stalls the scroll with no error. Timers are much more reliable there.
+const FLYTHROUGH_TICK_MS = 50;
 let isDragging = false;
 let dragStartY = 0;
 let dragStartTop = 0;
@@ -1119,7 +1123,7 @@ function prepareFlythroughLoop(panelMain) {
 
 function cancelFlythroughRead({ resetScroll = false, preserveLoopCopies = false } = {}) {
     if (flythroughReadRaf !== null) {
-        cancelAnimationFrame(flythroughReadRaf);
+        window.clearInterval(flythroughReadRaf);
         flythroughReadRaf = null;
     }
     flythroughReadToken = null;
@@ -1176,7 +1180,11 @@ async function startFlythroughRead(command = {}) {
 
     const panelMain = getActivePanelMain();
     const speedVh = Number(command.speedVhPerSecond) || DEFAULT_FLYTHROUGH_SCROLL_VH_PER_SECOND;
-    const speed = (speedVh / 100) * window.innerHeight; // vh/s -> px/s for this panel's viewport
+    // Use the panel's own rendered height rather than window.innerHeight — on projected/
+    // mirrored displays window.innerHeight can report 0 or a stale value, which silently
+    // zeroes out the scroll speed with no error.
+    const viewportHeight = panelMain?.clientHeight || document.documentElement.clientHeight || window.innerHeight || 900;
+    const speed = (speedVh / 100) * viewportHeight; // vh/s -> px/s for this panel's viewport
     const minDuration = Number(command.minDuration) || DEFAULT_FLYTHROUGH_MIN_DURATION;
     const token = {
         readId,
@@ -1229,11 +1237,9 @@ async function startFlythroughRead(command = {}) {
             token.completionSent = true;
             postSyncMessage({ type: "flythrough-read-complete", readId, panel: getPanelKind() });
         }
-
-        flythroughReadRaf = requestAnimationFrame(step);
     };
 
-    flythroughReadRaf = requestAnimationFrame(step);
+    flythroughReadRaf = window.setInterval(() => step(performance.now()), FLYTHROUGH_TICK_MS);
 }
 
 function handleSyncMessage(data = {}) {
