@@ -227,6 +227,13 @@
         <div id="word-nodes-container"></div>
     </div>
 
+    <!-- Mobile-only: related-words chip array shown while a word is
+         focused/zoomed but its full entry panel hasn't been opened yet.
+         Replaces the canvas relation lines on mobile. Kept outside
+         #universe-view (which is transformed for pan/zoom) so it can use
+         position: fixed relative to the viewport. -->
+    <div id="mobile-focused-related-words" class="mobile-related-words"></div>
+
     <div id="overlay" class="hidden"></div>
 
     <div id="tooltipDiv"></div>

@@ -1,10 +1,5 @@
 import { state } from "./state.js";
-
-const MOBILE_QUERY = "(max-width: 768px)";
-
-function isMobileLayout() {
-    return window.matchMedia(MOBILE_QUERY).matches;
-}
+import { isMobileLayout } from "./device.js";
 
 function hasFocusedWord() {
     return Boolean(state.focusedNodeId) || Boolean(document.querySelector(".word-node.focused"));

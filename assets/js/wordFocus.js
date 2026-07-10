@@ -6,6 +6,7 @@ import { updateRelations } from "./relationManager.js";
 import { renderPanelSections , showFloatingPanel, scrollToTop, resetFloatingPanelState } from "./detail.js";
 import { moveIndicator } from "./menu.js";
 import { getDisplayOriText } from "./oriDisplay.js";
+import { isMobileLayout } from "./device.js";
 
 
 let focusedWord = null;
@@ -20,10 +21,6 @@ function emitWordFocusChange(focusedNodeId) {
     document.dispatchEvent(new CustomEvent("word-focus-change", {
         detail: { focusedNodeId: focusedNodeId ?? null }
     }));
-}
-
-function isMobileLayout() {
-    return window.matchMedia("(max-width: 768px)").matches;
 }
 
 function ensureFocusedNodeLayer() {

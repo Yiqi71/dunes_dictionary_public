@@ -4,6 +4,7 @@ import { moveIndicator } from "./menu.js";
 import { hideFloatingPanel } from "./detail.js"
 import { getMinScaleForCurrentPath, resolveWheelScale, updateScaleForNodes } from "./zoom.js";
 import { logEvent } from "/analytics.js";
+import { isMobileLayout } from "./device.js";
 
 const canvas = document.getElementById("universe-canvas");
 const universeView = document.getElementById("universe-view");
@@ -102,10 +103,6 @@ function isFloatingPanelVisible() {
     return !!panel && !panel.classList.contains("hidden");
 }
 
-function isMobileLayout() {
-    return window.matchMedia("(max-width: 768px)").matches;
-}
-
 function endDrag() {
     if (!isDragging) return;
     isDragging = false;
@@ -173,7 +170,7 @@ export function updateWordNodeTransforms() {
     const scale = state.currentScale;
     const totalWidth = state.baseWidth * scale * 24;
     const totalHeight = state.baseHeight * scale;
-    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+    const isMobile = isMobileLayout();
 
     const nodes = document.querySelectorAll(".word-node");
 

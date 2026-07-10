@@ -2,6 +2,8 @@
 import { state } from "./state.js";
 import { updateWordFocus, zoomToWord } from "./wordFocus.js";
 import { logEvent } from "/analytics.js";
+import { isMobileLayout } from "./device.js";
+import { getWordColor } from "./wordColor.js";
 
 const connectionLines = document.getElementById("connection-lines");
 const universeCanvas = document.getElementById("universe-canvas");
@@ -464,6 +466,114 @@ function hideTooltip() {
     }
 }
 
+// 收集与某词条相关的其它词条 id（概念相关 + 同一提出者），供移动端关联词菜单使用
+export function getRelatedWordIds(thisWord) {
+    const ids = [];
+    if (!thisWord) return ids;
+    const seen = new Set();
+    const addId = (id) => {
+        const key = String(id);
+        if (key === String(thisWord.id) || seen.has(key)) return;
+        seen.add(key);
+        ids.push(key);
+    };
+
+    if (Array.isArray(thisWord.related_terms)) {
+        thisWord.related_terms.forEach(relation => addId(relation.id));
+    }
+
+    window.allWords.forEach(otherWord => {
+        if (!otherWord || otherWord.id === thisWord.id) return;
+        if (!Array.isArray(otherWord.related_terms)) return;
+        const hits = otherWord.related_terms.some(r => r && r.id == thisWord.id);
+        if (hits) addId(otherWord.id);
+    });
+
+    if (Array.isArray(thisWord.proposers)) {
+        const proposerNames = thisWord.proposers
+            .map(p => p?.name?.zh)
+            .filter(Boolean);
+
+        window.allWords.forEach(otherWord => {
+            if (otherWord.id === thisWord.id) return;
+            if (!Array.isArray(otherWord.proposers)) return;
+
+            const hasCommon = otherWord.proposers.some(p => {
+                const otherName = p?.name?.zh;
+                return otherName && proposerNames.includes(otherName);
+            });
+            if (hasCommon) addId(otherWord.id);
+        });
+    }
+
+    return ids;
+}
+
+function normalizeLang(code) {
+    const v = (code || "").toLowerCase();
+    return v.startsWith("en") ? "en" : "zh";
+}
+
+// Mobile-only: while a word is focused/zoomed but its full entry panel isn't
+// open yet, show its related words as a clickable chip array docked to the
+// bottom of the screen. This is the mobile stand-in for the canvas relation
+// lines (which are hidden on mobile, see mobile.css).
+function isAnyPanelOpen() {
+    const floatingPanel = document.getElementById("floating-panel");
+    const aboutPanel = document.getElementById("about-panel");
+    const isOpen = (panel) => panel && !panel.classList.contains("hidden");
+    return isOpen(floatingPanel) || isOpen(aboutPanel);
+}
+
+function renderMobileFocusedRelatedWords() {
+    const container = document.getElementById("mobile-focused-related-words");
+    if (!container) return;
+
+    if (!isMobileLayout() || !state.focusedNodeId || isAnyPanelOpen()) {
+        container.innerHTML = "";
+        container.classList.remove("has-items");
+        return;
+    }
+
+    const thisWord = window.allWords.find(w => w.id == state.focusedNodeId);
+    if (!thisWord) {
+        container.innerHTML = "";
+        container.classList.remove("has-items");
+        return;
+    }
+
+    const lang = normalizeLang(state.currentLang || "zh");
+    const relatedWords = getRelatedWordIds(thisWord)
+        .map(id => window.allWords.find(w => String(w.id) === id))
+        .filter(Boolean);
+
+    container.innerHTML = "";
+    const hasItems = relatedWords.length > 0;
+    container.classList.toggle("has-items", hasItems);
+    if (!hasItems) return;
+
+    relatedWords.forEach(w => {
+        const chip = document.createElement("button");
+        chip.type = "button";
+        chip.className = "related-word-chip";
+        chip.textContent = w.term?.[lang] || w.term?.zh || "";
+        chip.style.backgroundColor = getWordColor(parseInt(w.proposing_time));
+
+        chip.addEventListener("pointerdown", async (e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            const targetNodeId = String(w.id);
+            const fromWordId = state.focusedNodeId;
+            hideTooltip();
+            await zoomToWord(targetNodeId, state.currentScale, { animated: true, duration: 800 });
+            updateWordFocus(targetNodeId);
+            logEvent("link_click", { fromWordId, toWordId: targetNodeId, relation: "focused_chip" });
+        });
+
+        container.appendChild(chip);
+    });
+}
+
 // 更新所有关系连线
 export function updateRelations() {
     const svg = document.getElementById('connection-lines');
@@ -471,6 +581,8 @@ export function updateRelations() {
 
     // 每次更新关系时都隐藏tooltip，防止滞留
     hideTooltip();
+
+    renderMobileFocusedRelatedWords();
 
     if (!state.focusedNodeId) return;
 

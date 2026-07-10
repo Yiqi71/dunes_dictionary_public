@@ -1,12 +1,7 @@
 import { showFloatingPanel, hideFloatingPanel } from "./detail.js";
 import { updateRelations } from "./relationManager.js";
 import { updateWordFocus } from "./wordFocus.js";
-
-const MOBILE_MAX_WIDTH = 768;
-
-function isMobileLayout() {
-    return window.matchMedia(`(max-width: ${MOBILE_MAX_WIDTH}px)`).matches;
-}
+import { isMobileLayout } from "./device.js";
 
 function getFloatingPanel() {
     return document.getElementById("floating-panel");

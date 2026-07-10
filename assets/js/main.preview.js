@@ -19,7 +19,7 @@ import {
     initSavedWordStorageSync
 } from "./saved.js";
 import { logEvent, startWordView, endWordView } from "/analytics.js";
-import { yearPeriods } from "./menu.js";
+import { getWordColor } from "./wordColor.js";
 
 const BOOT_PROGRESS_EVENT = "dunes:boot-progress";
 const ENTRY_READY_EVENT = "dunes:entry-ready";
@@ -33,15 +33,6 @@ function setBootProgress(value, label) {
 // Shared runtime state
 let sessionStartTs = null;
 window.allWords = [];
-
-const yearPeriodColors = [
-    "#F9D67A",
-    "#FADD91",
-    "#FAE2A5",
-    "#FAE8BA",
-    "#FAEED0",
-    "#F9F3E3"
-];
 
 let wordsOnGrid = {};
 let usedPositions = new Set();
@@ -290,25 +281,6 @@ langBtn.addEventListener("click", () => {
 });
 
 // Color and date helpers
-function getWordColor(wordYear) {
-    if (isNaN(wordYear)) {
-        return yearPeriodColors[0];
-    }
-    let periodIndex = 0;
-    
-    for (let i = yearPeriods.length - 2; i >= 0; i--) {
-        const period = yearPeriods[i];
-        if (period.year !== null && wordYear >= period.year) {
-            periodIndex = i;
-            break;
-        }
-    }
-    if (periodIndex >= yearPeriodColors.length) {
-        periodIndex = yearPeriodColors.length - 1;
-    }
-    return yearPeriodColors[periodIndex];
-}
-
 function parseContributeDate(contributeDate) {
     if (!contributeDate || contributeDate.includes("TODO")) return 99991231;
     const parts = String(contributeDate).split("/").map((value) => parseInt(value, 10));
