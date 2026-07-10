@@ -85,46 +85,13 @@ function queueSavedWordSnapshotFromLocal({ force = false } = {}) {
 }
 
 async function probeSavedWordSyncConnection() {
-    if (!navigator.onLine) return false;
-    try {
-        const response = await fetch("/events", { method: "HEAD", cache: "no-store" });
-        return response.ok;
-    } catch (_) {
-        return false;
-    }
+    // Server sync removed — always report disconnected, no network call.
+    return false;
 }
 
 async function syncSavedWordQueue() {
-    if (savedWordSyncInFlight) return;
-    if (!navigator.onLine) return;
-
-    let queue = getSavedWordSyncQueue();
-    if (queue.length === 0) {
-        await probeSavedWordSyncConnection();
-        return;
-    }
-
-    savedWordSyncInFlight = true;
-    try {
-        while (queue.length > 0) {
-            const payload = queue[0];
-            try {
-                const response = await fetch("/events", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(payload),
-                    keepalive: true
-                });
-                if (!response.ok) break;
-                queue.shift();
-                setSavedWordSyncQueue(queue);
-            } catch (_) {
-                break;
-            }
-        }
-    } finally {
-        savedWordSyncInFlight = false;
-    }
+    // Server sync removed — saved words stay local-only, queue is left untouched.
+    return;
 }
 
 export function readSavedWordIdSet() {

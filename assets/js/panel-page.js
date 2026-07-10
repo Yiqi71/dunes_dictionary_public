@@ -12,7 +12,7 @@ import { getOrCreateDeviceId } from "./device-id.js";
 const CHANNEL_NAME = "dunes-focus";
 const SYNC_KEY = "dd_panel_sync";
 const FLYTHROUGH_READ_SYNC_KEY = "dd_panel_flythrough_read";
-const DEFAULT_FLYTHROUGH_SCROLL_PX_PER_SECOND = 32;
+const DEFAULT_FLYTHROUGH_SCROLL_VH_PER_SECOND = 3.2;
 const DEFAULT_FLYTHROUGH_MIN_DURATION = 2500;
 
 const API_BASE = (() => {
@@ -278,16 +278,8 @@ async function fetchCommentLikeCounts(wordId, { force = false } = {}) {
     if (!force && cached && now - cached.ts < COMMENT_LIKE_COUNTS_CACHE_TTL_MS) {
         return cached.counts;
     }
-    const response = await fetch(
-        buildApiUrl(`/api/votes/comment-likes?wordId=${encodeURIComponent(cacheKey)}`),
-        { cache: "no-store" }
-    );
-    if (!response.ok) throw new Error(`fetch_comment_likes_${response.status}`);
-    const payload = await response.json();
-    const rawCounts = payload?.countsByCommentIndex;
-    const counts = rawCounts && typeof rawCounts === "object" ? rawCounts : {};
-    commentLikeCountsCache.set(cacheKey, { ts: now, counts });
-    return counts;
+    // Server sync removed — no network call, fall back to empty counts.
+    throw new Error("comment_like_counts_unavailable");
 }
 
 function setCommentLikeBadge(buttonEl, count, shouldShow) {
@@ -499,62 +491,20 @@ function queueCommentLikeSnapshotFromLocal({ force = false } = {}) {
 }
 
 async function probeVoteSyncConnection() {
-    if (!navigator.onLine) { setVoteSyncState("disconnected"); return false; }
-    try {
-        const response = await fetch(buildApiUrl("/events"), { method: "HEAD", cache: "no-store" });
-        if (response.ok) { setVoteSyncState("connected"); return true; }
-        setVoteSyncState("disconnected");
-        return false;
-    } catch (_) { setVoteSyncState("disconnected"); return false; }
+    // Server sync removed — always report disconnected, no network call.
+    setVoteSyncState("disconnected");
+    return false;
 }
 
 async function syncVoteQueue() {
-    if (voteSyncInFlight) return;
-    if (!navigator.onLine) { setVoteSyncState("disconnected"); return; }
-    let queue = getVoteSyncQueue();
-    if (queue.length === 0) { await probeVoteSyncConnection(); await syncCommentLikeQueue(); return; }
-    voteSyncInFlight = true;
-    try {
-        while (queue.length > 0) {
-            const ev = queue[0];
-            try {
-                const response = await fetch(buildApiUrl("/events"), {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(ev),
-                    keepalive: true
-                });
-                if (response.ok) { setVoteSyncState("connected"); queue.shift(); setVoteSyncQueue(queue); continue; }
-                setVoteSyncState("disconnected");
-                break;
-            } catch (_) { setVoteSyncState("disconnected"); break; }
-        }
-    } finally { voteSyncInFlight = false; }
-    await syncCommentLikeQueue();
+    // Server sync removed — queue stays local-only.
+    setVoteSyncState("disconnected");
+    return;
 }
 
 async function syncCommentLikeQueue() {
-    if (commentLikeSyncInFlight) return;
-    if (!navigator.onLine) return;
-    let queue = getCommentLikeSyncQueue();
-    if (queue.length === 0) return;
-    commentLikeSyncInFlight = true;
-    try {
-        while (queue.length > 0) {
-            const ev = queue[0];
-            try {
-                const response = await fetch(buildApiUrl("/events"), {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(ev),
-                    keepalive: true
-                });
-                if (!response.ok) break;
-                queue.shift();
-                setCommentLikeSyncQueue(queue);
-            } catch (_) { break; }
-        }
-    } finally { commentLikeSyncInFlight = false; }
+    // Server sync removed — queue stays local-only.
+    return;
 }
 
 async function fetchServerWordVoteStats(wordId, { force = false } = {}) {
@@ -562,15 +512,8 @@ async function fetchServerWordVoteStats(wordId, { force = false } = {}) {
     const now = Date.now();
     const cached = entryVoteStatsCache.get(cacheKey);
     if (!force && cached && now - cached.ts < ENTRY_VOTE_STATS_CACHE_TTL_MS) return cached.stats;
-    const response = await fetch(
-        buildApiUrl(`/api/votes/understanding?wordId=${encodeURIComponent(cacheKey)}`),
-        { cache: "no-store" }
-    );
-    if (!response.ok) throw new Error(`fetch_vote_stats_${response.status}`);
-    const payload = await response.json();
-    const stats = normalizeVoteStats(payload?.stats);
-    entryVoteStatsCache.set(cacheKey, { ts: now, stats });
-    return stats;
+    // Server sync removed — no network call, caller falls back to local stats.
+    throw new Error("vote_stats_unavailable");
 }
 
 function initVoteSync() {
@@ -1232,7 +1175,8 @@ async function startFlythroughRead(command = {}) {
     }
 
     const panelMain = getActivePanelMain();
-    const speed = Number(command.speedPxPerSecond) || DEFAULT_FLYTHROUGH_SCROLL_PX_PER_SECOND;
+    const speedVh = Number(command.speedVhPerSecond) || DEFAULT_FLYTHROUGH_SCROLL_VH_PER_SECOND;
+    const speed = (speedVh / 100) * window.innerHeight; // vh/s -> px/s for this panel's viewport
     const minDuration = Number(command.minDuration) || DEFAULT_FLYTHROUGH_MIN_DURATION;
     const token = {
         readId,

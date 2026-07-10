@@ -19,7 +19,9 @@ let flythroughRouteIndex = -1;
 const FLY_DURATION = 3800;
 const INITIAL_DELAY = 1500;
 const NEARBY_POOL = 8;
-const PANEL_SCROLL_PX_PER_SECOND = 32;
+// vh/s instead of px/s so scroll speed scales with viewport height
+// (32px/s was tuned against a ~1000px-tall desktop viewport → 32/1000*100 = 3.2vh/s)
+const PANEL_SCROLL_VH_PER_SECOND = 3.2;
 const PANEL_READ_MIN_DURATION = 2500;
 const PANEL_READ_START_DELAY = 350;
 const PANEL_SYNC_CHANNEL = "dunes-focus";
@@ -209,7 +211,7 @@ function startPanelRead() {
                 type: "flythrough-read-start",
                 readId,
                 wordId: String(state.focusedNodeId),
-                speedPxPerSecond: PANEL_SCROLL_PX_PER_SECOND,
+                speedVhPerSecond: PANEL_SCROLL_VH_PER_SECOND,
                 minDuration: PANEL_READ_MIN_DURATION
             });
         }, PANEL_READ_START_DELAY);

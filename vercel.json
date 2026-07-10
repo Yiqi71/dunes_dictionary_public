@@ -1,6 +1,5 @@
 {
   "rewrites": [
-    { "source": "/events", "destination": "https://api.dunes-dictionary.com/events" },
     { "source": "/en", "destination": "/index.html" },
     { "source": "/cn", "destination": "/index.html" },
     { "source": "/zh", "destination": "/index.html" },

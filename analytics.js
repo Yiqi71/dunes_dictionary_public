@@ -99,15 +99,7 @@ export function logEvent(name, data = {}) {
       events.splice(0, events.length - MAX_EVENTS);
     }
     localStorage.setItem(STORAGE_KEY, JSON.stringify(events));
-
-    fetch(buildApiUrl("/events"), {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(event),
-      keepalive: true
-    }).catch(() => {
-      // noop
-    });
+    // Server sync removed — events are kept locally only.
   } catch (err) {
     console.error("logEvent failed", err);
   }
