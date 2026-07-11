@@ -12,7 +12,7 @@
         "en": "Intersubjectivity"
       },
       "termOri": "Intersubjectivity",
-      "concept_image": "images/主体间性_aigc.jpg",
+      "concept_image": "images/Intersubjectivity_aigc.jpg",
       "sm_title": {
         "zh": "我的存在和你的存在，创造了一个无形的场域",
         "en": "social title"
@@ -32,14 +32,14 @@
             "zh": "临床心理学家",
             "en": "clinical psychologist"
           },
-          "image": "images/主体间性_proposer.jpg"
+          "image": "images/Intersubjectivity_proposer.jpg"
         }
       ],
       "source": {
         "zh": "乔治·阿特伍德、罗伯特·斯托洛罗，《精神分析治疗的主体间性背景 (#The Intersubjective Context of Psychoanalytic Treatment#)》，载《国际精神分析杂志 (#International Journal of Psycho-Analysis#)》，1978。尚无中文翻译。",
         "en": "Atwood, George E., and Robert D. Stolorow. \"The Intersubjective Context of Psychoanalytic Treatment.\" #International Journal of Psycho-Analysis# 59 (1978): 313–324."
       },
-      "source_image": "images/主体间性_source_cover.jpg",
+      "source_image": "images/Intersubjectivity_source_cover.jpg",
       "related_works": [
         {
           "zh": "乔治·E·阿特伍德，《主体性的结构：精神分析现象学的探索 (#Structures of Subjectivity: Explorations in Psychoanalytic Phenomenology#)》，希尔斯代尔: 分析出版社 (The Analytic Press)，1984。尚无中文翻译。",
@@ -59,8 +59,8 @@
       "contributors": [
         {
           "name": {
-            "zh": "Shelley",
-            "en": "Shelley"
+            "zh": "颜文庆",
+            "en": "颜文庆"
           },
           "role": {
             "zh": "心理咨询师",
@@ -96,7 +96,7 @@
       },
       "diagrams": [
         {
-          "src": "images/主体间性_diagram_1.jpg",
+          "src": "images/Intersubjectivity_diagram_1.jpg",
           "caption": {
             "zh": "照片来自玛丽娜·阿布拉莫维奇（Marina Abramović）2010年在MoMA的行为艺术作品《艺术家在场》（The Artist is Present）。在凝视中，两个世界相遇。",
             "en": "Photo from Marina Abramović’s 2010 performance art piece at MoMA, The Artist is Present. Within the gaze, two worlds encounter one another."
@@ -115,7 +115,7 @@
           "en": "...it is not the counselor who 'treats' the client, but rather both parties who collectively 'generate' a specific therapeutic experience and reality through their interaction. Within this dual-subject system, the client cultivates new layers of meaning."
         },
         "author": {
-          "zh": "Shelley",
+          "zh": "颜文庆",
           "en": "TODO"
         }
       },
@@ -130,7 +130,7 @@
             "en": "Contributor"
           },
           "author": {
-            "zh": "Shelly",
+            "zh": "颜文庆",
             "en": ""
           },
           "background": {
@@ -149,7 +149,7 @@
             "en": "Contributor"
           },
           "author": {
-            "zh": "孟汀",
+            "zh": "吕孟汀",
             "en": "Mengting"
           },
           "background": {
@@ -168,7 +168,7 @@
             "en": "Contributor"
           },
           "author": {
-            "zh": "飞樾",
+            "zh": "陈飞樾",
             "en": "Feiyue"
           },
           "background": {
@@ -187,7 +187,7 @@
         "en": "Ghetto"
       },
       "termOri": "Ghetto",
-      "concept_image": "images/隔都_aigc.jpg",
+      "concept_image": "images/Ghetto_aigc.jpg",
       "sm_title": {
         "zh": "社媒标题",
         "en": "social title"
@@ -207,14 +207,14 @@
             "zh": "总督",
             "en": "Doge of Venice"
           },
-          "image": "images/隔都_proposer.jpg"
+          "image": "images/Ghetto_proposer.jpg"
         }
       ],
       "source": {
         "zh": "教皇保罗四世，教皇诏书 #Cum nimis absurdum#，1555。尚无中文翻译。",
         "en": "Pope Paul IV. #Cum nimis absurdum#. Papal Bull. July 14, 1555."
       },
-      "source_image": "images/隔都_source_cover.jpg",
+      "source_image": "images/Ghetto_source_cover.jpg",
       "related_works": [
         {
           "zh": "理查德·桑内特，《触摸的恐惧：文艺复兴时期威尼斯的犹太区 (#Fear of Touching: The Jewish Ghetto in Renaissance Venice#)》，载《肉体与石头 (#Flesh and Stone: The Body and the City in Western Civilization#)》，1994。中国大陆已出版，上海译文出版社。",
@@ -238,7 +238,7 @@
       "contributors": [
         {
           "name": {
-            "zh": "雅伦",
+            "zh": "李雅伦",
             "en": "Yalun"
           },
           "role": {
@@ -279,7 +279,7 @@
       },
       "diagrams": [
         {
-          "src": "images/隔都_diagram_1.jpg",
+          "src": "images/Ghetto_diagram_1.jpg",
           "caption": {
             "zh": "威尼斯隔都鸟瞰",
             "en": "Aerial photo of Venice Ghetto"
@@ -318,7 +318,7 @@
           "date": "2023/10/03",
           "images": [
             {
-              "src": "images/隔都_note1_1.jpg",
+              "src": "images/Ghetto_note1_1.jpg",
               "caption": {
                 "zh": "博洛尼亚隔都的地图",
                 "en": "Map of the Bologna Ghetto."
@@ -336,7 +336,7 @@
         "en": "Institution"
       },
       "termOri": "Institution",
-      "concept_image": "images/机构_aigc.jpg",
+      "concept_image": "images/Institution_aigc.jpg",
       "sm_title": {
         "zh": "沙丘词典 丨 （一）为了能说同一门语言",
         "en": "social title"
@@ -356,14 +356,14 @@
             "zh": "哲学家、社会理论家",
             "en": "philosopher and social theorist"
           },
-          "image": "images/机构_proposer.jpg"
+          "image": "images/Institution_proposer.jpg"
         }
       ],
       "source": {
         "zh": "米歇尔·福柯，《规训与惩罚 (#Surveiller et punir#)》，巴黎：伽利玛出版社 (Gallimard), 1975。中国大陆已出版，生活·读书·新知三联书店。",
         "en": "Foucault, Michel. #Discipline and Punish: The Birth of the Prison#. Translated by Alan Sheridan. New York: Pantheon Books, 1977."
       },
-      "source_image": "images/机构_source_cover.jpg",
+      "source_image": "images/Institution_source_cover.jpg",
       "related_works": [
         {
           "zh": "欧文·戈夫曼，《精神病院：论精神病患和其他被关押者的社会处境 (#Asylums: Essays on the Social Situation of Mental Patients and Other Inmates#)》，纽约: 安克尔图书 (Anchor Books)，1961。中国大陆已出版，商务印书馆。",
@@ -387,7 +387,7 @@
       "contributors": [
         {
           "name": {
-            "zh": "飞樾",
+            "zh": "陈飞樾",
             "en": "Feiyue"
           },
           "role": {
@@ -437,7 +437,7 @@
           "en": "The modern \"institution\" is the ghost of the pre-modern father."
         },
         "author": {
-          "zh": "雅伦",
+          "zh": "李雅伦",
           "en": "Yalun"
         }
       },
@@ -452,31 +452,12 @@
             "en": "Contributor"
           },
           "author": {
-            "zh": "雅伦",
+            "zh": "李雅伦",
             "en": "Yalun"
           },
           "background": {
             "zh": "建筑学",
             "en": "Architecture"
-          },
-          "date": "2019/09/30"
-        },
-        {
-          "content": {
-            "zh": "沙丘研究所在《切线》发表过一篇文章，叫《走廊的抵达与不可抵达》，我们探索了走廊这种空间装置的流行如何与现代性、官僚系统的生长同步并举。感兴趣的话，可以去切线网站查看这篇文章：https://www.tangentessays.com/essays/on-corridor-the-paradox-of-arrival/",
-            "en": "Dunes Workshop once published an essay in Tangent titled \"On Corridor: The Paradox of Arrival.\" In this piece, we explore how the prevalence of the corridor as a spatial device developed in tandem with the rise of modernity and bureaucratic systems. If you are interested, you can find the full essay on the Tangent website: https://www.tangentessays.com/essays/on-corridor-the-paradox-of-arrival/"
-          },
-          "role": {
-            "zh": "贡献者",
-            "en": "Contributor"
-          },
-          "author": {
-            "zh": "飞樾",
-            "en": "Feiyue"
-          },
-          "background": {
-            "zh": "城市学",
-            "en": "Urbanism"
           },
           "date": "2019/09/30"
         }
@@ -490,7 +471,7 @@
         "en": "Blasé Attitude"
       },
       "termOri": "Blasiertheit",
-      "concept_image": "images/倦怠态度_aigc.jpg",
+      "concept_image": "images/Blase_Attitude_aigc.jpg",
       "sm_title": {
         "zh": "沙丘词典丨「倦怠态度」是都市人精神过载而产生的保护机制",
         "en": "social title"
@@ -510,14 +491,14 @@
             "zh": "社会学家",
             "en": "sociologist"
           },
-          "image": "images/倦怠态度_proposer.jpg"
+          "image": "images/Blase_Attitude_proposer.jpg"
         }
       ],
       "source": {
         "zh": "乔治·齐美尔，《大都市与精神生活 (#Die Großstädte und das Geistesleben#)》，德累斯顿：彼得曼出版社 (Petermann), 1903。已有中文翻译。",
         "en": "Simmel, Georg. \"The Metropolis and Mental Life.\" In #The Sociology of Georg Simmel#, edited by Kurt H. Wolff. Glencoe, IL: Free Press, 1950."
       },
-      "source_image": "images/倦怠态度_source_cover.jpg",
+      "source_image": "images/Blase_Attitude_source_cover.jpg",
       "related_works": [
         {
           "zh": "格奥尔格·齐美尔，《货币哲学 (#Philosophie des Geldes#)》，伦敦: 劳特利奇出版社 (Routledge)，1978。中国大陆已出版，华夏出版社。",
@@ -537,7 +518,7 @@
       "contributors": [
         {
           "name": {
-            "zh": "雅伦",
+            "zh": "李雅伦",
             "en": "Yalun"
           },
           "role": {
@@ -582,22 +563,22 @@
           "en": "Inside a Pachinko parlor, the clatter of silver balls is deafening. Rows of customers pull levers repeatedly while screen animations flash frantically, one sound effect drowning out the next. Stepping in for the first time, your ears and eyes simply can’t cope. My classmate turned and said, \"After a while, you’ll find this actually relieves stress.\""
         },
         "author": {
-          "zh": "飞樾",
+          "zh": "陈飞樾",
           "en": "Feiyue"
         }
       },
       "comments": [
         {
           "content": {
-            "zh": "这篇文章于2023年11月发布在沙丘研究所的公众号上——\n\n多年前第一次旅游东京，非常震悚于这个城市的密度。这个密度不只是说楼房和人口的密度，而是说一种整体都市性的密度——什么都塞到了最满。无数的图形和多种语言文字都着迫不及待地往人眼睛上拍。当时我没有那么多资本主义、景观社会的反思，被这种大城市的引力紧紧抓住，觉得什么都想看，什么东西都想注意。\n\n和待在日本时间长的同学聊，她当即的反应就是：“这种感觉会过去的。”现在想来这个就是齐美尔说的“倦怠态度”。人不可能在东京待个十年，每天出门都还在对着那些街道大惊小怪。“倦怠”几乎成了一种必然的精神防御，防止人的大脑在过多刺激下过载。\n\n柏青哥店里面震耳欲聋的弹珠响，满座顾客一次一次拉动摇杆、屏幕动效疯狂闪烁，音效又一波盖过一波。第一次走进去，耳朵和眼睛都招架不住。同学转头说：“久了你会感觉这个反倒解压。”看来日本社畜那层“倦怠”的壳果是要比我厚不少，抗药性强了，必须要把剂量加到这个程度才行。不过奇怪的是，最近一年我忽然有点理解了——客厅放着电视，我在房间里刷社交媒体，甚至还一边放着播客。奇怪的是，那种被媒介塞满的状态反而让人短时间里放空。John Mulaney在单口里面描述自己在纽约的状态：“我可能从2014年开始就一直处在神游中，像卓别林一样走进车流里面，耳朵里听着一档播客，脑子里又想着另一档播客。”一方面对各种刺激视听的东西见怪不怪，一方面身处其中不想离开，闲暇的时候又得靠过度剂量才觉得舒服，这个就是都市人的精神状况。\n\n倦怠也指向为人处世上慢慢积养起来的厚壳。相比乡村熟人社会，在都市中生活的人会接触到多几十上百倍的陌生人，并和他们产生浅的深的交往。因为知道一些关系必然转瞬即逝，知道一些人不怀好意，或者有截然不同的利益取向，“都市人”养成的社交模式自然会转向世故、冷漠或者抽离。在大都市里逢人就交出真心，既无效率又容易受伤害。\n\n我最后想要从人际上延伸的是一种伦理或者良知上的倦怠。路易CK在自嘲纽约人对待流浪汉的态度的时候说：“流浪汉也太多了，你得做出选择才行。你没法全都帮，当然，你也一个都不会帮。” 我更喜欢的是他的另一个段子。他讲他在纽约有个朋友，这个朋友有一个来自小地方的表妹。表妹第一次来到大城市纽约，显然还远没有习惯纽约街上流浪汉遍地的场景。两人刚在车站接到表妹，往外走着，这时女孩看到角落里一个浑身垃圾、臭气熏天的流浪汉，大骇，赶忙冲上前去，单膝跪在地上，着急地问：“先生，你怎么了？发生了什么？”这时候，路易CK和朋友也赶忙冲上去，拉住这个“天真的农村女孩”，“别别别，我们这儿不这么做！”\n\n这种“纠正”当然很荒唐，但也非常说明问题。在一个污秽的人、事、物像漩涡般疯狂聚集的大都市里面，待久了的居民当然已经训练出视而不见的麻木品格。要是纽约客每天注目和过问每一件城市里发生的罪恶、不公和不幸，那自己的日子也完全没法过了。这近乎成了在这个地方生存的行为准则——于是，两人赶紧上前拉住了想要提供帮助的表妹，像是一个东道主教育客人的餐桌礼仪一样：“我们这里不这么做！”这也是倦怠的一种。\n\n不得不提的是，如果说19世纪末现代大都市的出现，让社会学家齐美尔观察到了与之伴随的新的人，新的性格，新的精神的出现，那么对我们现在来说，社交媒体就是这样一个对等的，甚至更为极端的状况。不管是图像数量、刺激力度、接触到的人际数量，还是对于苦难和不幸的摄取，互联网都再度让这些东西倍增。特别是最后一项，伦理和良知的——世界很不好，我都能看见，但我又终归帮不了。过度沉湎其中，我也无法正常生活。那么一种更深度的倦怠是难免的。",
-            "en": "This article was published in November 2023 on the Dunes Workshop WeChat Official Account—\nYears ago, during my first trip to Tokyo, I was struck by the city's sheer density. It wasn’t just the density of buildings and population, but a holistic \"urban density\"—where everything is packed to the absolute brim. Countless graphics and multilingual texts seem desperate to slap you right across the eyes. Back then, I lacked the reflections on capitalism and the \"society of the spectacle\"; I was simply held fast by the gravity of the metropolis, feeling as though I wanted to see and notice every single thing.\nWhen I spoke with a classmate who had lived in Japan for a long time, her immediate reaction was: \"That feeling will pass.\" Looking back, that is exactly what Georg Simmel called the #blasé attitude#. It is impossible for someone to live in Tokyo for ten years and still be wide-eyed at those streets every time they step out. \"Blasé\" becomes an almost inevitable mental defense mechanism, preventing the brain from overloading under excessive stimulation.\nInside a Pachinko parlor, the clatter of silver balls is deafening. Rows of customers pull levers repeatedly while screen animations flash frantically, one sound effect drowning out the next. Stepping in for the first time, your ears and eyes simply can’t cope. My classmate turned and said, \"After a while, you’ll find this actually relieves stress.\" It seems the \"blasé\" shell of the Japanese #salaryman# is indeed much thicker than mine; their \"tolerance\" has built up to the point where they require this level of dosage. Strangely, though, I’ve started to understand it over the past year—the TV is on in the living room while I scroll through social media in my room, perhaps even with a podcast playing simultaneously. Oddly, that state of being saturated by media actually allows one to \"space out\" for a short while. John Mulaney described his state in New York in a stand-up set: \"I've been in a fugue state since 2014... walking into traffic like Charlie Chaplin, listening to a podcast in my ears and thinking about another podcast in my head.\" On one hand, becoming indifferent to all kinds of sensory stimuli; on the other, being immersed in them and unwilling to leave, needing an \"overdose\" during leisure time just to feel comfortable—this is the mental condition of the urbanite.\nBlaséness also points to the thick shell one gradually cultivates in social conduct. Compared to the \"society of acquaintances\" in rural areas, people living in cities encounter dozens or hundreds of times more strangers and engage in interactions ranging from the superficial to the profound. Knowing that some relationships are inevitably fleeting, that some people harbor ill intentions, or have diametrically opposed interests, the social mode developed by the \"urbanite\" naturally shifts toward sophistication, indifference, or detachment. Giving your heart to everyone you meet in a metropolis is both inefficient and leaves you vulnerable to hurt.\nFinally, I want to extend this interpersonal aspect to a kind of ethical or conscientious blaséness. Louis C.K., poking fun at New Yorkers' attitudes toward the homeless, said: \"There's too many homeless people, you have to make a choice. You can't help all of them. And so, of course, you help none of them.\" I prefer another of his bits. He talks about a friend in New York who had a cousin visiting from a small town. This was the cousin's first time in the big city, and she was clearly nowhere near used to the sight of homeless people everywhere. Just as they picked her up from the station and started walking out, the girl saw a homeless man in a corner, covered in trash and reeking. Horrified, she rushed forward, knelt on one knee, and asked anxiously, \"Sir, what’s wrong? What happened?\" At that moment, Louis and his friend rushed over, grabbed this \"naive country girl,\" and said, \"No, no, no—we don’t do that here!\"\nThis \"correction\" is, of course, absurd, but it is highly telling. In a metropolis where filthy people, events, and things gather like a swirling vortex, long-term residents have trained a character of numbness—the ability to look without seeing. If a New Yorker were to pay attention to and inquire about every crime, injustice, and misfortune occurring in the city, they wouldn't be able to live their own lives at all. It has almost become a code of conduct for survival here. Thus, the two rushed forward to stop the cousin who wanted to help, like a host teaching a guest table manners: \"We don’t do that here!\" This, too, is a form of being blasé.\nIt must be mentioned that if the emergence of the modern metropolis at the end of the 19th century allowed the sociologist Simmel to observe the appearance of new people, new characters, and a new spirit, then for us today, social media is an equivalent—or even more extreme—condition. Whether it is the quantity of images, the intensity of stimulation, the number of interpersonal contacts, or the consumption of suffering and misfortune, the Internet has once again multiplied these factors. Especially the last one—the ethical and conscientious: the world is in bad shape, I can see it all, but ultimately, I cannot help. If I indulge in it too much, I cannot live a normal life. Thus, a deeper level of blaséness is inevitable."
+            "zh": "多年前第一次旅游东京，非常震悚于这个城市的密度。这个密度不只是说楼房和人口的密度，而是说一种整体都市性的密度——什么都塞到了最满。无数的图形和多种语言文字都着迫不及待地往人眼睛上拍。当时我没有那么多资本主义、景观社会的反思，被这种大城市的引力紧紧抓住，觉得什么都想看，什么东西都想注意。\n\n和待在日本时间长的同学聊，她当即的反应就是：“这种感觉会过去的。”现在想来这个就是齐美尔说的“倦怠态度”。人不可能在东京待个十年，每天出门都还在对着那些街道大惊小怪。“倦怠”几乎成了一种必然的精神防御，防止人的大脑在过多刺激下过载。\n\n柏青哥店里面震耳欲聋的弹珠响，满座顾客一次一次拉动摇杆、屏幕动效疯狂闪烁，音效又一波盖过一波。第一次走进去，耳朵和眼睛都招架不住。同学转头说：“久了你会感觉这个反倒解压。”看来日本社畜那层“倦怠”的壳果是要比我厚不少，抗药性强了，必须要把剂量加到这个程度才行。不过奇怪的是，最近一年我忽然有点理解了——客厅放着电视，我在房间里刷社交媒体，甚至还一边放着播客。奇怪的是，那种被媒介塞满的状态反而让人短时间里放空。John Mulaney在单口里面描述自己在纽约的状态：“我可能从2014年开始就一直处在神游中，像卓别林一样走进车流里面，耳朵里听着一档播客，脑子里又想着另一档播客。”一方面对各种刺激视听的东西见怪不怪，一方面身处其中不想离开，闲暇的时候又得靠过度剂量才觉得舒服，这个就是都市人的精神状况。\n\n倦怠也指向为人处世上慢慢积养起来的厚壳。相比乡村熟人社会，在都市中生活的人会接触到多几十上百倍的陌生人，并和他们产生浅的深的交往。因为知道一些关系必然转瞬即逝，知道一些人不怀好意，或者有截然不同的利益取向，“都市人”养成的社交模式自然会转向世故、冷漠或者抽离。在大都市里逢人就交出真心，既无效率又容易受伤害。\n\n我最后想要从人际上延伸的是一种伦理或者良知上的倦怠。路易CK在自嘲纽约人对待流浪汉的态度的时候说：“流浪汉也太多了，你得做出选择才行。你没法全都帮，当然，你也一个都不会帮。” 我更喜欢的是他的另一个段子。他讲他在纽约有个朋友，这个朋友有一个来自小地方的表妹。表妹第一次来到大城市纽约，显然还远没有习惯纽约街上流浪汉遍地的场景。两人刚在车站接到表妹，往外走着，这时女孩看到角落里一个浑身垃圾、臭气熏天的流浪汉，大骇，赶忙冲上前去，单膝跪在地上，着急地问：“先生，你怎么了？发生了什么？”这时候，路易CK和朋友也赶忙冲上去，拉住这个“天真的农村女孩”，“别别别，我们这儿不这么做！”\n\n这种“纠正”当然很荒唐，但也非常说明问题。在一个污秽的人、事、物像漩涡般疯狂聚集的大都市里面，待久了的居民当然已经训练出视而不见的麻木品格。要是纽约客每天注目和过问每一件城市里发生的罪恶、不公和不幸，那自己的日子也完全没法过了。这近乎成了在这个地方生存的行为准则——于是，两人赶紧上前拉住了想要提供帮助的表妹，像是一个东道主教育客人的餐桌礼仪一样：“我们这里不这么做！”这也是倦怠的一种。\n\n不得不提的是，如果说19世纪末现代大都市的出现，让社会学家齐美尔观察到了与之伴随的新的人，新的性格，新的精神的出现，那么对我们现在来说，社交媒体就是这样一个对等的，甚至更为极端的状况。不管是图像数量、刺激力度、接触到的人际数量，还是对于苦难和不幸的摄取，互联网都再度让这些东西倍增。特别是最后一项，伦理和良知的——世界很不好，我都能看见，但我又终归帮不了。过度沉湎其中，我也无法正常生活。那么一种更深度的倦怠是难免的。",
+            "en": "Years ago, during my first trip to Tokyo, I was struck by the city's sheer density. It wasn’t just the density of buildings and population, but a holistic \"urban density\"—where everything is packed to the absolute brim. Countless graphics and multilingual texts seem desperate to slap you right across the eyes. Back then, I lacked the reflections on capitalism and the \"society of the spectacle\"; I was simply held fast by the gravity of the metropolis, feeling as though I wanted to see and notice every single thing.\nWhen I spoke with a classmate who had lived in Japan for a long time, her immediate reaction was: \"That feeling will pass.\" Looking back, that is exactly what Georg Simmel called the #blasé attitude#. It is impossible for someone to live in Tokyo for ten years and still be wide-eyed at those streets every time they step out. \"Blasé\" becomes an almost inevitable mental defense mechanism, preventing the brain from overloading under excessive stimulation.\nInside a Pachinko parlor, the clatter of silver balls is deafening. Rows of customers pull levers repeatedly while screen animations flash frantically, one sound effect drowning out the next. Stepping in for the first time, your ears and eyes simply can’t cope. My classmate turned and said, \"After a while, you’ll find this actually relieves stress.\" It seems the \"blasé\" shell of the Japanese #salaryman# is indeed much thicker than mine; their \"tolerance\" has built up to the point where they require this level of dosage. Strangely, though, I’ve started to understand it over the past year—the TV is on in the living room while I scroll through social media in my room, perhaps even with a podcast playing simultaneously. Oddly, that state of being saturated by media actually allows one to \"space out\" for a short while. John Mulaney described his state in New York in a stand-up set: \"I've been in a fugue state since 2014... walking into traffic like Charlie Chaplin, listening to a podcast in my ears and thinking about another podcast in my head.\" On one hand, becoming indifferent to all kinds of sensory stimuli; on the other, being immersed in them and unwilling to leave, needing an \"overdose\" during leisure time just to feel comfortable—this is the mental condition of the urbanite.\nBlaséness also points to the thick shell one gradually cultivates in social conduct. Compared to the \"society of acquaintances\" in rural areas, people living in cities encounter dozens or hundreds of times more strangers and engage in interactions ranging from the superficial to the profound. Knowing that some relationships are inevitably fleeting, that some people harbor ill intentions, or have diametrically opposed interests, the social mode developed by the \"urbanite\" naturally shifts toward sophistication, indifference, or detachment. Giving your heart to everyone you meet in a metropolis is both inefficient and leaves you vulnerable to hurt.\nFinally, I want to extend this interpersonal aspect to a kind of ethical or conscientious blaséness. Louis C.K., poking fun at New Yorkers' attitudes toward the homeless, said: \"There's too many homeless people, you have to make a choice. You can't help all of them. And so, of course, you help none of them.\" I prefer another of his bits. He talks about a friend in New York who had a cousin visiting from a small town. This was the cousin's first time in the big city, and she was clearly nowhere near used to the sight of homeless people everywhere. Just as they picked her up from the station and started walking out, the girl saw a homeless man in a corner, covered in trash and reeking. Horrified, she rushed forward, knelt on one knee, and asked anxiously, \"Sir, what’s wrong? What happened?\" At that moment, Louis and his friend rushed over, grabbed this \"naive country girl,\" and said, \"No, no, no—we don’t do that here!\"\nThis \"correction\" is, of course, absurd, but it is highly telling. In a metropolis where filthy people, events, and things gather like a swirling vortex, long-term residents have trained a character of numbness—the ability to look without seeing. If a New Yorker were to pay attention to and inquire about every crime, injustice, and misfortune occurring in the city, they wouldn't be able to live their own lives at all. It has almost become a code of conduct for survival here. Thus, the two rushed forward to stop the cousin who wanted to help, like a host teaching a guest table manners: \"We don’t do that here!\" This, too, is a form of being blasé.\nIt must be mentioned that if the emergence of the modern metropolis at the end of the 19th century allowed the sociologist Simmel to observe the appearance of new people, new characters, and a new spirit, then for us today, social media is an equivalent—or even more extreme—condition. Whether it is the quantity of images, the intensity of stimulation, the number of interpersonal contacts, or the consumption of suffering and misfortune, the Internet has once again multiplied these factors. Especially the last one—the ethical and conscientious: the world is in bad shape, I can see it all, but ultimately, I cannot help. If I indulge in it too much, I cannot live a normal life. Thus, a deeper level of blaséness is inevitable."
           },
           "role": {
             "zh": "贡献者",
             "en": "Contributor"
           },
           "author": {
-            "zh": "飞樾",
+            "zh": "陈飞樾",
             "en": "Feiyue"
           },
           "background": {
@@ -616,7 +597,7 @@
         "en": "Archive Fever"
       },
       "termOri": "Mal d'archive",
-      "concept_image": "images/档案热_aigc.jpg",
+      "concept_image": "images/Archive_Fever_aigc.jpg",
       "sm_title": {
         "zh": "人们热衷于记录和存档，然后再毁坏和丢失",
         "en": "social title"
@@ -636,14 +617,14 @@
             "zh": "哲学家",
             "en": "philosopher"
           },
-          "image": "images/档案热_proposer.jpg"
+          "image": "images/Archive_Fever_proposer.jpg"
         }
       ],
       "source": {
         "zh": "雅克·德里达，《档案热：一种弗洛伊德式的印象 (#Mal d'archive: une impression freudienne#)》，巴黎：伽利略出版社 (Éditions Galilée), 1995。中国大陆已出版，中国人民大学出版社。",
         "en": "Derrida, Jacques. #Archive Fever: A Freudian Impression#. Translated by Eric Prenowitz. Chicago: University of Chicago Press, 1996."
       },
-      "source_image": "images/档案热_source_cover.jpg",
+      "source_image": "images/Archive_Fever_source_cover.jpg",
       "related_works": [
         {
           "zh": "卡罗琳·斯底德曼，《尘埃 (#Dust#)》，曼彻斯特: 曼彻斯特大学出版社 (Manchester University Press)，2001。尚无中文翻译。",
@@ -667,8 +648,8 @@
       "contributors": [
         {
           "name": {
-            "zh": "Sati",
-            "en": "Sati"
+            "zh": "高凌霄",
+            "en": "高凌霄"
           },
           "role": {
             "zh": "比较文学在读博士",
@@ -709,14 +690,14 @@
       },
       "diagrams": [
         {
-          "src": "images/档案热_diagram_1.jpg",
+          "src": "images/Archive_Fever_diagram_1.jpg",
           "caption": {
             "zh": "伦敦弗洛伊德博物馆的图书馆",
             "en": "Freud's library at the Freud Museum London"
           }
         },
         {
-          "src": "images/档案热_diagram_2.jpg",
+          "src": "images/Archive_Fever_diagram_2.jpg",
           "caption": {
             "zh": "特雷津集中营（Theresienstadt）里的办公室。摄影： Dirk Reinartzr",
             "en": "Office at Theresienstadt, Dirk Reinartzr."
@@ -739,8 +720,8 @@
           "en": "Steedman argues that \"archive fever\" is not merely a metaphor but a genuine occupational disease, exemplified by the famous historian Jules Michelet, who fell ill after years of inhaling the dust and pathogens of the archives."
         },
         "author": {
-          "zh": "Sati",
-          "en": "Sati"
+          "zh": "高凌霄",
+          "en": "高凌霄"
         }
       },
       "comments": [
@@ -754,8 +735,8 @@
             "en": "Contributor"
           },
           "author": {
-            "zh": "Sati",
-            "en": "Sati"
+            "zh": "高凌霄",
+            "en": "高凌霄"
           },
           "background": {
             "zh": "比较文学",
@@ -773,7 +754,7 @@
             "en": "Contributor"
           },
           "author": {
-            "zh": "雅伦",
+            "zh": "李雅伦",
             "en": "Yalun"
           },
           "background": {
@@ -792,7 +773,7 @@
         "en": "Surface Reading"
       },
       "termOri": "Surface Reading",
-      "concept_image": "images/表层阅读_aigc.jpg",
+      "concept_image": "images/Surface_Reading_aigc.jpg",
       "sm_title": {
         "zh": "做多了阅读理解，我们都需要一点“表层阅读”",
         "en": "social title"
@@ -812,14 +793,14 @@
             "zh": "文学理论家\n文学学者",
             "en": "literary theorist\nliterary scholar"
           },
-          "image": "images/表层阅读_proposer.jpg"
+          "image": "images/Surface_Reading_proposer.jpg"
         }
       ],
       "source": {
         "zh": "斯蒂芬·贝斯特、沙伦·马库斯，《表层阅读：导论 (#Surface Reading: An Introduction#)》，载《表征 (#Representations#)》第108卷第1期，伯克利：加州大学出版社 (University of California Press), 2009。尚无中文翻译。",
         "en": "Best, Stephen, and Sharon Marcus. \"Surface Reading: An Introduction.\" #Representations# 108, no. 1 (Fall 2009): 1–21."
       },
-      "source_image": "images/表层阅读_source_cover.jpg",
+      "source_image": "images/Surface_Reading_source_cover.jpg",
       "related_works": [
         {
           "zh": "斯蒂芬·贝斯特，《无与伦比：黑人身份、归属感与美学生活 (#None Like Us: Blackness, Belonging, Aesthetic Life#)》，达勒姆: 杜克大学出版社 (Duke University Press)，2018。尚无中文翻译。",
@@ -839,8 +820,8 @@
       "contributors": [
         {
           "name": {
-            "zh": "Sati",
-            "en": "Sati"
+            "zh": "高凌霄",
+            "en": "高凌霄"
           },
           "role": {
             "zh": "比较文学在读博士",
@@ -888,7 +869,7 @@
           "en": "My concern is that \"superficial reading\" is more of an emotional reaction: \"I'm tired, I don't want to be a detective anymore.\" I think this is realistic and necessary. But if it's considered the only correct method, then it might swing to the other extreme."
         },
         "author": {
-          "zh": "孟汀",
+          "zh": "吕孟汀",
           "en": "Mengting"
         }
       },
@@ -903,7 +884,7 @@
             "en": "Contributor"
           },
           "author": {
-            "zh": "孟汀",
+            "zh": "吕孟汀",
             "en": "Mengting"
           },
           "background": {
@@ -922,7 +903,7 @@
         "en": "The Caring Classes"
       },
       "termOri": "The Caring Classes",
-      "concept_image": "images/关怀阶级_aigc.jpg",
+      "concept_image": "images/Caring_Classes_aigc.jpg",
       "sm_title": {
         "zh": "“关怀阶级”营造了公共空间和公共变革的前提",
         "en": "social title"
@@ -942,14 +923,14 @@
             "zh": "人类学家",
             "en": "anthropologist"
           },
-          "image": "images/关怀阶级_proposer.jpg"
+          "image": "images/Caring_Classes_proposer.jpg"
         }
       ],
       "source": {
         "zh": "《过于关怀是工人阶级的诅咒 (#Caring too much. That's the curse of the working classes#)》，载《卫报 (#The Guardian#)》，2014。",
         "en": "Jones, Owen. \"Caring too much. That's the curse of the working classes.\" #The Guardian#, November 17, 2014."
       },
-      "source_image": "images/关怀阶级_source_cover.jpg",
+      "source_image": "images/Caring_Classes_source_cover.jpg",
       "related_works": [
         {
           "zh": "南希·福尔布雷，《无形之心：市场、关怀与人性 (#The Invisible Heart: Economics and Family Values#)》，纽约: 新出版社 (The New Press)，2001。尚无中文翻译。",
@@ -973,7 +954,7 @@
       "contributors": [
         {
           "name": {
-            "zh": "孟汀",
+            "zh": "吕孟汀",
             "en": "Mengting"
           },
           "role": {
@@ -1023,7 +1004,7 @@
           "en": "Such care may not produce tangible \"commodities\" or \"useful objects,\" yet it provides the very foundation upon which the production of goods and formal labor can function."
         },
         "author": {
-          "zh": "孟汀",
+          "zh": "吕孟汀",
           "en": "Mengting"
         }
       },
@@ -1038,7 +1019,7 @@
             "en": "Contributor"
           },
           "author": {
-            "zh": "孟汀",
+            "zh": "吕孟汀",
             "en": "Mengting"
           },
           "background": {
@@ -1057,7 +1038,7 @@
         "en": "Gig Economy"
       },
       "termOri": "Gig Economy",
-      "concept_image": "images/零工经济_aigc.jpg",
+      "concept_image": "images/Gig_Economy_aigc.jpg",
       "sm_title": {
         "zh": "沙丘词典丨上门制图？中国建筑行业是否也在无奈地走入「零工经济」",
         "en": "social title"
@@ -1077,14 +1058,14 @@
             "zh": "编辑和作家",
             "en": "editor and author"
           },
-          "image": "images/零工经济_proposer.jpg"
+          "image": "images/Gig_Economy_proposer.jpg"
         }
       ],
       "source": {
         "zh": "蒂娜·布朗，[零工经济]，载《野兽日报 (#The Daily Beast#)》，2009。尚无中文翻译。",
         "en": "Brown, Tina. [The Gig Economy]. #The Daily Beast#, 2009."
       },
-      "source_image": "images/零工经济_source_cover.jpg",
+      "source_image": "images/Gig_Economy_source_cover.jpg",
       "related_works": [
         {
           "zh": "莎拉·凯斯勒，《零工经济：工作的终结与未来的工作 (#Gigged: The End of the Job and the Future of Work#)》，纽约: 圣马丁出版社 (St. Martin's Press)，2018。中国大陆已出版，中信出版社。",
@@ -1104,7 +1085,7 @@
       "contributors": [
         {
           "name": {
-            "zh": "飞樾、雅伦",
+            "zh": "陈飞樾、李雅伦",
             "en": "Feiyue, Yalun"
           },
           "role": {
@@ -1152,14 +1133,14 @@
           "en": "In the digital era, the platform economy resurrects this fiction by commodifying not just labor, but time and attention itself. Since labor is merely another name for a human being’s life activity, its reduction by algorithms into 'on-demand units' or 'per-second logistics' represents a radical re-commodification. This market fiction veils a grim reality: by stripping away social protections and legal accountability, the algorithm eviscerates the stability of the 'social man.'"
         },
         "author": {
-          "zh": "孟汀",
+          "zh": "吕孟汀",
           "en": "Mengting"
         }
       },
       "comments": [
         {
           "content": {
-            "zh": "在卡尔·波兰尼的《大转型》一书中，pauperism（贫民化）是英国工业转型中最明显的社会问题，波兰尼指出，随着工厂资本主义发展，出现了伪商品（Fictitious Commodity）：土地、人的生命、货币都不应该作为商品存在，却被变成了商品。在数字时代，平台经济似乎重现了一些fictitious commodity: 劳动、时间、注意力。波兰尼认为劳动力本质上是人类生命活动，而非为市场而生的商品。当平台通过算法将鲜活的人还原为可随时调取、按秒计价的“运力单位”时，这种强制的伪商品化逻辑重现了，它的商品交易掩盖了残酷的现实：算法在剥离了社会保险与法律责任的同时，也剥夺了劳动者作为“社会人”的稳定性。它虽然创造了极具灵活性的劳动力市场，却以摧毁人的社会尊严与生存韧性为代价。",
+            "zh": "在卡尔·波兰尼的《大转型》一书中，贫民化是英国工业转型中最明显的社会问题，波兰尼指出，随着工厂资本主义发展，出现了伪商品：土地、人的生命、货币都不应该作为商品存在，却被变成了商品。在数字时代，平台经济似乎重现了一些伪商品: 劳动、时间、注意力。波兰尼认为劳动力本质上是人类生命活动，而非为市场而生的商品。当平台通过算法将鲜活的人还原为可随时调取、按秒计价的“运力单位”时，这种强制的伪商品化逻辑重现了，它的商品交易掩盖了残酷的现实：算法在剥离了社会保险与法律责任的同时，也剥夺了劳动者作为“社会人”的稳定性。它虽然创造了极具灵活性的劳动力市场，却以摧毁人的社会尊严与生存韧性为代价。",
             "en": "In Karl Polanyi’s The Great Transformation, pauperism stands as the most conspicuous social wreckage of the English industrial transition. Polanyi contends that the rise of industrial capitalism necessitated the invention of fictitious commodities: land, labor, and money—elements that are fundamentally not produced for sale, yet are treated as if they were. In the digital era, the platform economy resurrects this fiction by commodifying not just labor, but time and attention itself. Since labor is merely another name for a human being’s life activity, its reduction by algorithms into 'on-demand units' or 'per-second logistics' represents a radical re-commodification. This market fiction veils a grim reality: by stripping away social protections and legal accountability, the algorithm eviscerates the stability of the 'social man.' It yields a hyper-flexible labor market at the catastrophic cost of human dignity and social resilience."
           },
           "role": {
@@ -1167,7 +1148,7 @@
             "en": "Contributor"
           },
           "author": {
-            "zh": "孟汀",
+            "zh": "吕孟汀",
             "en": "Mengting"
           },
           "background": {
@@ -1177,7 +1158,7 @@
           "date": "2023/09/24",
           "images": [
             {
-              "src": "images/零工经济_note1_1.jpg",
+              "src": "images/Gig_Economy_note1_1.jpg",
               "caption": {
                 "zh": "Getty Image \"pauperism\"",
                 "en": ""
@@ -1195,7 +1176,7 @@
         "en": "Contronym"
       },
       "termOri": "Contronym",
-      "concept_image": "images/反训词_aigc.png",
+      "concept_image": "images/Contronym_aigc.png",
       "sm_title": {
         "zh": "词语反对词语",
         "en": "social title"
@@ -1222,7 +1203,7 @@
         "zh": "约瑟夫·T·希普利，《文字游戏》（#Playing with Words#），新泽西州：普伦蒂斯·霍尔出版社 (Prentice-Hall)，1960。中文尚无出版物。",
         "en": "Shipley, Joseph T. 1960. #Playing with Words#. Englewood Cliffs, NJ: Prentice-Hall."
       },
-      "source_image": "images/反训词_source_cover.jpg",
+      "source_image": "images/Contronym_source_cover.jpg",
       "related_works": [
         {
           "zh": "约瑟夫·T·希普利，《词源词典 (#Dictionary of Word Origins#)》，纽约: 哲学图书馆出版社 (Philosophical Library)，1945。尚无中文翻译。",
@@ -1242,7 +1223,7 @@
       "contributors": [
         {
           "name": {
-            "zh": "飞樾",
+            "zh": "陈飞樾",
             "en": "Feiyue"
           },
           "role": {
@@ -1287,65 +1268,27 @@
           "en": "In the Chinese editions of Giorgio Agamben’s works, two distinct renderings can be found: Shengsheng Ren (Sacred Man) and Sheng Ren (The Expendable/Sacrificial Man)."
         },
         "author": {
-          "zh": "飞樾",
+          "zh": "陈飞樾",
           "en": "Feiyue"
         }
       },
       "comments": [
         {
           "content": {
-            "zh": "我们探讨过 #homo sacer# 这个词的译法问题。对于阿甘本的著作，中文译本可以找到“神圣人”和“牲人”两种用语。\n\n在推送发出后，我们的好友安太然补充提醒我们，拉丁语中的sacer本就是一个典型的“contronym”（反训词），兼有“神圣的、不可触碰的”和“臭名昭著的、被诅咒的”两重意思。可能这也是为什么 #homo sacer# 一词的译法存在如此多有趣的争议。\n\n我们借上这个由头，今天的推送就简单介绍“反训词”，并捎带上“反义复词”这个概念。当然，“反义复词”一般用在汉语的分析当中，英文中的相关词语是我们个人延伸出的，将它们称作“反义混成词”应该更为恰当。",
-            "en": "We previously explored the translation of the term homo sacer. In the Chinese editions of Giorgio Agamben’s works, two distinct renderings can be found: Shengsheng Ren (Sacred Man) and Sheng Ren (The Expendable/Sacrificial Man).\nFollowing our previous post, our friend An Tairan added a insightful reminder that the Latin word sacer is itself a quintessential contronym. It encompasses the dual meanings of \"sacred/inviolable\" and \"infamous/accursed.\" This inherent ambiguity likely explains why the translation of homo sacer remains a subject of such intriguing debate.\nTaking this as a starting point, today’s post will briefly introduce the concept of contronyms, along with the notion of antonymous compounds. While the latter is typically used in the analysis of the Chinese language, we have personally extended this logic to English. It would perhaps be more appropriate to refer to these English equivalents as antonymous portmanteaus."
+            "zh": "对于“反训词”的兴趣开始于对 #homo sacer# 这个词的译法讨论。对于这本阿甘本的著作，目前的中文译本可以找到“神圣人”和“牲人”两种用语。\n\n好友安太然提醒我们，拉丁语中的 #sacer# 本就是一个典型的“contronym”（反训词），兼有“神圣的、不可触碰的”和“臭名昭著的、被诅咒的”两重意思。可能这也是为什么 #homo sacer# 一词的译法存在如此多有趣的争议。\n\n另外，有几个成语是我在搜索反训词的相关知识的时候联想到的，几个好友也有补充：“差强人意”，原本的意思是“大体上能够让人满意”，但经常被误用为相反的意思。“万人空巷”，原本指的是人挤人的热闹盛况，很多时候被误用作相反的意思，“街上没人”。最有意思的应该是“空穴来风”，自相矛盾的两个意思已经写在现代汉语词典里了：原本比喻“传言有所依据”，现在用来指“传言没有依据”。\n\n可以说，反训词的诞生可以追溯到人类对某种“极端边界”的统整认知。比如 #sacer# 的原始内核指向了“与世俗社会隔离”的意思。这种绝对的隔离，一方面通向了至高的神圣，一方面也通向了被剥夺一切的诅咒。其语义在漫长的历史变迁中逐渐滑向了两极。\n\n不管是作为研究者还是写作者，我都总感到这种词语内部的张力蕴藏了某种迷人的诗意，它们身上带有历史投出的复杂阴影。我想对于诗人也是这样，词语自身的微缩的辩证法，或者说内聚的矛盾性，可以促使一些写作的发生。",
+            "en": ""
           },
           "role": {
             "zh": "贡献者",
             "en": "Contributor"
           },
           "author": {
-            "zh": "飞樾",
+            "zh": "陈飞樾",
             "en": "Feiyue"
           },
           "background": {
             "zh": "城市学",
             "en": "Urbanism"
-          },
-          "date": "2025/05/13"
-        },
-        {
-          "content": {
-            "zh": "有几个成语是我在搜索反训词的相关知识的时候联想到的，几个好友也有补充：“差强人意”，原本的意思是“大体上能够让人满意”，但经常被误用为相反的意思。“万人空巷”，原本指的是人挤人的热闹盛况，很多时候被误用作相反的意思，“街上没人”。最好笑的应该是“空穴来风”，自相矛盾的两个意思已经写在现代汉语词典里了：原本比喻“传言有所依据”，现在用来指“传言没有依据”。这些词再这样用下去，可能已经起不到交流的作用了…",
-            "en": "While researching contronyms, several Chinese idioms came to mind—some also suggested by friends. For instance, cha qiang ren yi (差强人意) originally meant \"largely satisfactory,\" yet it is frequently misused to convey the exact opposite. Then there is wan ren kong xiang (万人空巷), which describes a bustling scene where everyone has poured out of their homes to throng the streets; ironically, it is often misinterpreted to mean \"empty streets with no one in sight.\"\nPerhaps the most amusing case is kong xue lai feng (空穴来风). The two contradictory meanings are now both officially recorded in modern Chinese dictionaries: while it originally alluded to \"rumors having a factual basis,\" it is now commonly used to mean \"rumors with no basis at all.\" If we continue to use these words in such a manner, they may eventually lose their function as a medium for communication altogether..."
-          },
-          "role": {
-            "zh": "贡献者",
-            "en": "Contributor"
-          },
-          "author": {
-            "zh": "飞樾",
-            "en": "Feiyue"
-          },
-          "background": {
-            "zh": "城市学",
-            "en": "Urbanism"
-          },
-          "date": "2025/05/13"
-        },
-        {
-          "content": {
-            "zh": "不知道算不算反训词相关现象，不过 fact 来自 拉丁文 factum 意思是「人做的一件事或者制作的一个东西」，后面衍生出事实（fact）和虚假（factitious）这两个方向的含义",
-            "en": "I am not certain if this strictly qualifies as a contronym-related phenomenon, but the word fact originates from the Latin factum, meaning \"a thing done\" or \"a thing made.\" Interestingly, it evolved into two divergent semantic directions: fact, representing objective reality, and factitious, which denotes something artificial or false."
-          },
-          "role": {
-            "zh": "贡献者",
-            "en": "Contributor"
-          },
-          "author": {
-            "zh": "太然",
-            "en": "Tairan"
-          },
-          "background": {
-            "zh": "建筑史",
-            "en": "Architectural History"
           },
           "date": "2025/05/13"
         }
@@ -1359,7 +1302,7 @@
         "en": "Suspension"
       },
       "termOri": "Suspension",
-      "concept_image": "images/悬浮_aigc.jpg",
+      "concept_image": "images/Suspension_aigc.jpg",
       "sm_title": {
         "zh": "没有人活在当下和此处，都期望着暴富然后逃离",
         "en": "social title"
@@ -1379,14 +1322,14 @@
             "zh": "人类学家",
             "en": "Anthropologist"
           },
-          "image": "images/悬浮_proposer.jpg"
+          "image": "images/Suspension_proposer.jpg"
         }
       ],
       "source": {
         "zh": "项飙，《跨越边界的社区：北京“浙江村”的生活史 (#The Making of a Transnational Community: Life History of Beijing's \"Zhejiang Village\"#)》，北京：北京大学出版社，1998。中国大陆已出版，北京大学出版社。",
         "en": "Xiang, Biao. #The Making of a Transnational Community: Life History of Beijing's \"Zhejiang Village\"#. Beijing: Peking University Press, 1998."
       },
-      "source_image": "images/悬浮_source_cover.jpg",
+      "source_image": "images/Suspension_source_cover.jpg",
       "related_works": [
         {
           "zh": "项飙，《全球“猎身”：信息产业和印度技术劳工的跨国流动 (#Global \"Body Shopping\": An Indian Labor System in the IT Industry#)》，普林斯顿: 普林斯顿大学出版社 (Princeton University Press)，2006。中国大陆已出版，北京大学出版社。",
@@ -1406,7 +1349,7 @@
       "contributors": [
         {
           "name": {
-            "zh": "小蓝",
+            "zh": "梁慧琳",
             "en": "William"
           },
           "role": {
@@ -1452,7 +1395,7 @@
       ],
       "commentAbs": {
         "content": {
-          "zh": "她总是说：“等这段时间过了多”，“等搬新房子多”，仿佛现在的生活是“暂时”的，这段苦日子总会过去的。",
+          "zh": "她总说：“等这段日子过去了再说”、“等搬进新房子再说”。仿佛当下的生活只是某种“暂时状态”，这段苦日子终究会过去。",
           "en": "she would always say, \"Wait until this period is over,\" or \"Wait until I move into the new place.\" It was as if her current life was merely #temporary#, a stretch of \"bitter days\" that would eventually pass."
         },
         "author": {
@@ -1463,15 +1406,15 @@
       "comments": [
         {
           "content": {
-            "zh": "现在网上流行的暴富崇拜可能也是一种“悬浮”心理的表现？追热点，买彩票，赶风口，期待一夜暴富，期待泼天富贵，我想这些行为折射出的都是对所处社会现实和个体当下生活的不满，但又对改造它无望，所以期待某个天降神力能够把自己从这个泥沼里面拽出来，从此过上别样的生活。我们流行说“赚钱嘛，不嗑颤”，可能也是内心知道这事儿就是挺嗑颤，但追逐财富已经变成了大过一切的绝对正当性，所以也就一边厌恶又一边做着那些迎合的、浮肿的、对伦理问题漠然、自己也不相信它对的事。这种追逐或者“悬浮”即是，好像只要财富自由了，就可以润了溜了颠儿了，所以当下的、此处的、附近的公共文化和公共议题被搁置起来，没有人再相信需要对社会产生价值来获得回报。这是场大病。",
-            "en": "Could the current online obsession with sudden wealth be a manifestation of what we call #suspension#? Chasing trends, buying lottery tickets, and jumping on every \"next big thing\" in hopes of overnight riches or \"a landslide of fortune\"—to me, these behaviors reflect a profound dissatisfaction with one’s social reality and daily life. Yet, since people feel hopeless about actually changing their circumstances, they pin their hopes on some divine intervention or external force to drag them out of the mire and into a completely different existence.\nWe often hear the popular saying, \"Making money is nothing to be ashamed of,\" which likely stems from a deep-seated realization that it actually is quite shameful. But because the pursuit of wealth has become an absolute justification that supersedes everything else, people continue to engage in behavior that is sycophantic, bloated, and indifferent to ethics—doing things they don't even believe are right while loathing themselves for it. This pursuit, or this #suspension#, suggests that as long as one achieves financial freedom, they can simply \"run,\" \"slip away,\" or \"bolt.\" Consequently, the culture and public issues of the here and now are sidelined. No one believes anymore that you should receive rewards by creating value for society. This is a systemic malady."
+            "zh": "“悬浮”这个不算新鲜。跟慧琳交流的时候，她也表示，这些词——包括“内卷”、“躺平”、“异化”什么的——都被“用到包浆”了。但自从共创会上听慧琳比较成系统地讲了之后，我还是很经常回味“悬浮”这个词的意味，并且产生很多发散的联想。一是它似乎可以被看做是“栖居”的反面：欧洲中世纪人把此世搁置起来，作为赎罪，把幸福美好寄托到来世。对于当代中国语境，长辈和老师们总对高三学生说：现在辛苦一年，高考完就自由了轻松了。但事实上从小学一年级开始，每一年都被讲作“最关键的一年”，耽误不得。于是，人们不断搁置当下，不断借着先苦后甜的说法充饥。另有一种成年人的常见自我PUA，给自己的画饼：“等我xx了我就xx”，最后始终没有充分地活在当下。\n另外，现在网上流行的暴富崇拜可能也是一种“悬浮”心理的表现？追热点，买彩票，赶风口，期待一夜暴富，期待“泼天富贵”。我想这些行为折射出的都是对所处社会现实和个体当下生活的不满，但又对改造它无望，所以期待某个天降神力能够把自己从这个泥沼里面拽出来，从此过上别样的生活。我们流行说“赚钱嘛，不嗑颤”，可能也是内心知道这事儿就是挺嗑颤，但追逐财富已经变成了大过一切的绝对正当性，所以也就一边厌恶又一边做着那些迎合的、浮肿的、对伦理问题漠然、自己也不相信它对的事。这种追逐或者“悬浮”即是，好像只要财富自由了，就可以润了、溜了、颠儿了，所以当下的、此处的、附近的公共文化和公共议题被搁置起来，没有人再相信需要对社会产生价值来获得回报。我想这是一场结构性的社会症候。",
+            "en": "The concept of #suspension# isn't exactly new. When I was chatting with Xiaolan, she mentioned that terms like this—along with #involution#, #lying flat#, and #alienation#—have been #used until they’ve developed a patina#. However, after hearing Xiaolan’s systematic breakdown of the idea during our co-creation session, I’ve found myself frequently chewing on the nuances of #suspension#, leading to a flurry of divergent associations.\nFirst, it seems to be the polar opposite of #dwelling#. In Medieval Europe, people set aside their earthly lives as a form of atonement, pinning all hopes of happiness on the afterlife. In the contemporary Chinese context, \"bishops\" (teachers and parents) are always telling high school seniors: \"Suffer for one more year; once the #Gaokao# is over, you’ll be free and relaxed.\" But in reality, from the first grade onward, every single year is framed as \"the most critical year\" where one cannot afford any delay. Consequently, a person constantly postpones the present, trying to satisfy their hunger with the promise of \"bitterness first, sweetness later.\" Perhaps this, too, is a form of #suspension#? Then there’s the common adult version of self-#PUA# or \"drawing a big cake\" for oneself: \"Once I achieve X, then I’ll finally do Y.\" In the end, one never truly lives in the #here and now#.\nCould the current online obsession with sudden wealth be a manifestation of what we call #suspension#? Chasing trends, buying lottery tickets, and jumping on every \"next big thing\" in hopes of overnight riches or \"a landslide of fortune\"—to me, these behaviors reflect a profound dissatisfaction with one’s social reality and daily life. Yet, since people feel hopeless about actually changing their circumstances, they pin their hopes on some divine intervention or external force to drag them out of the mire and into a completely different existence.\nWe often hear the popular saying, \"Making money is nothing to be ashamed of,\" which likely stems from a deep-seated realization that it actually is quite shameful. But because the pursuit of wealth has become an absolute justification that supersedes everything else, people continue to engage in behavior that is sycophantic, bloated, and indifferent to ethics—doing things they don't even believe are right while loathing themselves for it. This pursuit, or this #suspension#, suggests that as long as one achieves financial freedom, they can simply \"run,\" \"slip away,\" or \"bolt.\" Consequently, the culture and public issues of the here and now are sidelined. No one believes anymore that you should receive rewards by creating value for society. This is a systemic malady."
           },
           "role": {
             "zh": "贡献者",
             "en": "Contributor"
           },
           "author": {
-            "zh": "飞樾",
+            "zh": "陈飞樾",
             "en": "Feiyue"
           },
           "background": {
@@ -1482,26 +1425,7 @@
         },
         {
           "content": {
-            "zh": "“悬浮”这个不算新鲜，跟小蓝交流的时候她也表示这些词，包括内卷、躺平、异化什么的，都被“用到包浆”了。但自从共创会上听小蓝比较成系统地讲了之后，我还是很经常回味“悬浮”这个词的意味，并且产生很多发散的联想。一是它似乎可以被看做是“栖居”的反面：欧洲中世纪人把此世搁置起来，作为赎罪，把幸福美好寄托到来世。对于当代中国语境，那么主教们总对高三学生说：现在辛苦一年，高考完就自由了轻松了。但事实上从小学一年级开始，每一年都被讲作“最关键的一年”，耽误不得，于是一个人不断搁置当下，不断对着先苦后甜的说法充饥。这可能也是一种“悬浮”？另有一种成年人的常见自我pua，自我画饼：“等我xx了我就xx”，最后始终没有充分地活在当下",
-            "en": "The concept of #suspension# isn't exactly new. When I was chatting with Xiaolan, she mentioned that terms like this—along with #involution#, #lying flat#, and #alienation#—have been #used until they’ve developed a patina#. However, after hearing Xiaolan’s systematic breakdown of the idea during our co-creation session, I’ve found myself frequently chewing on the nuances of #suspension#, leading to a flurry of divergent associations.\nFirst, it seems to be the polar opposite of #dwelling#. In Medieval Europe, people set aside their earthly lives as a form of atonement, pinning all hopes of happiness on the afterlife. In the contemporary Chinese context, \"bishops\" (teachers and parents) are always telling high school seniors: \"Suffer for one more year; once the #Gaokao# is over, you’ll be free and relaxed.\" But in reality, from the first grade onward, every single year is framed as \"the most critical year\" where one cannot afford any delay. Consequently, a person constantly postpones the present, trying to satisfy their hunger with the promise of \"bitterness first, sweetness later.\" Perhaps this, too, is a form of #suspension#? Then there’s the common adult version of self-#PUA# or \"drawing a big cake\" for oneself: \"Once I achieve X, then I’ll finally do Y.\" In the end, one never truly lives in the #here and now#."
-          },
-          "role": {
-            "zh": "贡献者",
-            "en": "Contributor"
-          },
-          "author": {
-            "zh": "飞樾",
-            "en": "Feiyue"
-          },
-          "background": {
-            "zh": "城市学",
-            "en": "Urbanism"
-          },
-          "date": "2024/05/01"
-        },
-        {
-          "content": {
-            "zh": "想补充两个接近于“悬浮”的例子。\n一是一种时间上的悬浮，（一直在等待未来）。我的妈妈，一个在没有搬家之前永远属于“悬浮”状态的中年女性。妈妈离婚之后搬进了一个之前的老房子里，老房子即使被翻新了，她依然非常不满意，当我说提一些建议的时候，她总是说：“等这段时间过了多”，“等搬新房子多”，仿佛现在的生活是“暂时”的，这段苦日子总会过去的。\n现在她终于搬家了，我说你多久重新开始运动啊?，她说“等春天来了多”…\n\n另外一种是空间上的悬浮，（一直在寻找别处）。是迁徙于被于各种国家间的年轻人，他们通常不想回到自己的国家，但是又同样平等地讨厌每个她们长期呆过的城市和国家，其中我听到辱骂声最多的是德国，每一个在德国长期待的人都仿佛特别憎恨这片土地。\n\n他们（或者是我们）仿佛永远在寻找一块并不存在的 Dream Land，也许扎根之地都是牢笼，所以只能在移动中和未完成种获得一种安全感。",
+            "zh": "我想补充两个接近于“悬浮”的例子。\n其一是时间上的悬浮，即一种“永远在等待未来”的状态。我的母亲在搬家之前，就是一位始终处于“悬浮”状态的中年女性。离婚后，她搬进了一个老房子，即便房子经过翻新，她依然满心嫌恶。每当我试着提出装修建议时，她总说：“等这段日子过去了再说”、“等搬进新房子再说”。仿佛当下的生活只是某种“暂时状态”，这段苦日子终究会过去。 如今她终于搬了家，当我问她何时重新开始运动时，她却依旧回答：“等春天到了再说吧……”\n其二是空间上的悬浮，即一种“一直在寻找别处”的流浪。这多见于那些穿梭在不同国家间的年轻人。他们通常不想回到故土，却又平等地讨厌每一个长期居住过的城市。其中，我听到怨言最多的是德国，每一个在德国长期生活过的中国留学生，似乎都对那片土地怀有一种深重的不满。\n他们（或者说我们）仿佛永远在寻找一片并不存在的 Dream Land。或许对于这些人而言，扎根之地皆是牢笼，唯有在不停的移动与“未完成”的状态中，才能获得一丝微弱的安全感。",
             "en": "I’d like to add two more examples that border on #suspension#.\nThe first is a #temporal suspension#—a state of perpetually waiting for the future. Take my mother, for instance: a middle-aged woman who existed in a constant state of #suspension# before she finally moved. After her divorce, she moved into an old house. Even after it was renovated, she remained deeply dissatisfied. Whenever I offered suggestions to improve her surroundings, she would always say, \"Wait until this period is over,\" or \"Wait until I move into the new place.\" It was as if her current life was merely #temporary#, a stretch of \"bitter days\" that would eventually pass. Now that she has finally moved, I asked her when she plans to start exercising again. Her reply? \"Wait until spring comes...\"\nThe second is a #spatial suspension#—a state of perpetually searching for #elsewhere#. This is common among young people migrating between different countries. Generally, they have no desire to return to their home countries, yet they seem to loathe every city or nation they stay in long-term with equal intensity. Among them, I’ve heard the most vitriol directed at Germany; it seems almost everyone who stays there for an extended period develops a particular hatred for the land. They (or perhaps \"we\") seem to be forever searching for a #Dream Land# that doesn't actually exist. Perhaps to them, the very place  of taking root feels like being caged, so they can only find a sense of security within movement and the #unfished#."
           },
           "role": {
@@ -1520,7 +1444,7 @@
         },
         {
           "content": {
-            "zh": "1995年，项飙第一次用这个词来描述农民工在中国社会中的结构地位。城乡移民不能在城市中定居，也不能回到农村。他用蜂鸟的形象来指代各种各样的人口活动。悬置是一个“主位-客位术语”（“emic-etic term”），既是研究者用它来描述客观条件的术语，行动者们也用它来描述自己的生活经历和感受。\n\n可以说，如果没有大量工人“悬浮”他们的正常生活，中国就不可能高速发展。中国向服务型经济的转型也依赖于灵活、勤奋和流动的劳动力。 同样重要的是，在社会冲突不断加剧的情况下，“悬浮”有助于保持社会稳定。这种听天由命和充满希望的混合体让人们继续前行。\n\n在某种程度上，“悬浮”是发展主义（developmentalism）的缩影——先富起来，别的再说。换句话说，发展是消解问题，而没有解决问题。四十来年的疯狂发展带来多种挑战（不平等、环境等），那种认为情况一定会好转的信念正在失去吸引力。",
+            "zh": "1995年，项飙第一次用这个词来描述农民工在中国社会中的结构地位。城乡移民不能在城市中定居，也不能回到农村。他用蜂鸟的形象来指代各种各样的人口活动。悬置是一个“主位-客位术语”，既是研究者用它来描述客观条件的术语，行动者们也用它来描述自己的生活经历和感受。\n\n可以说，如果没有大量工人“悬浮”他们的正常生活，中国就不可能高速发展。中国向服务型经济的转型也依赖于灵活、勤奋和流动的劳动力。 同样重要的是，在社会冲突不断加剧的情况下，“悬浮”有助于保持社会稳定。这种听天由命和充满希望的混合体让人们继续前行。\n\n在某种程度上，“悬浮”是发展主义的缩影——先富起来，别的再说。换句话说，发展是消解问题，而没有解决问题。四十来年的疯狂发展带来多种挑战（不平等、环境等），那种认为情况一定会好转的信念正在失去吸引力。",
             "en": "In 1995, Biao Xiang first employed this term to describe the structural position of migrant workers within Chinese society. These rural-to-urban migrants could neither settle permanently in the cities nor return to their rural roots. He used the imagery of a hummingbird to represent various forms of population mobility. Suspension is an \"emic-etic term\"—a concept used by researchers to describe objective conditions, while simultaneously being used by actors themselves to describe their own lived experiences and feelings.\nIt could be argued that China's rapid development would have been impossible without a vast number of workers \"suspending\" their normal lives. The nation's transition to a service-oriented economy also relies on a flexible, diligent, and mobile workforce. Equally important is that, amidst intensifying social conflicts, \"suspension\" helps maintain social stability. This mixture of resignation and hope keeps people moving forward.\nTo some extent, \"suspension\" is the epitome of developmentalism: get rich first, and worry about the rest later. In other words, development has dissolved problems rather than solving them. Forty years of frantic growth have brought various challenges (inequality, environmental issues, etc.), and the belief that things will inevitably improve is losing its luster."
           },
           "role": {
@@ -1528,7 +1452,7 @@
             "en": "Contributor"
           },
           "author": {
-            "zh": "小蓝",
+            "zh": "梁慧琳",
             "en": "Xiaolan"
           },
           "background": {
@@ -1544,10 +1468,10 @@
       "id": 11,
       "term": {
         "zh": "城市欲望机器",
-        "en": "term"
+        "en": "Urban Desiring Machine"
       },
-      "termOri": "termOri",
-      "concept_image": "No concept image yet.",
+      "termOri": "Urban Desiring Machine",
+      "concept_image": "images/Urban_Desiring_Machine_aigc.png",
       "sm_title": {
         "zh": "社媒标题",
         "en": "social title"
@@ -1567,14 +1491,14 @@
             "zh": "人类学家",
             "en": "role"
           },
-          "image": "images/城市欲望机器_proposer.jpg"
+          "image": "images/Urban_Desiring_Machine_proposer.jpg"
         }
       ],
       "source": {
         "zh": "乔纳森·巴赫，《深圳：悬置可能性之城 (#Shenzhen: City of Suspended Possibility#)》，新泽西州: 威利-布莱克威尔出版社 (Wiley-Blackwell), 2011。尚无中文翻译。",
         "en": "source"
       },
-      "source_image": "No source cover yet.",
+      "source_image": "images/Urban_Desiring_Machine_source_cover.png",
       "related_works": [
         {
           "zh": "乔纳森·巴赫等，《向深圳学习：中国后毛泽东时代的实验，从特区到模范城市 (#Learning from Shenzhen: China’s Post-Mao Experiment from Special Zone to Model City#)》，芝加哥: 芝加哥大学出版社 (University of Chicago Press), 2017。尚无中文翻译。",
@@ -1594,7 +1518,7 @@
       "contributors": [
         {
           "name": {
-            "zh": "雅伦，飞樾",
+            "zh": "李雅伦，陈飞樾",
             "en": ""
           },
           "role": {
@@ -1631,12 +1555,12 @@
       "related_terms": [],
       "commentAbs": {
         "content": {
-          "zh": "暂无导读",
-          "en": "No abstract info yet."
+          "zh": "机器把这些人的欲望作为燃料，把他们的劳动、冒险、乃至失败，都转化为城市自身的动能。",
+          "en": ""
         },
         "author": {
-          "zh": "暂无作者信息",
-          "en": "No author info yet."
+          "zh": "段珊珊",
+          "en": ""
         }
       },
       "comments": [
@@ -1650,7 +1574,7 @@
             "en": "Contributor"
           },
           "author": {
-            "zh": "珊珊",
+            "zh": "段珊珊",
             "en": ""
           },
           "background": {
@@ -1669,7 +1593,7 @@
         "en": "shàng'àn"
       },
       "termOri": "shàng'àn",
-      "concept_image": "images/上岸_aigc.jpg",
+      "concept_image": "images/Ashore_aigc.jpg",
       "sm_title": {
         "zh": "社媒标题",
         "en": "social title"
@@ -1679,7 +1603,7 @@
           "name": {
             "zh": "中文互联网网民群体",
             "en": "Chinese Internet Users",
-            "ori": "proposerOri"
+            "ori": "Chinese Internet Users"
           },
           "year": {
             "zh": "No year info yet.",
@@ -1716,7 +1640,7 @@
       "contributors": [
         {
           "name": {
-            "zh": "孟汀",
+            "zh": "吕孟汀",
             "en": "Mengting"
           },
           "role": {
@@ -1763,7 +1687,7 @@
           "en": "...power sometimes decides who must come ashore, sometimes who is eligible to come ashore, and sometimes which land is defined as a \"shore\" that provides asylum, and which is merely an \"island\" used for exile."
         },
         "author": {
-          "zh": "孟汀",
+          "zh": "吕孟汀",
           "en": "Mengting"
         }
       },
@@ -1788,7 +1712,7 @@
           "date": "2026/03/06",
           "images": [
             {
-              "src": "images/上岸_note1_1.jpg",
+              "src": "images/Ashore_note1_1.jpg",
               "caption": {
                 "zh": "福州疍民把水上的船只作为家宅。图源维基百科。",
                 "en": "The Fuzhou Tanka people used their boats on the water as their homes. Image source: Wikipedia."

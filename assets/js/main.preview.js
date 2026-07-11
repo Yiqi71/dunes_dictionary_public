@@ -176,22 +176,10 @@ function resolveInitialLang(routeLang = null) {
 let lastSyncedPath = null;
 
 function syncRouteFromState({ replace = true } = {}) {
-    const lang = normalizeLang(state.currentLang || document.documentElement.lang || "en");
-    const routeLang = stateLangToRouteLang(lang);
-    let nextPath = `/${routeLang}`;
-
-    if (state.focusedNodeId !== null && state.focusedNodeId !== undefined && window.allWords?.length) {
-        const word = window.allWords.find((w) => String(w.id) === String(state.focusedNodeId));
-        const slug = getWordSlug(word, lang);
-        if (slug) {
-            nextPath = `/${routeLang}/${encodeURIComponent(slug)}`;
-        }
-    }
-
-    if (window.location.pathname === nextPath || lastSyncedPath === nextPath) return;
-    const fn = replace ? window.history.replaceState : window.history.pushState;
-    fn.call(window.history, {}, "", nextPath);
-    lastSyncedPath = nextPath;
+    // URL rewriting disabled — the address bar no longer changes to /cn/<slug> or
+    // /en/<slug> as the user navigates; it stays on whatever page was loaded
+    // (index.html / combined.html / etc).
+    return;
 }
 
 window.__DD_SYNC_ROUTE = () => {
