@@ -543,8 +543,10 @@ html:lang(en) #proposer .proposer-ori {
 }
 
 #comment {
-    max-width: 35vw;
+    max-width: 55vw;
     min-height: 240px;
+    max-height: 60vh;
+    overflow-y: auto;
     background-color: #B4B596;
 }
 

@@ -79,6 +79,8 @@
     box-sizing: border-box !important;
     left: 40px !important;
     top: 62vh !important;
+    max-height: calc(100vh - 62vh - 20px) !important;
+    overflow-y: auto !important;
     transform: none !important;
   }
 
