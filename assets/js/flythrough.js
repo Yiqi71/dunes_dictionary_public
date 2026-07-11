@@ -302,6 +302,53 @@ function setButtonActive(active) {
     document.getElementById("flythrough-button")?.classList.toggle("active", active);
 }
 
+const IDLE_HIDE_DELAY = 3000; // ms of no mouse movement before the button fades out
+let idleHideTimer = null;
+
+function showFlythroughButton() {
+    document.getElementById("flythrough-button")?.classList.remove("idle-hidden");
+}
+
+function scheduleIdleHide() {
+    if (idleHideTimer) clearTimeout(idleHideTimer);
+    idleHideTimer = setTimeout(() => {
+        document.getElementById("flythrough-button")?.classList.add("idle-hidden");
+    }, IDLE_HIDE_DELAY);
+}
+
+function initIdleAutoHide() {
+    showFlythroughButton();
+    scheduleIdleHide();
+    document.addEventListener("mousemove", () => {
+        showFlythroughButton();
+        scheduleIdleHide();
+    });
+}
+
+// The flythrough button is intentionally left commented out of index.html's
+// markup (it shouldn't appear on direct/iPad visits). When index.html is
+// embedded inside combined.html it's loaded with ?nopanel=1, which flags
+// <html class="nopanel">; only in that context do we create the button here
+// and wire up the idle auto-hide behavior.
+function ensureFlythroughButton() {
+    if (!document.documentElement.classList.contains("nopanel")) return null;
+    let btn = document.getElementById("flythrough-button");
+    if (btn) return btn;
+
+    btn = document.createElement("button");
+    btn.id = "flythrough-button";
+    btn.setAttribute("aria-label", "Toggle flythrough mode");
+    btn.innerHTML = '<span class="flythrough-dot"></span>Flythrough';
+    (document.getElementById("app-root") || document.body).appendChild(btn);
+    return btn;
+}
+
+const flythroughButton = ensureFlythroughButton();
+if (flythroughButton) {
+    flythroughButton.addEventListener("click", toggleFlythrough);
+    initIdleAutoHide();
+}
+
 export function startFlythrough() {
     if (isActive) return;
     isActive = true;
@@ -327,5 +374,3 @@ export function stopFlythrough() {
 export function toggleFlythrough() {
     isActive ? stopFlythrough() : startFlythrough();
 }
-
-document.getElementById("flythrough-button")?.addEventListener("click", toggleFlythrough);

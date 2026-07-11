@@ -662,8 +662,13 @@ html:lang(en) #proposer .proposer-ori {
     display: flex;
     align-items: center;
     gap: 7px;
-    transition: background 0.25s, color 0.25s;
+    transition: background 0.25s, color 0.25s, opacity 0.4s ease;
     user-select: none;
+}
+
+#flythrough-button.idle-hidden {
+    opacity: 0;
+    pointer-events: none;
 }
 
 #flythrough-button:hover {
