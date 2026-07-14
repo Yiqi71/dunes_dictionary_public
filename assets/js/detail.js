@@ -1408,8 +1408,6 @@ function renderCommentSection() {
     const emptyCommentsLabel = lang === "en" ? "No comments" : "暂无评论";
     const likedAriaLabel = lang === "en" ? "Unlike this comment" : "取消喜欢这条评论";
     const unlikedAriaLabel = lang === "en" ? "Like this comment" : "喜欢这条评论";
-    const readMoreEchoesLabel = lang === "en" ? "Read more echoes" : "阅读更多回声";
-    const lastEchoLabel = lang === "en" ? "You've reached the last echo" : "已经是最后一条回声了";
     contentScroll.innerHTML = `
         ${comments.length ? comments.map((c, idx) => {
             const roleLabel = c?.role?.[lang] || "";
@@ -1441,11 +1439,6 @@ function renderCommentSection() {
                 : "";
             const liked = isCommentLiked(currentWord.id, idx);
             const ariaLabel = liked ? likedAriaLabel : unlikedAriaLabel;
-            const isLastComment = idx === comments.length - 1;
-            const readMoreHtml = `<div class="note-read-more" data-comment-index="${idx}">
-                <img class="note-read-more-arrow" src="assets/images/chevron_down.svg" alt="" aria-hidden="true">
-                <span class="note-read-more-text">${isLastComment ? lastEchoLabel : readMoreEchoesLabel}</span>
-            </div>`;
             return `<section>
                 <button
                     type="button"
@@ -1455,7 +1448,7 @@ function renderCommentSection() {
                     aria-label="${ariaLabel}"
                 ><span class="note-like-count" aria-hidden="true"></span></button>
                 <p class="left-title">${titleLabel}</p>
-                <div class="note-body"><br><br><br><br>${content}${imagesHtml}${readMoreHtml}</div>
+                <div class="note-body"><br><br><br><br>${content}${imagesHtml}</div>
             </section>`;
         }).join('') : emptyCommentsLabel}
 
@@ -1577,21 +1570,6 @@ function renderCommentSection() {
                 return;
             }
             applyNoteLayout(section);
-        });
-    });
-
-    const readMoreCtas = Array.from(contentScroll.querySelectorAll('.note-read-more'));
-    readMoreCtas.forEach(cta => {
-        cta.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const section = cta.closest('section');
-            const currentIndex = noteSections.indexOf(section);
-            const nextSection = noteSections[currentIndex + 1];
-            if (nextSection) {
-                applyNoteLayout(nextSection);
-            } else {
-                clearNoteLayout({ scrollToTop: true });
-            }
         });
     });
 }
