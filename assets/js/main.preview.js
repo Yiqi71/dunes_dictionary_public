@@ -20,6 +20,7 @@ import {
 } from "./saved.js";
 import { logEvent, startWordView, endWordView } from "/analytics.js";
 import { getWordColor } from "./wordColor.js";
+import { isMobileLayout } from "./device.js";
 
 const BOOT_PROGRESS_EVENT = "dunes:boot-progress";
 const ENTRY_READY_EVENT = "dunes:entry-ready";
@@ -225,10 +226,14 @@ function updateTabLabels() {
             span.textContent = currentLang === "en" ? "DEVLOG" : "\u65e5\u5fd7";
         }
 
-        if (currentLang === "en") {
+        if (currentLang === "en" && !isMobileLayout()) {
+            // Desktop side tabs are narrow vertical strips, so English
+            // labels are rotated to fit. The mobile top tab bar is
+            // horizontal, so English text stays upright there.
             span.style.display = "inline-block";
             span.style.transform = "translateX(-10px) rotate(-90deg)";
         } else {
+            span.style.display = "";
             span.style.transform = "rotate(0deg) translateY(0)";
         }
     });

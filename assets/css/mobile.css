@@ -328,23 +328,49 @@
     transition: opacity 0.35s ease, width 0.35s ease !important;
   }
 
-  /* Mobile floating/about panel: full-screen overlay, no side tabs. */
+  /* Mobile floating/about panel: bottom-sheet overlay that slides up from
+     the bottom, leaving a gap at the top of the screen for a horizontal
+     tab bar (instead of the desktop side tabs). */
   #floating-panel,
   #about-panel {
-    top: 0 !important;
+    top: 56px !important;
     right: 0 !important;
     left: 0 !important;
     width: 100vw !important;
-    height: var(--app-vh) !important;
-    border-radius: 0 !important;
+    height: calc(var(--app-vh) - 56px) !important;
+    border-radius: 16px 16px 0 0 !important;
     z-index: 12020 !important;
+    transform: translateY(100%) !important;
+    transition: transform 0.45s ease-in-out !important;
+  }
+
+  /* .panel-main's height is hardcoded to var(--app-vh) (full screen) in
+     floatingPanel.css, but on mobile the panel itself is shifted down and
+     shortened by 56px above. Without this override panel-main is 56px
+     taller than its visible container, and that extra 56px of scrollable
+     content falls below the bottom of the actual viewport where it can
+     never be scrolled into view. */
+  #floating-panel .panel-main,
+  #about-panel .panel-main {
+    height: 100% !important;
+  }
+
+  #floating-panel.hidden,
+  #about-panel.hidden {
+    transform: translateY(100%) !important;
+  }
+
+  #floating-panel:not(.hidden),
+  #about-panel:not(.hidden) {
+    transform: translateY(0) !important;
   }
 
   #floating-panel .panel-entry,
   #floating-panel .panel-comment,
   #about-panel .panel-entry,
   #about-panel .panel-comment {
-    border-radius: 0 !important;
+    border-radius: 16px 16px 0 0 !important;
+    overflow: visible !important;
   }
 
   #floating-panel .panel-entry:not(.active),
@@ -355,9 +381,67 @@
     transform: none !important;
   }
 
+  /* Horizontal tab bar sitting in the gap above the sheet, sliding up
+     together with the panel. */
   #floating-panel .panel-tabs,
   #about-panel .panel-tabs {
-    display: none !important;
+    display: flex !important;
+    position: absolute !important;
+    flex-direction: row !important;
+    top: -40px !important;
+    left: 50% !important;
+    bottom: auto !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+    width: auto !important;
+    height: 40px !important;
+    gap: 8px !important;
+    z-index: 20 !important;
+    pointer-events: auto !important;
+  }
+
+  #floating-panel .panel-tabs button,
+  #about-panel .panel-tabs button {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    width: auto !important;
+    height: 40px !important;
+    padding: 0 20px !important;
+    -webkit-clip-path: none !important;
+    clip-path: none !important;
+    border-radius: 10px 10px 0 0 !important;
+    box-shadow: none !important;
+    white-space: nowrap !important;
+  }
+
+  /* Tab colour follows the tab's own identity, not whichever themed
+     sub-panel (.panel-entry dark / .panel-comment light) currently
+     happens to render this duplicated tab bar. On desktop the "other"
+     button in each pair is invisible (opacity 0) so this never showed;
+     on mobile both buttons are always visible, so 词条/ABOUT must stay
+     dark-bg/light-text and 回声/DEVLOG must stay light-bg/dark-text
+     regardless of active state or container. */
+  #floating-panel .panel-tabs button[data-tab="entry"],
+  #about-panel .panel-tabs button[data-tab="about"] {
+    background: #43403B !important;
+    color: #FAF4E5 !important;
+  }
+
+  #floating-panel .panel-tabs button[data-tab="comment"],
+  #about-panel .panel-tabs button[data-tab="devlog"] {
+    background: #EEE9DB !important;
+    color: #43403B !important;
+  }
+
+  /* Desktop rotates the English label to fit the narrow vertical side
+     tab (see updateTabLabels() in main.preview.js). The mobile bar is
+     horizontal, so force the label upright even if that inline rotation
+     is still applied (e.g. right after a resize, before the next
+     language/render update runs). */
+  #floating-panel .panel-tabs button span,
+  #about-panel .panel-tabs button span {
+    display: inline-block !important;
+    transform: none !important;
   }
 
   #floating-panel .panel-slide,
@@ -459,23 +543,62 @@
     display: none !important;
   }
 
-  #floating-panel .panel-comment .panel-bottom.notes-mode section:not(.note-expanded):not(#section-contributors):not(#section-contact):not(#section-editors),
-  #about-panel .panel-comment .panel-bottom.notes-mode section:not(.note-expanded):not(#section-contributors):not(#section-contact):not(#section-editors) {
+  /* Mobile echoes: no fold/expand interaction (renderCommentSection skips
+     wiring it up via isMobileLayout()) — every echo is laid out in full,
+     one after another on a single continuously scrollable page, separated
+     by a divider line. No hover affordances either. */
+  #floating-panel .panel-comment .panel-bottom section:not(#section-contributors):not(#section-contact):not(#section-editors),
+  #about-panel .panel-comment .panel-bottom section:not(#section-contributors):not(#section-contact):not(#section-editors) {
+    max-height: none !important;
     height: auto !important;
     min-height: 0 !important;
-    padding-top: 10px !important;
-    padding-bottom: 10px !important;
+    overflow: visible !important;
+    cursor: default !important;
+    transform: none !important;
+    transition: none !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+    padding-top: 24px !important;
+    padding-bottom: 24px !important;
     align-items: flex-start !important;
+    border-top: 1px solid rgba(67, 64, 59, 0.15);
   }
 
-  #floating-panel .panel-comment .panel-bottom.notes-mode section:not(.note-expanded):not(#section-contributors):not(#section-contact):not(#section-editors) .note-like-toggle,
-  #about-panel .panel-comment .panel-bottom.notes-mode section:not(.note-expanded):not(#section-contributors):not(#section-contact):not(#section-editors) .note-like-toggle {
-    top: 10px !important;
+  #floating-panel .panel-comment .panel-bottom section:not(#section-contributors):not(#section-contact):not(#section-editors):first-child,
+  #about-panel .panel-comment .panel-bottom section:not(#section-contributors):not(#section-contact):not(#section-editors):first-child {
+    border-top: none;
   }
 
-  #floating-panel .panel-comment .panel-bottom.notes-mode section:not(.note-expanded):not(#section-contributors):not(#section-contact):not(#section-editors) .left-title,
-  #about-panel .panel-comment .panel-bottom.notes-mode section:not(.note-expanded):not(#section-contributors):not(#section-contact):not(#section-editors) .left-title {
-    padding-bottom: 0 !important;
+  #floating-panel .panel-comment.active .panel-bottom section:hover,
+  #about-panel .panel-comment.active .panel-bottom section:hover {
+    transform: none !important;
+  }
+
+  #floating-panel .panel-comment .panel-bottom section .note-like-toggle:hover,
+  #about-panel .panel-comment .panel-bottom section .note-like-toggle:hover {
+    transform: none !important;
+  }
+
+  #floating-panel .panel-comment .panel-bottom section .note-body,
+  #about-panel .panel-comment .panel-bottom section .note-body {
+    display: block !important;
+  }
+
+  #floating-panel .panel-comment .panel-bottom section .note-like-toggle,
+  #about-panel .panel-comment .panel-bottom section .note-like-toggle {
+    top: 26px !important;
+  }
+
+  #floating-panel .panel-comment .panel-bottom section .left-title,
+  #about-panel .panel-comment .panel-bottom section .left-title {
+    padding-bottom: 16px !important;
+  }
+
+  /* The fold-navigation CTA has no purpose in the always-expanded mobile
+     layout — scrolling down reaches the next echo naturally. */
+  #floating-panel .panel-comment .panel-bottom .note-read-more,
+  #about-panel .panel-comment .panel-bottom .note-read-more {
+    display: none !important;
   }
 
   #floating-close-btn {

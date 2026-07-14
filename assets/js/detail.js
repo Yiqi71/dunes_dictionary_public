@@ -1537,6 +1537,11 @@ function renderCommentSection() {
         contentScroll.querySelectorAll('section:not(#section-contributors):not(#section-contact):not(#section-editors)')
     );
 
+    // Mobile: all echoes are laid out in one continuously scrollable page
+    // (separated by dividers, see mobile.css), so there's no fold/expand or
+    // "read more" jump interaction to wire up.
+    if (isMobileLayout()) return;
+
     const clearNoteLayout = ({ scrollToTop = false } = {}) => {
         contentScroll.classList.remove('notes-mode');
         if (panelMain) panelMain.classList.remove('notes-fixed');
