@@ -6,6 +6,7 @@
     font-weight: 600;
     letter-spacing: -1.1px;
     margin: 0;
+    white-space: nowrap;
 
     /* font-family: FZJunHeiS-B-GB; */
 }
@@ -18,6 +19,7 @@
     font-weight: 600;
     letter-spacing: -0.1px;
     margin: 0;
+    white-space: nowrap;
 }
 
 #upper-menu p {
@@ -47,6 +49,7 @@
     z-index: 11000;
     gap: var(--menu-gap);
     min-width: var(--menu-min-width);
+    -webkit-user-select: none;
     user-select: none;
     position: fixed;
 }
@@ -174,8 +177,11 @@
 #dunes-icon {
     display: grid;
     grid-template-columns: max-content max-content;
-    column-gap: 10px;
+    font-size: 29.538px;
+    /* 与 .Chinese 字号一致，使 column-gap 的 em 单位可随字号缩放 */
+    column-gap: 0.34em;
     align-items: baseline;
+    flex-shrink: 0;
 }
 
 #dunes-icon > h2 {

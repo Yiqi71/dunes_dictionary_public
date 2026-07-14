@@ -216,8 +216,6 @@ function updateTabLabels() {
             span.textContent = currentLang === "en" ? "ECHOES" : "回声";
         } else if (tabName === "about") {
             span.textContent = currentLang === "en" ? "ABOUT" : "\u5173\u4e8e";
-        } else if (tabName === "devlog") {
-            span.textContent = currentLang === "en" ? "DEVLOG" : "\u65e5\u5fd7";
         }
 
         if (currentLang === "en") {

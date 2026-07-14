@@ -6,10 +6,86 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <base href="/">
     <title>沙丘词典</title>
-    <!-- 
+
+    <!-- 添加到主屏幕后以独立App（无Safari地址栏）方式运行 -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="沙丘词典">
+    <meta name="theme-color" content="#43403B">
+    <link rel="apple-touch-icon" href="/assets/images/icons/apple-touch-icon.png">
+
+    <!--
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700&display=swap" rel="stylesheet"> -->
 
     <script>(function(){if(new URLSearchParams(location.search).get('nopanel')==='1')document.documentElement.classList.add('nopanel');}());</script>
+    <script>
+      // 注册离线缓存：即使本地服务器(iSH)之后被系统挂起/关闭，
+      // 已经预缓存过的网站也能继续从缓存离线运行。
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').catch((err) => {
+            console.warn('Service worker registration failed:', err);
+          });
+        });
+
+        // 收到 sw.js 发来的"缓存完成"消息后，弹一个悬浮提示条（覆盖在内容上方，
+        // 不占用页面布局空间）。用localStorage做标记，保证这辈子（这台设备上）
+        // 只弹这一次，弹完之后彻底从DOM里移除，不留任何痕迹。
+        navigator.serviceWorker.addEventListener('message', (event) => {
+          if (event.data && event.data.type === 'sw-precache-done') {
+            const ALERTED_KEY = 'dunes_offline_precache_alerted';
+            if (localStorage.getItem(ALERTED_KEY) === '1') return;
+            localStorage.setItem(ALERTED_KEY, '1');
+
+            const msg = event.data.failed > 0
+              ? `离线缓存完成，但有 ${event.data.failed}/${event.data.total} 个文件失败，请检查`
+              : `离线内容已准备好（共 ${event.data.total} 个文件），现在可以添加到主屏幕并断开网络测试`;
+
+            const overlay = document.createElement('div');
+            overlay.id = 'offline-ready-toast';
+            const box = document.createElement('div');
+            box.id = 'offline-ready-toast-box';
+            box.className = event.data.failed > 0 ? 'offline-ready-toast-box--warn' : '';
+            box.textContent = msg;
+            overlay.appendChild(box);
+            document.body.appendChild(overlay);
+
+            const remove = () => overlay.remove();
+            overlay.addEventListener('click', remove);
+            setTimeout(remove, 6000);
+          }
+        });
+      }
+    </script>
+    <style>
+      /* 这个元素是JS动态创建/移除的，默认不存在于DOM里，不会占用任何版面空间。 */
+      #offline-ready-toast {
+        position: fixed;
+        inset: 0;
+        z-index: 999999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        background: rgba(0, 0, 0, 0.35);
+      }
+      #offline-ready-toast-box {
+        max-width: 420px;
+        padding: 18px 22px;
+        border-radius: 12px;
+        font-size: 14px;
+        line-height: 1.5;
+        text-align: center;
+        background: #2f7d3a;
+        color: #FAF4E5;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      }
+      #offline-ready-toast-box.offline-ready-toast-box--warn {
+        background: #a13b2b;
+      }
+    </style>
     <link rel="stylesheet" href="assets/css/resetCSS.css">
     <link rel="stylesheet" href="assets/css/fonts.css">
     <link rel="stylesheet" href="assets/css/style.css">
@@ -25,7 +101,6 @@
     <script type="module" src="assets/js/relationManager.js" defer></script>
     <script type="module" src="assets/js/state.js" defer></script>
     <script type="module" src="assets/js/countryBoundingBoxes.js" defer></script>
-    <script type="module" src="assets/js/boot-progress.js" defer></script>
     <script type="module" src="assets/js/main.preview.js"></script>
     <script type="module" src="assets/js/mobile-panel.js" defer></script>
     <script type="module" src="assets/js/mobile-interactions.js" defer></script>
@@ -37,14 +112,7 @@
     <!-- <script type="module" src="sandtest.js" defer></script> -->
 </head>
 
-<body class="boot-pending">
-    <div id="boot-progress" role="status" aria-live="polite" aria-label="Page loading">
-        <div id="boot-progress-track">
-            <div id="boot-progress-indicator"></div>
-        </div>
-        <p id="boot-progress-text">Loading...</p>
-    </div>
-
+<body>
     <div id="app-root">
     <!-- <div id="center-dot"></div> -->
     <!-- <button id="flythrough-button" aria-label="Toggle flythrough mode">
@@ -105,26 +173,6 @@
             <div class="panel-slide">
                 <div class="scroll-track"></div>
                 <div class="scroll-thumb"></div>
-            </div>
-            <div class="panel-tabs">
-                <button data-tab="about" class="active">ABOUT</button>
-                <button data-tab="devlog" style="opacity:0; pointer-events:none;">DEVLOG</button>
-            </div>
-        </div>
-
-        <!-- Devlog Panel (light) -->
-        <div class="panel-comment">
-            <div class="panel-main">
-                <div class="panel-top"></div>
-                <div class="panel-bottom"></div>
-            </div>
-            <div class="panel-slide">
-                <div class="scroll-track"></div>
-                <div class="scroll-thumb"></div>
-            </div>
-            <div class="panel-tabs">
-                <button data-tab="about" style="opacity:0; pointer-events:none;">ABOUT</button>
-                <button data-tab="devlog" class="active">DEVLOG</button>
             </div>
         </div>
     </div>

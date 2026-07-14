@@ -406,6 +406,9 @@
   #floating-panel .panel-comment .note-body img,
   #about-panel .panel-comment .note-body img {
     padding: 24px 0 0 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
   }
 
   #floating-panel #section-example .diagram-image,

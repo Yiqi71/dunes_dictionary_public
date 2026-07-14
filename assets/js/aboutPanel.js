@@ -19,11 +19,6 @@ function queryAbout(selector) {
     return panel ? panel.querySelector(selector) : null;
 }
 
-function queryAllAbout(selector) {
-    const panel = getAboutPanel();
-    return panel ? panel.querySelectorAll(selector) : [];
-}
-
 function normalizeLang(code) {
     const v = (code || "").toLowerCase();
     return v.startsWith("en") ? "en" : "zh";
@@ -39,86 +34,14 @@ function getAboutText(value, lang) {
     return "";
 }
 
-const DEVLOG_URL = "/content/devlog.json";
-let devlogData = {
-    logs: []
-};
-let devlogLoaded = false;
-let devlogLoading = null;
-
-function normalizeDevlogPayload(payload) {
-    if (!payload) return { logs: [] };
-    const candidate = payload.devlog || payload;
-    if (Array.isArray(candidate)) {
-        return { logs: candidate };
-    }
-    if (typeof candidate === "object") {
-        if (Array.isArray(candidate.logs)) {
-            return { logs: candidate.logs };
-        }
-        if (candidate.zh || candidate.en) {
-            return { logs: [candidate] };
-        }
-    }
-    return { logs: [] };
-}
-
-function loadDevlogData() {
-    if (devlogLoaded) return Promise.resolve(devlogData);
-    if (devlogLoading) return devlogLoading;
-    devlogLoading = fetch(DEVLOG_URL)
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error("Failed to load devlog.");
-            }
-            return response.json();
-        })
-        .then((payload) => {
-            devlogData = normalizeDevlogPayload(payload);
-            devlogLoaded = true;
-            return devlogData;
-        })
-        .catch((error) => {
-            console.warn("Devlog load failed:", error);
-            devlogLoaded = true;
-            return devlogData;
-        });
-    return devlogLoading;
-}
-
-function escapeHtml(value) {
-    return String(value || "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#39;");
-}
-
-function resolveDevlogContent(lang) {
-    if (!devlogData.logs || devlogData.logs.length === 0) return "";
-    const items = devlogData.logs.map((entry) => {
-        const text = entry ? (entry[lang] || "") : "";
-        return `<li><p>${escapeHtml(text)}</p></li>`;
-    }).join("");
-    return `<ol class="devlog-list">${items}</ol>`;
-}
-
-
 function renderAboutContent() {
     const lang = normalizeLang(state.currentLang || "zh");
 
     const aboutPanel = queryAbout('.panel-entry');
-    const devlogPanel = queryAbout('.panel-comment');
-    if (!aboutPanel || !devlogPanel) return;
+    if (!aboutPanel) return;
 
     const aboutTitle = aboutPanel.querySelector('.panel-top');
     const aboutBottom = aboutPanel.querySelector('.panel-bottom');
-
-    const devlogTitle = devlogPanel.querySelector('.panel-top');
-    const devlogBottom = devlogPanel.querySelector('.panel-bottom');
-    const devlogContent = resolveDevlogContent(lang);
-
 
     if (lang === "en") {
         aboutTitle.innerHTML = `
@@ -169,20 +92,6 @@ function renderAboutContent() {
                 </div>
         </section>
         `;
-
-        devlogTitle.innerHTML = `
-        <div>
-            <div class = "term-main"> Developer Log </div>
-            <div class = "term-ori"> Dev Log </div>
-        </div>
-        `;
-        devlogBottom.innerHTML = `
-        <section>
-            <div>
-                ${devlogContent}
-            </div>
-        </section>
-        `;
     } else {
         aboutTitle.innerHTML = `
         <div>
@@ -201,7 +110,7 @@ function renderAboutContent() {
                 </p>
             </div>
         </section>
-        
+
         <section>
             <p class="left-title">工作人员</p>
             <div>
@@ -234,38 +143,19 @@ function renderAboutContent() {
                 </div>
         </section>
         `;
-
-        devlogTitle.innerHTML = `
-        <div>
-            <div class = "term-main"> 开发者日志</div>
-            <div class = "term-ori"> Developer Log </div>
-        </div>
-        `;
-        devlogBottom.innerHTML = `
-        <section>
-            <div>
-                ${devlogContent}
-            </div>
-        </section>
-        `;
     }
 }
-
-// About tab logic
-let aboutCurrentTab = "about";
-let aboutTouchStartY = 0;
-
-const SWITCH_THRESHOLD = 180;
-const SCROLL_CONFIG = {
-    thumbMargin: 0,
-    thumbSize: 14
-};
 
 let isDragging = false;
 let startY = 0;
 let startTop = 0;
 let currentScrollThumb = null;
 let currentPanelMain = null;
+
+const SCROLL_CONFIG = {
+    thumbMargin: 0,
+    thumbSize: 14
+};
 
 function setupScrollDrag(scrollThumb, panelMain) {
     if (currentScrollThumb) {
@@ -310,54 +200,18 @@ document.addEventListener('mouseup', () => {
     document.body.style.userSelect = '';
 });
 
-function initAboutTabs() {
-    const allTabs = queryAllAbout('.panel-tabs button');
-    allTabs.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const tabName = btn.dataset.tab;
-            switchAboutTab(tabName);
-        });
-    });
-}
-
-function switchAboutTab(tabName) {
-    const aboutPanel = queryAbout('.panel-entry');
-    const devlogPanel = queryAbout('.panel-comment');
-    if (!aboutPanel || !devlogPanel) return;
-
-    const allTabs = queryAllAbout('.panel-tabs button');
-    allTabs.forEach(btn => {
-        btn.classList.remove('active');
-        if (btn.dataset.tab === tabName) {
-            btn.classList.add('active');
-        }
-    });
-
-    if (tabName === "about") {
-        aboutPanel.classList.add('active');
-        devlogPanel.classList.remove('active');
-    } else if (tabName === "devlog") {
-        devlogPanel.classList.add('active');
-        aboutPanel.classList.remove('active');
-    }
-
-    aboutCurrentTab = tabName;
-    updateAboutScrollHandlers();
-}
-
-function getAboutActivePanelMain() {
-    const activePanel = queryAbout('.panel-entry.active, .panel-comment.active');
-    return activePanel ? activePanel.querySelector('.panel-main') : null;
+function getAboutPanelMain() {
+    const panel = queryAbout('.panel-entry');
+    return panel ? panel.querySelector('.panel-main') : null;
 }
 
 function updateAboutScrollHandlers() {
-    const activePanel = queryAbout('.panel-entry.active, .panel-comment.active');
-    if (!activePanel) return;
+    const panel = queryAbout('.panel-entry');
+    if (!panel) return;
 
-    const panelMain = activePanel.querySelector('.panel-main');
-    const scrollThumb = activePanel.querySelector('.scroll-thumb');
-    const scrollTrack = activePanel.querySelector('.scroll-track');
+    const panelMain = panel.querySelector('.panel-main');
+    const scrollThumb = panel.querySelector('.scroll-thumb');
+    const scrollTrack = panel.querySelector('.scroll-track');
 
     if (!panelMain || !scrollThumb || !scrollTrack) return;
 
@@ -366,16 +220,12 @@ function updateAboutScrollHandlers() {
 
     handleAboutScroll();
     setupScrollDrag(scrollThumb, panelMain);
-    setupAboutWheelHandler();
-    setupAboutTouchHandlers();
 }
 
 function handleAboutScroll() {
-    const activePanel = queryAbout('.panel-entry.active, .panel-comment.active');
-    if (!activePanel) return;
-
-    const panelMain = activePanel.querySelector('.panel-main');
-    const scrollThumb = activePanel.querySelector('.scroll-thumb');
+    const panelMain = getAboutPanelMain();
+    const panel = queryAbout('.panel-entry');
+    const scrollThumb = panel ? panel.querySelector('.scroll-thumb') : null;
     if (!panelMain || !scrollThumb) return;
 
     const scrollTop = panelMain.scrollTop;
@@ -398,86 +248,6 @@ function handleAboutScroll() {
     scrollThumb.style.top = `${thumbTop}px`;
 }
 
-function setupAboutWheelHandler() {
-    const panelMain = getAboutActivePanelMain();
-    if (!panelMain) return;
-
-    panelMain.removeEventListener("wheel", handleAboutWheel);
-    panelMain.addEventListener("wheel", handleAboutWheel);
-}
-
-function handleAboutWheel(e) {
-    const panelMain = getAboutActivePanelMain();
-    if (!panelMain) return;
-
-    const atBottom = panelMain.scrollTop + panelMain.clientHeight >= panelMain.scrollHeight - 2;
-    const atTop = panelMain.scrollTop <= 2;
-
-    if (aboutCurrentTab === "about" && atBottom && e.deltaY > SWITCH_THRESHOLD) {
-        switchAboutTab("devlog");
-    } else if (aboutCurrentTab === "devlog" && atTop && e.deltaY < -SWITCH_THRESHOLD) {
-        switchAboutTab("about");
-    }
-}
-
-function setupAboutTouchHandlers() {
-    const panelMain = getAboutActivePanelMain();
-    if (!panelMain) return;
-
-    panelMain.removeEventListener("touchstart", handleAboutTouchStart);
-    panelMain.removeEventListener("touchend", handleAboutTouchEnd);
-    panelMain.addEventListener("touchstart", handleAboutTouchStart);
-    panelMain.addEventListener("touchend", handleAboutTouchEnd);
-}
-
-function handleAboutTouchStart(e) {
-    aboutTouchStartY = e.touches[0].clientY;
-}
-
-function handleAboutTouchEnd(e) {
-    const panelMain = getAboutActivePanelMain();
-    if (!panelMain) return;
-
-    const deltaY = e.changedTouches[0].clientY - aboutTouchStartY;
-    const atBottom = panelMain.scrollTop + panelMain.clientHeight >= panelMain.scrollHeight - 2;
-    const atTop = panelMain.scrollTop <= 2;
-
-    if (aboutCurrentTab === "about" && atBottom && deltaY < -SWITCH_THRESHOLD) {
-        switchAboutTab("devlog");
-    } else if (aboutCurrentTab === "devlog" && atTop && deltaY > SWITCH_THRESHOLD) {
-        switchAboutTab("about");
-    }
-}
-
-function initAboutPanelClickHandlers() {
-    const aboutPanel = queryAbout('.panel-entry');
-    const devlogPanel = queryAbout('.panel-comment');
-
-    if (aboutPanel) {
-        aboutPanel.addEventListener('click', (e) => {
-            if (!aboutPanel.classList.contains('active')) {
-                const rect = aboutPanel.getBoundingClientRect();
-                const clickX = e.clientX - rect.left;
-                if (clickX < 100) {
-                    switchAboutTab('about');
-                }
-            }
-        });
-    }
-
-    if (devlogPanel) {
-        devlogPanel.addEventListener('click', (e) => {
-            if (!devlogPanel.classList.contains('active')) {
-                const rect = devlogPanel.getBoundingClientRect();
-                const clickX = e.clientX - rect.left;
-                if (clickX < 100) {
-                    switchAboutTab('devlog');
-                }
-            }
-        });
-    }
-}
-
 export function showAboutPanel() {
     const panel = getAboutPanel();
     if (!panel) return;
@@ -486,12 +256,6 @@ export function showAboutPanel() {
     document.dispatchEvent(new CustomEvent('about-panel:show'));
 
     renderAboutContent();
-    loadDevlogData().then(() => {
-        if (isAboutVisible) {
-            renderAboutContent();
-        }
-    });
-    switchAboutTab("about");
 
     const view = document.getElementById("universe-view");
     view.style.left = "-18vw";
@@ -549,5 +313,3 @@ document.addEventListener('floating-panel:show', () => {
 });
 
 initClickOutsideHandler();
-initAboutTabs();
-initAboutPanelClickHandlers();

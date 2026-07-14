@@ -1372,7 +1372,7 @@ function renderCommentSection() {
         : (lang === "en" ? "No contributor information yet." : "暂无贡献者信息");
     contributorsSec.innerHTML = `<p>${contributorTextInComment}</p>`;
 
-    const contactPrimaryTextInComment = lang === "en" ? "If you have any historical anecdotes or extended reflections regarding this entry, or if you have experienced a direct connection between this theoretical concept and daily life, we welcome you to submit your echoes to the following email address: " : "如果您知道关于这个词条的历史趣闻，延展思考或者能感受到过这个理论概念与生活的直接联系，欢迎将你的回声投稿至以下邮箱。";
+    const contactPrimaryTextInComment = lang === "en" ? "If you have any historical anecdotes or extended reflections regarding this entry, or if you have experienced a direct connection between this theoretical concept and daily life, we welcome you to submit your echoes to the following email address: " : "如果您知道关于这个词条的历史趣闻，延展思考或者能感受到过这个理论概念与生活的直接联系，欢迎将您的回声投稿至以下邮箱。";
     const contactSecondaryTextInComment = "hello@dunesworkshop.org";
     if (contactSec) {
         contactSec.innerHTML = `
@@ -1428,42 +1428,13 @@ function renderCommentSection() {
         contentScroll.querySelectorAll('section:not(#section-contributors):not(#section-contact):not(#section-editors)')
     );
 
-    const clearNoteLayout = ({ scrollToTop = false } = {}) => {
-        contentScroll.classList.remove('notes-mode');
-        if (panelMain) panelMain.classList.remove('notes-fixed');
-        noteSections.forEach(sec => {
-            sec.classList.remove('note-expanded', 'note-above', 'note-below', 'note-below-first');
-            sec.scrollTop = 0;
-        });
-        if (scrollToTop && panelMain) {
-            panelMain.scrollTo({ top: 0, behavior: "smooth" });
-        }
-    };
-
-    const applyNoteLayout = (activeSection) => {
-        clearNoteLayout();
-        if (!activeSection) return;
-        contentScroll.classList.add('notes-mode');
-        if (panelMain) panelMain.classList.add('notes-fixed');
-        const activeIndex = noteSections.indexOf(activeSection);
-        noteSections.forEach((sec, idx) => {
-            if (idx < activeIndex) sec.classList.add('note-above');
-            if (idx > activeIndex) sec.classList.add('note-below');
-        });
-        activeSection.classList.add('note-expanded');
-        const firstBelow = noteSections[activeIndex + 1];
-        if (firstBelow) firstBelow.classList.add('note-below-first');
-    };
-
-    noteSections.forEach(section => {
-        section.addEventListener('click', (e) => {
-            e.stopPropagation();
-            if (section.classList.contains('note-expanded')) {
-                clearNoteLayout({ scrollToTop: true });
-                return;
-            }
-            applyNoteLayout(section);
-        });
+    // Echoes are always shown fully expanded in normal flow, no collapse/hover
+    // toggle. CSS handles the visual side; here we just skip wiring up the
+    // click-to-expand/collapse behavior entirely.
+    contentScroll.classList.remove('notes-mode');
+    if (panelMain) panelMain.classList.remove('notes-fixed');
+    noteSections.forEach(sec => {
+        sec.classList.remove('note-expanded', 'note-above', 'note-below', 'note-below-first');
     });
 }
 
@@ -2024,22 +1995,30 @@ const commentDiv = document.getElementById("comment");
 const proposerDiv = document.getElementById("proposer");
 const imageDiv = document.getElementById("image");
 
-// Click "Comment".
+// Click "Comment" (echo abstract card) -> open the echoes panel.
 commentDiv.addEventListener("click", (e) => {
     e.stopPropagation();
+    if (!isPanelVisible) showFloatingPanel();
+    switchTab("comment");
     renderCommentSection();
     scrollToTop("comment");
 });
 
-// Click "Related works / Proposers".
+// Click "Related works / Proposers" (proposer card) -> open the entry panel
+// (brought in front of the echoes panel) and jump to the proposers section.
 proposerDiv.addEventListener("click", (e) => {
     e.stopPropagation();
+    if (!isPanelVisible) showFloatingPanel();
+    switchTab("entry");
     updateTabContent("proposers");
 });
 
-// Click "Image".
+// Click "Image" (source card) -> open the entry panel (brought in front of
+// the echoes panel) and jump to the source section.
 imageDiv.addEventListener("click", (e) => {
     e.stopPropagation();
+    if (!isPanelVisible) showFloatingPanel();
+    switchTab("entry");
     updateTabContent("source");
 });
 

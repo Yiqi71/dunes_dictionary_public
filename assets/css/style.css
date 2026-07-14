@@ -28,66 +28,9 @@ body {
     opacity: 1;
 }
 
-body.boot-pending #app-root {
-    opacity: 1;
-}
-
-body.boot-ready #app-root {
-    opacity: 1;
-}
-
-#boot-progress {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 100000;
-    background: radial-gradient(circle at 20% 20%, #f8f3ea 0%, #f3efe7 45%, #ece4d8 100%);
-    opacity: 1;
-    transition: opacity 480ms ease;
-}
-
-#boot-progress.is-fading {
-    opacity: 0;
-    pointer-events: none;
-}
-
-#boot-progress-text,
-#boot-progress-track {
-    width: min(420px, calc(100vw - 40px));
-    max-width: 420px;
-}
-
-#boot-progress-track {
-    position: relative;
-    height: 1.37px;
-    background-color: #43403B;
-}
-
-#boot-progress-indicator {
-    position: absolute;
-    top: 50%;
-    left: 0%;
-    width: 13px;
-    height: 13px;
-    background-color: #43403B;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    transition: left 220ms ease;
-}
-
-#boot-progress-text {
-    margin-top: 18px;
-    color: rgba(57, 47, 23, 0.82);
-    text-align: left;
-    font-family: "Barlow Condensed", "ChillDIN", sans-serif;
-    font-size: 12px;
-    letter-spacing: 0.4px;
-}
-
 img {
+    -webkit-user-select: none;
+    /* Safari 15.4 以前需要前缀 */
     user-select: none;
     /* 禁止文字/图片被选中 */
     -webkit-user-drag: none;
@@ -154,6 +97,7 @@ h1.English {
 
     transition: left 0.3s ease-in-out;
 
+    -webkit-user-select: none;
     user-select: none;
 }
 
@@ -548,6 +492,8 @@ html:lang(en) #proposer .proposer-ori {
     max-height: 60vh;
     overflow-y: auto;
     background-color: #B4B596;
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 #comment h3 {
@@ -578,6 +524,8 @@ html:lang(en) #proposer .proposer-ori {
     font-weight: 500;
     line-height: 30px;
     letter-spacing: -0.72px;
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 
@@ -665,6 +613,7 @@ html:lang(en) #proposer .proposer-ori {
     align-items: center;
     gap: 7px;
     transition: background 0.25s, color 0.25s, opacity 0.4s ease;
+    -webkit-user-select: none;
     user-select: none;
 }
 

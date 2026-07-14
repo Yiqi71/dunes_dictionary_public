@@ -154,7 +154,7 @@ import { getMinScaleForCurrentPath } from "./zoom.js";
         if (cachedGeoJSON) return cachedGeoJSON;
         
         try {
-            const response = await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/land-50m.json');
+            const response = await fetch('/assets/data/land-50m.json');
             const topology = await response.json();
             
             const land = topology.objects.land;

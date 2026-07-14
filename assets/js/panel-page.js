@@ -889,11 +889,12 @@ function renderEchoesPanel() {
             ? `The contributor for this entry is ${contribNames.join(", ")}.`
             : `本期词条的贡献者是${contribNames.join(", ")}。`)
         : (lang === "en" ? "No contributor information yet." : "暂无贡献者信息");
-    contributorsSec.innerHTML = `<p>${contribText}</p>`;
+    // contributorsSec.innerHTML = `<p>${contribText}</p>`;
+    contributorsSec.innerHTML = ``;
 
     const contactPrimary = lang === "en"
         ? "If you have any historical anecdotes or extended reflections regarding this entry, or if you have experienced a direct connection between this theoretical concept and daily life, we welcome you to submit your echoes to the following email address: "
-        : "如果您知道关于这个词条的历史趣闻，延展思考或者能感受到过这个理论概念与生活的直接联系，欢迎将你的回声投稿至以下邮箱。";
+        : "如果您知道关于这个词条的历史趣闻，延展思考或者能感受到过这个理论概念与生活的直接联系，欢迎将您的回声投稿至以下邮箱。";
     contactSec.innerHTML = `<div><p>${contactPrimary}</p><p>hello@dunesworkshop.org</p></div>`;
 
     editorsSec.innerHTML = `<p class="left-title">${sectionTitles.editors[lang]}</p>
